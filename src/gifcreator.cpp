@@ -1,6 +1,6 @@
 #include "gifcreator.h"
 
-GifCreator::GifCreator()
+GifCreator::GifCreator():duration(0.1)
 {
 }
 
@@ -92,9 +92,13 @@ bool GifCreator::save(const char* filename, int every)
  
     
     ExtStr[0] = (false) ? 0x06 : 0x04;
-    ExtStr[1] = delay[ni] % 256;
-    ExtStr[2] = delay[ni] / 256;
- 
+    // ExtStr[1] = delay[ni] % 256;
+    // ExtStr[2] = delay[ni] / 256;
+    
+    int dt = duration*100.0f;
+    ExtStr[1] = dt % 256;
+    ExtStr[2] = dt / 256;
+
     /* Dump graphics control block. */
     EGifPutExtension(GifFile, GRAPHICS_EXT_FUNC_CODE, 4, ExtStr);
             

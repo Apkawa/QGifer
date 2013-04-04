@@ -114,7 +114,7 @@ void MainWindow::extractGif()
      for(long i=startBox->value();i<=stopBox->value();i++)
      {
 	  player->seek(i);
-	  g->addFrame(player->getCurrentFrame()->scaled(widthBox->value(),heightBox->value()));
+	  g->addFrame(player->getCurrentFrame()->scaled(widthBox->value(),heightBox->value(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
      }
      g->show();
      g->play();

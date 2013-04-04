@@ -29,14 +29,16 @@ public:
   // Saves the results in a gif file
   bool save(const char* filename, int every = 1);
   void setPalette(ColorMapObject* palette) {outputPalette = palette;}
+  void setDuration(float d){duration = d;}
 private:
      static bool addLoop(GifFileType *gf);
 
 protected:
   vector<Frame> frames;
-  vector<int> delay;
+  //vector<int> delay; //na razie rezygnujemy z roznych opoznien
   ColorMapObject* outputPalette;
   int w;
   int h;
+  float duration;
   //int paletteSize;
 };

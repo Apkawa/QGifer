@@ -48,10 +48,7 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map)
      // 	  for(int j=0;j<img->height();j++)
      // 	       img->setPixel(i,j,matchPixel(img->pixel(i,j),map));
      int bytes = img->byteCount();
-     const QImage& cimg = *img;
      Byte* data = img->bits();
-     qDebug() << "======= bytes: " << bytes;
-     qDebug() << "image size: " << cimg.size();
      Frame frame(bytes);
      for(int i=0,f=0;i<bytes;i+=3,f++)
      {
@@ -75,5 +72,5 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map)
      }
 
      frames.push_back(frame);
-     delay.push_back(duration);
+     //delay.push_back(duration);
 }

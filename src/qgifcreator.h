@@ -13,12 +13,11 @@ class QGifCreator : public QObject, public GifCreator
 public:
      QGifCreator();
      virtual ~QGifCreator();
-     void setDuration(float d){duration = d;}
+     
      Byte* imageData(const QImage& img);
      void prepareFrame(QImage* img, ColorMapObject* map);
 private:
      QList<QImage*> cache;
-     float duration;
      private slots:
 
 };

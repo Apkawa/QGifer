@@ -81,7 +81,7 @@ void GifWidget::save()
      if(!prevFrames.size())
 	  return;
      pause();
-     gif.setDuration((float)intervalBox->value()/1000);
+     gif.setDuration((double)intervalBox->value()/1000);
      gif.save(filename.toStdString().c_str(),
 	  saveEveryBox->isChecked() ? seBox->value() : 1);
 }
