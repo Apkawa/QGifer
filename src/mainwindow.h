@@ -20,6 +20,10 @@ private:
 	  void openVideo();
 	  void extractGif();
 	  void updatePalette();
+	  void startFromCurrent() 
+	  { startBox->setValue(player->getCurrentPos()); }
+	  void stopFromCurrent() 
+	  { stopBox->setValue(player->getCurrentPos()); }
 };
 
 #endif

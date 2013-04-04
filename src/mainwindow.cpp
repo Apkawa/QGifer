@@ -6,9 +6,18 @@ MainWindow::MainWindow()
      setupUi(this);
      player->controlPanel->hide();
      player->setStatusBar(statusbar);
+     
+     upStartButton->setIcon(QIcon(":/res/fromimg.png"));
+     upStartButton->setDefaultAction(actionSetAsStart);
+     upStopButton->setDefaultAction(actionSetAsStop);
+     upStopButton->setIcon(QIcon(":/res/fromimg.png"));
+
      connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
      connect(actionExtractGif, SIGNAL(triggered()), this, SLOT(extractGif()));
      connect(updatePalButton, SIGNAL(clicked()), this, SLOT(updatePalette()));
+
+     connect(actionSetAsStart, SIGNAL(triggered()), this, SLOT(startFromCurrent()));
+     connect(actionSetAsStop, SIGNAL(triggered()), this, SLOT(stopFromCurrent()));
 
      connect(actionOpenVideo, SIGNAL(triggered()), this, SLOT(openVideo()));
      connect(actionCloseVideo, SIGNAL(triggered()), player, SLOT(close()));
@@ -19,7 +28,7 @@ MainWindow::MainWindow()
      connect(actionPrevFrame, SIGNAL(triggered()), player, SLOT(prevFrame()));
 
      //test
-     openVideo("/home/chodak/rec/tkw540.avi");
+     //openVideo("/home/chodak/rec/tkw540.avi");
 }
 
 MainWindow::~MainWindow()

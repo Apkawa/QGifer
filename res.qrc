@@ -40,5 +40,7 @@
     <file>res/stop.png</file>
     <file>res/icon.png</file>
     <file>res/edit.png</file>
+    <file>res/fromimg.png</file>
+    <file>res/palette.png</file>
   </qresource>
 </RCC>

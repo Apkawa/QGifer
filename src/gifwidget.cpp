@@ -1,5 +1,6 @@
 #include "gifwidget.h"
 #include <QProgressDialog>
+#include <QFileDialog>
 
 GifWidget::GifWidget(
      QWidget* parent, 
@@ -68,21 +69,19 @@ void GifWidget::pause()
 void GifWidget::save()
 {
      qDebug() << "saving gif...";
+
+     QString filename = QFileDialog::getSaveFileName(
+	  this, tr("Save GIF file"), qApp->applicationDirPath(),
+	  "GIF files (*.gif);;All files (*.*)");
+
+     if(filename.isEmpty())
+	  return;
+
      if(!prevFrames.size())
 	  return;
      pause();
      gif.setDuration((float)intervalBox->value()/1000);
-     // QProgressDialog pd(tr("Rendering frames..."), tr("Abort"), 0, prevFrames.size() , this);
-     // pd.setWindowModality(Qt::WindowModal);
-     // pd.show();
-     // qApp->processEvents();
-     //  for(int i=0;i<prevFrames.size();i++)
-     // {
-     // 	  pd.setValue(i);
-     // 	  gc.addFrame(prevFrames.at(i));
-     // }
-     // pd.setValue(prevFrames.size());
-     gif.save("/home/chodak/testgif.gif");
+     gif.save(filename.toStdString().c_str());
 }
 
 void GifWidget::timerEvent(QTimerEvent*)
