@@ -32,6 +32,8 @@ public:
      QImage* getCurrentFrame() {return &currentFrame;}
      int estimateInterval()
      {return vcap.isOpened() ? round(1000.0/vcap.get(CV_CAP_PROP_FPS)) : 0;}
+     double fps()
+     {return vcap.isOpened() ? vcap.get(CV_CAP_PROP_FPS) : 0;}
      void setStatusBar(QStatusBar* sb);
 
      /**
@@ -96,7 +98,8 @@ public slots:
      void pause();
      void seek(int pos);
      void close();
-
+     void setInterval(int i){interval=i;if(status==Playing){pause();play();}}
+     void setFps(double f){ setInterval(1000/f);}
 signals:
      void frameChanged(long);
      void statusUpdated(FramePlayer::Status status);

@@ -27,7 +27,7 @@ public:
   bool addFrame(Byte* data,  float dt);
   
   // Saves the results in a gif file
-  bool save(const char* filename);
+  bool save(const char* filename, int every = 1);
   void setPalette(ColorMapObject* palette) {outputPalette = palette;}
 private:
      static bool addLoop(GifFileType *gf);

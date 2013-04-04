@@ -87,6 +87,7 @@ src/mainwindow.h
 src/gifwidget.h
 src/qgifcreator.h
 src/palettewidget.h
+src/qmultislider.h
 )
 
 SET (SOURCES 
@@ -98,6 +99,7 @@ src/gifwidget.cpp
 src/gifcreator.cpp
 src/qgifcreator.cpp
 src/palettewidget.cpp
+src/qmultislider.cpp
 )
 
 SET (RESOURCES 

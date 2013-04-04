@@ -68,7 +68,8 @@ bool GifCreator::addLoop(GifFileType *gf)
 }
 
 
-bool GifCreator::save(const char* filename){
+bool GifCreator::save(const char* filename, int every)
+{
   if (frames.size()==0) return false;
   
   
@@ -84,7 +85,7 @@ bool GifCreator::save(const char* filename){
 
   if (!addLoop(GifFile)) return false;
 
-  for (int ni=0; ni<frames.size(); ni++) {      
+  for (int ni=0; ni<frames.size(); ni+=every) {      
 
     static unsigned char
     ExtStr[4] = { 0x04, 0x00, 0x00, 0xff };

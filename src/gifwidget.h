@@ -21,6 +21,7 @@ private:
      QList<QImage> prevFrames;
      int timerId;
      int currentFrame;
+     int skipped;
      void timerEvent(QTimerEvent*);
      public slots:
 	  void save();

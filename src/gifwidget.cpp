@@ -49,6 +49,7 @@ void GifWidget::play()
      if(timerId == -1)
      {
 	  timerId = startTimer(intervalBox->value());
+	  skipped = 0;
 	  currentFrame = 0;
      }
      else
@@ -81,13 +82,15 @@ void GifWidget::save()
 	  return;
      pause();
      gif.setDuration((float)intervalBox->value()/1000);
-     gif.save(filename.toStdString().c_str());
+     gif.save(filename.toStdString().c_str(),
+	  saveEveryBox->isChecked() ? seBox->value() : 1);
 }
 
 void GifWidget::timerEvent(QTimerEvent*)
 {
      preview->setImage(prevFrames.at(currentFrame));
-     currentFrame++;
+     currentFrame += saveEveryBox->isChecked() ? seBox->value() : 1;
+
      if(currentFrame >= prevFrames.size())
-	  currentFrame = 0;
+	  currentFrame = skipped = 0;
 }

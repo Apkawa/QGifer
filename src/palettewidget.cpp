@@ -27,7 +27,7 @@ void PaletteWidget::paintEvent(QPaintEvent*)
      {
 	  p.fillRect(1+c*sqSize,1+r*sqSize,sqSize,sqSize,QColor(
 		     palette->Colors[i].Red,
-		     palette->Colors[i].Red,
+		     palette->Colors[i].Green,
 		     palette->Colors[i].Blue));
 	  if(++c >= cols)
 	  {

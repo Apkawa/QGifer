@@ -24,6 +24,11 @@ private:
 	  { startBox->setValue(player->getCurrentPos()); }
 	  void stopFromCurrent() 
 	  { stopBox->setValue(player->getCurrentPos()); }
+	  void stopChanged(int v){multiSlider->setPosB(v,false);}
+	  void startChanged(int v){multiSlider->setPosA(v,false);}
+	  void posAChanged(int);
+	  void posBChanged(int);
+	  void frameChanged(long);
 };
 
 #endif

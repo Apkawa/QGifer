@@ -12,6 +12,18 @@ MainWindow::MainWindow()
      upStopButton->setDefaultAction(actionSetAsStop);
      upStopButton->setIcon(QIcon(":/res/fromimg.png"));
 
+     multiSlider->setSkin(QPixmap(":/res/multislider/bar.png"),
+			  QPixmap(":/res/multislider/midbar.png"),
+			  QPixmap(":/res/multislider/left.png"),
+			  QPixmap(":/res/multislider/right.png"),
+			  QPixmap(":/res/multislider/a.png").
+			  scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation),
+			  QPixmap(":/res/multislider/b.png").
+			  scaled(16,16,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+     multiSlider->setMaximum(0);
+     multiSlider->setPosA(0);
+     multiSlider->setPosB(0);
+
      connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
      connect(actionExtractGif, SIGNAL(triggered()), this, SLOT(extractGif()));
      connect(updatePalButton, SIGNAL(clicked()), this, SLOT(updatePalette()));
@@ -26,6 +38,15 @@ MainWindow::MainWindow()
      connect(actionPause, SIGNAL(triggered()), player, SLOT(pause()));
      connect(actionNextFrame, SIGNAL(triggered()), player, SLOT(nextFrame()));
      connect(actionPrevFrame, SIGNAL(triggered()), player, SLOT(prevFrame()));
+
+     connect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
+     connect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
+
+     connect(multiSlider, SIGNAL(posAChanged(int)), this, SLOT(posAChanged(int)));
+     connect(multiSlider, SIGNAL(posBChanged(int)), this, SLOT(posBChanged(int)));
+
+     connect(fpsBox, SIGNAL(valueChanged(double)), player, SLOT(setFps(double)));
+     connect(player, SIGNAL(frameChanged(long)), this, SLOT(frameChanged(long)));
 
      //test
      //openVideo("/home/chodak/rec/tkw540.avi");
@@ -53,9 +74,10 @@ bool MainWindow::openVideo(const QString& path)
          player->nextFrame();
 	 startBox->setMaximum(player->countFrames());
 	 stopBox->setMaximum(player->countFrames());
+	 multiSlider->setMaximum(player->countFrames());
 	 startBox->setValue(0);
-	 stopBox->setValue(0);
-	 updatePalette();
+	 stopBox->setValue(1);
+	 fpsBox->setValue(player->fps());
 	 return true;
      }
      startBox->setMaximum(0);
@@ -75,7 +97,10 @@ void MainWindow::extractGif()
      }
 
      if(!paletteWidget->map())
+     {
+	  player->seek(startBox->value());
 	  updatePalette();
+     }
 
      if(!paletteWidget->map())
      {
@@ -93,10 +118,40 @@ void MainWindow::extractGif()
      }
      g->show();
      g->play();
+     player->pause();
      QTimer::singleShot(100,g,SLOT(adjustWidgetSize())); //TODO find another way....
 }
 
 void MainWindow::updatePalette()
 {
      paletteWidget->fromImage(*player->getCurrentFrame(), pow(2,paletteBox->value()));
+}
+
+void MainWindow::posAChanged(int v)
+{
+     disconnect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
+     startBox->setValue(v);
+     connect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
+}
+
+void MainWindow::posBChanged(int v)
+{
+     disconnect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
+     stopBox->setValue(v);
+     connect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
+}
+
+void MainWindow::frameChanged(long f)
+{
+     if(laRadio->isChecked() && f >= player->countFrames()-1)
+	  player->seek(0);
+     else if(ssRadio->isChecked() && (f >= stopBox->value() || f < startBox->value()) && 
+	     stopBox->value() > startBox->value())
+	  player->seek(startBox->value());
+     else if(ssRadio->isChecked() && f >= stopBox->value() && 
+	     stopBox->value() < startBox->value())
+     {
+	  QMessageBox::warning(this,tr("Warning"),tr("The range seems to be invalid!"));
+	  player->pause();
+     }
 }

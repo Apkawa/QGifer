@@ -19,7 +19,7 @@ private:
      int sqSize;
      ColorMapObject* palette;
      void paintEvent(QPaintEvent*);
-     void resizeEvent(QResizeEvent*){sqSize = (width()-2)/cols;}
+     void resizeEvent(QResizeEvent*){sqSize = (width()-10)/cols;}
      private slots:
 
 };
