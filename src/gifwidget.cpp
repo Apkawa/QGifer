@@ -1,12 +1,13 @@
 #include "gifwidget.h"
 #include <QProgressDialog>
 #include <QFileDialog>
+#include <QProcess>
+#include <QMessageBox>
 
-GifWidget::GifWidget(
-     QWidget* parent, 
-     Qt::WindowFlags f): QWidget(parent,f), timerId(-1), currentFrame(-1)
+GifWidget::GifWidget(QSettings* s): timerId(-1), currentFrame(-1)
 {
      setupUi(this);
+     set = s;
      createActions();
 }
 
@@ -72,7 +73,8 @@ void GifWidget::save()
      qDebug() << "saving gif...";
 
      QString filename = QFileDialog::getSaveFileName(
-	  this, tr("Save GIF file"), qApp->applicationDirPath(),
+	  this, tr("Save GIF file"), 
+	  set->value("last_gif_dir",qApp->applicationDirPath()).toString(),
 	  "GIF files (*.gif);;All files (*.*)");
 
      if(filename.isEmpty())
@@ -84,6 +86,24 @@ void GifWidget::save()
      gif.setDuration((double)intervalBox->value()/1000);
      gif.save(filename.toStdString().c_str(),
 	  saveEveryBox->isChecked() ? seBox->value() : 1);
+
+     emit gifSaved(filename);
+
+     // if(fuzzBox->isEnabled() && fuzzBox->value() > 0)
+     // {
+     // 	  QDialog d;
+     // 	  QVBoxLayout lay(&d);
+     // 	  QLabel l("Optimizing gif, please wait...");
+     // 	  lay.addWidget(&l);
+     // 	  d.resize(300,200);
+     // 	  d.show();
+     // 	  qApp->processEvents();
+     // 	  QString program = "convert";
+     // 	  QStringList args;
+     // 	  args << filename << "-fuzz" << QString::number(fuzzBox->value())+"%" << "-layers" << "Optimize" << filename;
+     // 	  if(QProcess::execute(program,args))
+     // 	       QMessageBox::critical(this, tr("Error"), tr("Optimization failed!"));
+     // }
 }
 
 void GifWidget::timerEvent(QTimerEvent*)
@@ -94,3 +114,21 @@ void GifWidget::timerEvent(QTimerEvent*)
      if(currentFrame >= prevFrames.size())
 	  currentFrame = skipped = 0;
 }
+
+// void GifWidget::optStateChanged(int s)
+// {
+//      bool c = s == Qt::Checked;
+//      fuzzBox->setEnabled(c);
+//      fuzzLabel->setEnabled(c);
+//      if(c && QProcess::execute("convert"))
+//      {
+// 	  if(!QMessageBox::question(
+// 		  this, tr("Warning"), 
+// 		  tr("This operation requires ImageMagick installed on your system. The \"convert\" command is not found, do you want to manually set the path?"),
+// 		  tr("Yes"), tr("No")))
+// 	  {
+	       
+// 	  }
+// 	  optBox->setChecked(false);
+//      }
+// }

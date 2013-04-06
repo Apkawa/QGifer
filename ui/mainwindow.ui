@@ -6,48 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>878</width>
-    <height>563</height>
+    <width>930</width>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>QGifer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="2">
-     <widget class="FramePlayer" name="player" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>345</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="Line" name="line_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
+    <item row="2" column="2">
      <widget class="QMultiSlider" name="multiSlider" native="true">
       <property name="minimumSize">
        <size>
@@ -63,7 +31,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="2">
+    <item row="0" column="0" rowspan="3">
      <widget class="QToolBox" name="toolBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -84,9 +52,17 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>250</width>
+         <height>419</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>Margins</string>
        </attribute>
@@ -208,7 +184,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>388</height>
+         <height>419</height>
         </rect>
        </property>
        <attribute name="label">
@@ -273,19 +249,112 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_3">
+       <attribute name="label">
+        <string>Balance</string>
+       </attribute>
+      </widget>
       <widget class="QWidget" name="page_2">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>388</height>
+         <height>419</height>
         </rect>
        </property>
        <attribute name="label">
         <string>Output properties</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="5" column="0" colspan="3">
+         <widget class="Line" name="line_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Stop frame:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="upStartButton">
+          <property name="toolTip">
+           <string>Start from current frame</string>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Height:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1" colspan="2">
+         <widget class="QSpinBox" name="heightBox">
+          <property name="suffix">
+           <string> px</string>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>9999</number>
+          </property>
+          <property name="value">
+           <number>240</number>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0" colspan="3">
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>160</height>
+           </size>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>236</width>
+             <height>232</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="PaletteWidget" name="paletteWidget" native="true"/>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Palette size:</string>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="2">
          <widget class="QToolButton" name="upStopButton">
           <property name="toolTip">
@@ -303,42 +372,14 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QSpinBox" name="startBox">
-          <property name="maximum">
-           <number>0</number>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
+        <item row="8" column="0" colspan="3">
+         <widget class="QPushButton" name="updatePalButton">
           <property name="text">
-           <string>Stop frame:</string>
+           <string>Update from current frame</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="stopBox">
-          <property name="maximum">
-           <number>0</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Width:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
+        <item row="3" column="1" colspan="2">
          <widget class="QSpinBox" name="widthBox">
           <property name="suffix">
            <string> px</string>
@@ -354,115 +395,69 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Height:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QSpinBox" name="heightBox">
+        <item row="7" column="1" colspan="2">
+         <widget class="QSpinBox" name="paletteBox">
           <property name="suffix">
-           <string> px</string>
+           <string> bit</string>
           </property>
           <property name="minimum">
-           <number>1</number>
+           <number>2</number>
           </property>
           <property name="maximum">
-           <number>9999</number>
+           <number>8</number>
           </property>
           <property name="value">
-           <number>240</number>
+           <number>8</number>
           </property>
          </widget>
         </item>
-        <item row="5" column="0" colspan="3">
-         <widget class="Line" name="line_2">
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="startBox">
+          <property name="maximum">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="stopBox">
+          <property name="maximum">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Width:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="Line" name="line">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
-         <widget class="QToolButton" name="upStartButton">
-          <property name="toolTip">
-           <string>Start from current frame</string>
-          </property>
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0" colspan="3">
-         <widget class="QGroupBox" name="groupBox_3">
-          <property name="title">
-           <string>Palette</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_9">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>Palette size:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="paletteBox">
-             <property name="suffix">
-              <string> bit</string>
-             </property>
-             <property name="minimum">
-              <number>2</number>
-             </property>
-             <property name="maximum">
-              <number>8</number>
-             </property>
-             <property name="value">
-              <number>8</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QPushButton" name="updatePalButton">
-             <property name="text">
-              <string>Update from current frame</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="2">
-            <widget class="QScrollArea" name="scrollArea">
-             <property name="horizontalScrollBarPolicy">
-              <enum>Qt::ScrollBarAlwaysOff</enum>
-             </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>222</width>
-                <height>165</height>
-               </rect>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_4">
-               <item row="0" column="0">
-                <widget class="PaletteWidget" name="paletteWidget" native="true"/>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
        </layout>
       </widget>
+     </widget>
+    </item>
+    <item row="0" column="2" rowspan="2">
+     <widget class="FramePlayer" name="player" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="3">
+     <widget class="Line" name="line_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
      </widget>
     </item>
    </layout>
@@ -472,7 +467,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>878</width>
+     <width>930</width>
      <height>20</height>
     </rect>
    </property>
@@ -480,8 +475,6 @@
     <property name="title">
      <string>&amp;Player</string>
     </property>
-    <addaction name="actionOpenVideo"/>
-    <addaction name="separator"/>
     <addaction name="actionPlay"/>
     <addaction name="actionPause"/>
     <addaction name="actionStop"/>
@@ -512,6 +505,9 @@
     <property name="title">
      <string>&amp;Program</string>
     </property>
+    <addaction name="actionOpenVideo"/>
+    <addaction name="actionOptimizer"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menu_Program"/>
@@ -564,8 +560,6 @@
    <addaction name="actionExtractGif"/>
    <addaction name="separator"/>
    <addaction name="actionUpdatePalette"/>
-   <addaction name="action_Export_palette"/>
-   <addaction name="actionI_mport_palette"/>
   </widget>
   <action name="actionOpenVideo">
    <property name="icon">
@@ -721,6 +715,11 @@
   <action name="actionI_mport_palette">
    <property name="text">
     <string>I&amp;mport palette...</string>
+   </property>
+  </action>
+  <action name="actionOptimizer">
+   <property name="text">
+    <string>GIF &amp;optimizer...</string>
    </property>
   </action>
  </widget>

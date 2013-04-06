@@ -7,6 +7,8 @@ MainWindow::MainWindow()
      player->controlPanel->hide();
      player->setStatusBar(statusbar);
      
+     set = new QSettings("QGifer","QGifer");
+     
      upStartButton->setIcon(QIcon(":/res/fromimg.png"));
      upStartButton->setDefaultAction(actionSetAsStart);
      upStopButton->setDefaultAction(actionSetAsStop);
@@ -25,6 +27,7 @@ MainWindow::MainWindow()
      multiSlider->setPosB(0);
 
      connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
+     connect(actionOptimizer, SIGNAL(triggered()), this, SLOT(runOptimizer()));
      connect(actionExtractGif, SIGNAL(triggered()), this, SLOT(extractGif()));
      connect(updatePalButton, SIGNAL(clicked()), this, SLOT(updatePalette()));
 
@@ -54,13 +57,14 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-
+     delete set;
 }
 
 void MainWindow::openVideo()
 {
      QString path = QFileDialog::getOpenFileName(
-	  this, tr("Open video file"), qApp->applicationDirPath(),
+	  this, tr("Open video file"), 
+	  set->value("last_video_dir",qApp->applicationDirPath()).toString(),
 	  "Video files (*.avi *.mp4 *.mpg *.ogv *.flv);;All files (*.*)");
      if(!path.isEmpty())
 	  if(!openVideo(path))
@@ -78,6 +82,7 @@ bool MainWindow::openVideo(const QString& path)
 	 startBox->setValue(0);
 	 stopBox->setValue(1);
 	 fpsBox->setValue(player->fps());
+	 set->setValue("last_video_dir",QFileInfo(path).absoluteDir().absolutePath());
 	 return true;
      }
      startBox->setMaximum(0);
@@ -108,7 +113,8 @@ void MainWindow::extractGif()
 	  return;
      }
 
-     GifWidget* g = new GifWidget();
+     GifWidget* g = new GifWidget(set);
+     connect(g, SIGNAL(gifSaved(const QString&)), this, SLOT(gifSaved(const QString&)));
      g->setAttribute(Qt::WA_DeleteOnClose, true);
      g->setPalette(paletteWidget->map());
      for(long i=startBox->value();i<=stopBox->value();i++)
@@ -154,4 +160,12 @@ void MainWindow::frameChanged(long f)
 	  QMessageBox::warning(this,tr("Warning"),tr("The range seems to be invalid!"));
 	  player->pause();
      }
+}
+
+void MainWindow::gifSaved(const QString& path)
+{
+     set->setValue("last_gif", path);
+     set->setValue("last_gif_dir", QFileInfo(path).absoluteDir().absolutePath());
+     if(set->value("show_optimizer",false).toBool())
+	  runOptimizer();
 }

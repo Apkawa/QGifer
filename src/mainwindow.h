@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFileDialog>
 #include "gifwidget.h"
+#include "optimizerdialog.h"
 #include "ui_mainwindow.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
@@ -15,6 +16,8 @@ public:
      
 private:
      bool openVideo(const QString& path);
+ 
+     QSettings* set;
 
      private slots:
 	  void openVideo();
@@ -29,6 +32,8 @@ private:
 	  void posAChanged(int);
 	  void posBChanged(int);
 	  void frameChanged(long);
+	  void runOptimizer(){OptimizerDialog od(set); od.exec();}
+	  void gifSaved(const QString&);
 };
 
 #endif

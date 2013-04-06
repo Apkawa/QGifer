@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QList>
+#include <QSettings>
 #include "qgifcreator.h"
 #include "ui_gifwidget.h"
 
@@ -10,13 +11,18 @@ class GifWidget : public QWidget, public Ui::GifWidget
 {
      Q_OBJECT;
 public:
-     GifWidget(QWidget* parent=0, Qt::WindowFlags f=0);
+     GifWidget(QSettings* s);
      virtual ~GifWidget();
      void addFrame(const QImage& f);
      void setPalette(ColorMapObject* map){palette = map; gif.setPalette(map);}
+
+signals:
+     void gifSaved(const QString&);
+
 private:
      QGifCreator gif;
      ColorMapObject* palette;
+     QSettings* set;
      void createActions();
      QList<QImage> prevFrames;
      int timerId;

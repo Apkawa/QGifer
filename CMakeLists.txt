@@ -88,6 +88,7 @@ src/gifwidget.h
 src/qgifcreator.h
 src/palettewidget.h
 src/qmultislider.h
+src/optimizerdialog.h
 )
 
 SET (SOURCES 
@@ -100,6 +101,7 @@ src/gifcreator.cpp
 src/qgifcreator.cpp
 src/palettewidget.cpp
 src/qmultislider.cpp
+src/optimizerdialog.cpp
 )
 
 SET (RESOURCES 
@@ -110,6 +112,7 @@ SET (FORMS
 ui/frameplayer.ui 
 ui/mainwindow.ui
 ui/gifwidget.ui
+ui/optimizerdialog.ui
 )
 
 QT4_WRAP_CPP(HEADERS_MOC ${QT_HEADERS})
