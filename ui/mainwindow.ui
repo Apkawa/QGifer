@@ -52,15 +52,20 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
+      <widget class="QWidget" name="page_4">
+       <attribute name="label">
+        <string>Objects</string>
+       </attribute>
+      </widget>
       <widget class="QWidget" name="page">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>419</height>
+         <height>393</height>
         </rect>
        </property>
        <attribute name="label">
@@ -184,13 +189,36 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>419</height>
+         <height>393</height>
         </rect>
        </property>
        <attribute name="label">
         <string>Preview properties</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
+        <item row="1" column="0" colspan="2">
+         <widget class="Line" name="line_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QSlider" name="zoomSlider">
+          <property name="minimum">
+           <number>10</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_6">
           <property name="text">
@@ -198,7 +226,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="7" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -211,10 +239,17 @@
           </property>
          </spacer>
         </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="zoomLabel">
+          <property name="text">
+           <string>Zoom:</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="1">
          <widget class="QDoubleSpinBox" name="fpsBox"/>
         </item>
-        <item row="1" column="0" colspan="2">
+        <item row="6" column="0" colspan="2">
          <widget class="QGroupBox" name="groupBox_2">
           <property name="title">
            <string>Loop</string>
@@ -247,9 +282,31 @@
           </layout>
          </widget>
         </item>
+        <item row="5" column="0" colspan="2">
+         <widget class="QCheckBox" name="ratioBox">
+          <property name="text">
+           <string>Keep aspect ratio</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QCheckBox" name="smoothBox">
+          <property name="text">
+           <string>Smooth preview</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_3">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>250</width>
+         <height>393</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>Balance</string>
        </attribute>
@@ -260,7 +317,7 @@
          <x>0</x>
          <y>0</y>
          <width>250</width>
-         <height>419</height>
+         <height>393</height>
         </rect>
        </property>
        <attribute name="label">
@@ -337,7 +394,7 @@
              <x>0</x>
              <y>0</y>
              <width>236</width>
-             <height>232</height>
+             <height>206</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">

@@ -71,6 +71,7 @@ public:
      QString codecName();
      void showDefaultScreen()
      {currentFrame = defaultImg;pw->setImage(defaultImg.scaled(frame->size()));}
+     PreviewWidget* previewWidget() {return pw;}
 
 private:
      VideoCapture vcap;

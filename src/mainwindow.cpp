@@ -51,6 +51,10 @@ MainWindow::MainWindow()
      connect(fpsBox, SIGNAL(valueChanged(double)), player, SLOT(setFps(double)));
      connect(player, SIGNAL(frameChanged(long)), this, SLOT(frameChanged(long)));
 
+     connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoomChanged(int)));
+     connect(ratioBox, SIGNAL(stateChanged(int)), this, SLOT(ratioChanged(int)));
+     connect(smoothBox, SIGNAL(stateChanged(int)), this, SLOT(smoothChanged(int)));
+
      //test
      //openVideo("/home/chodak/rec/tkw540.avi");
 }
@@ -168,4 +172,26 @@ void MainWindow::gifSaved(const QString& path)
      set->setValue("last_gif_dir", QFileInfo(path).absoluteDir().absolutePath());
      if(set->value("show_optimizer",false).toBool())
 	  runOptimizer();
+}
+
+void MainWindow::zoomChanged(int v)
+{
+     zoomLabel->setText(tr("Zoom")+" ("+QString::number(v)+"%):");
+     player->previewWidget()->setZoom((double)v/100.0);
+     if(player->getStatus() != FramePlayer::Playing)
+	  player->seek(player->getCurrentPos());
+}
+
+void MainWindow::ratioChanged(int s)
+{
+     player->previewWidget()->keepAspectRatio(s == Qt::Checked);
+     if(player->getStatus() != FramePlayer::Playing)
+	  player->seek(player->getCurrentPos());
+}
+
+void MainWindow::smoothChanged(int s)
+{
+     player->previewWidget()->enableAntialiasing(s == Qt::Checked);
+     if(player->getStatus() != FramePlayer::Playing)
+	  player->seek(player->getCurrentPos());
 }

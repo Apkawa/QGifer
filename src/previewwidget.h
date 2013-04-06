@@ -24,6 +24,8 @@ public:
      {return image.isNull() ? -1 : (double)cpos.y()/(double)image.height();}
      void enableAntialiasing(bool enable) {smooth = enable;}
      void clear();
+     void keepAspectRatio(bool keep){ratio = keep;}
+     void setZoom(double z) {zoom = z;}
 private:
      void paintEvent(QPaintEvent*);
      void mouseMoveEvent(QMouseEvent*);
@@ -32,7 +34,8 @@ private:
      QImage image;
      QPoint cpos;
      bool smooth;
-     
+     bool ratio;
+     double zoom; //0 - 1
 
      private slots:
 	  

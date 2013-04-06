@@ -247,6 +247,7 @@ void FramePlayer::resizeEvent(QResizeEvent*)
 {
      //qDebug() << "player resize event";
      pw->setImage(currentFrame,frame->size());
+     pw->setFixedSize(size());
 }
 
 void FramePlayer::setStatusBar(QStatusBar* sb)

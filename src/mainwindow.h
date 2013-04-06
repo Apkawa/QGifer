@@ -34,6 +34,9 @@ private:
 	  void frameChanged(long);
 	  void runOptimizer(){OptimizerDialog od(set); od.exec();}
 	  void gifSaved(const QString&);
+	  void zoomChanged(int);
+	  void ratioChanged(int);
+	  void smoothChanged(int);
 };
 
 #endif
