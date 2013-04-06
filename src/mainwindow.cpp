@@ -54,7 +54,11 @@ MainWindow::MainWindow()
      connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoomChanged(int)));
      connect(ratioBox, SIGNAL(stateChanged(int)), this, SLOT(ratioChanged(int)));
      connect(smoothBox, SIGNAL(stateChanged(int)), this, SLOT(smoothChanged(int)));
+     connect(marginBox, SIGNAL(stateChanged(int)), this, SLOT(marginBoxChanged(int)));
 
+     //marginesy
+     connectMargins();
+     connect(player->previewWidget(), SIGNAL(marginsChanged()), this, SLOT(marginsChanged()));
      //test
      //openVideo("/home/chodak/rec/tkw540.avi");
 }
@@ -194,4 +198,45 @@ void MainWindow::smoothChanged(int s)
      player->previewWidget()->enableAntialiasing(s == Qt::Checked);
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
+}
+
+void MainWindow::applyMargins()
+{
+     *player->previewWidget()->margins() = QMargins(
+	  leftSpin->value(),topSpin->value(),
+	  rightSpin->value(),bottomSpin->value()); 
+     player->previewWidget()->update();
+}
+
+void MainWindow::marginsChanged()
+{
+     disconnectMargins();
+     QMargins* m = player->previewWidget()->margins();
+     leftSpin->setValue(m->left());
+     rightSpin->setValue(m->right());
+     topSpin->setValue(m->top());
+     bottomSpin->setValue(m->bottom());
+     connectMargins();
+}
+
+void MainWindow::connectMargins()
+{
+     connect(leftSpin, SIGNAL(valueChanged(int)), this, SLOT(applyMargins()));
+     connect(topSpin, SIGNAL(valueChanged(int)), this, SLOT(applyMargins()));
+     connect(rightSpin, SIGNAL(valueChanged(int)), this, SLOT(applyMargins()));
+     connect(bottomSpin, SIGNAL(valueChanged(int)), this, SLOT(applyMargins()));
+}
+
+void MainWindow::disconnectMargins()
+{
+     disconnect(leftSpin, SIGNAL(valueChanged(int)), this, SLOT(applyMargins()));
+     disconnect(topSpin, SIGNAL(valueChanged(int)), this, SLOT(applyMargins()));
+     disconnect(rightSpin, SIGNAL(valueChanged(int)), this, SLOT(applyMargins()));
+     disconnect(bottomSpin, SIGNAL(valueChanged(int)), this, SLOT(applyMargins()));
+}
+
+void MainWindow::marginBoxChanged(int s)
+{
+     player->previewWidget()->enableMargins(s == Qt::Checked);
+     player->previewWidget()->update();
 }

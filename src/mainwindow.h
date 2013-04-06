@@ -16,7 +16,9 @@ public:
      
 private:
      bool openVideo(const QString& path);
- 
+     void connectMargins();
+     void disconnectMargins();
+
      QSettings* set;
 
      private slots:
@@ -33,10 +35,13 @@ private:
 	  void posBChanged(int);
 	  void frameChanged(long);
 	  void runOptimizer(){OptimizerDialog od(set); od.exec();}
+	  void marginBoxChanged(int s);
 	  void gifSaved(const QString&);
 	  void zoomChanged(int);
 	  void ratioChanged(int);
 	  void smoothChanged(int);
+	  void applyMargins();
+	  void marginsChanged();
 };
 
 #endif
