@@ -18,7 +18,8 @@ private:
      bool openVideo(const QString& path);
      void connectMargins();
      void disconnectMargins();
-
+     void resizeEvent(QResizeEvent*){if(balanceBox->isChecked())balanceChanged();}
+     QImage finalFrame(long f);
      QSettings* set;
 
      private slots:
@@ -42,6 +43,9 @@ private:
 	  void smoothChanged(int);
 	  void applyMargins();
 	  void marginsChanged();
+	  void balanceChanged();
+	  void resetBalance();
+	  void lock(bool l);
 };
 
 #endif

@@ -16,8 +16,8 @@ class PreviewWidget : public QWidget
 public:
      PreviewWidget(QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~PreviewWidget();
-     void setImage(const QImage& img, const QSize& size = QSize(-1,-1));
-     const QImage* getImage() const {return &image;}
+     void setImage(const QImage& img, const QSize& size = QSize(0,0));
+     QImage* getImage() {return &image;}
      const QPoint* getCursorPos() const {return underMouse() ? &cpos : NULL;}
      const double normalizedX() const 
      {return image.isNull() ? -1 : (double)(cpos.x()-((1-zoom)/2*width()))/(double)image.width();}
@@ -29,6 +29,7 @@ public:
      void setZoom(double z) {zoom = z;}
      QMargins* margins(){return &mr;}
      void enableMargins(bool enable){useMr = enable;}
+     static void applyBalance(QImage* img, int r, int g, int b);
 private:
      void paintEvent(QPaintEvent*);
      void mouseMoveEvent(QMouseEvent*);

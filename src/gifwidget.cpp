@@ -29,7 +29,7 @@ void GifWidget::addFrame(const QImage& f)
 void GifWidget::createActions()
 {
      QAction* a = new QAction(tr("Save gif..."), this);
-     a->setIcon(QIcon(":/res/floppy.png"));
+     a->setIcon(QIcon(":/res/save.png"));
      saveButton->setDefaultAction(a);
      connect(a, SIGNAL(triggered()), this, SLOT(save()));
 

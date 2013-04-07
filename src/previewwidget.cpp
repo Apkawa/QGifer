@@ -1,10 +1,9 @@
 #include "previewwidget.h"
 
 PreviewWidget::PreviewWidget(QWidget* parent, Qt::WindowFlags f):
-     QWidget(parent,f),smooth(false),imsize(-1,-1),ratio(false),zoom(1)
+     QWidget(parent,f),smooth(false),imsize(-1,-1),ratio(true),zoom(1),useMr(false)
 {
      setFixedSize(480,360);
-     useMr = true;
      mr = QMargins(30,60,30,60);
      canDrag = drag = mrNone;
      show();
@@ -20,7 +19,15 @@ void PreviewWidget::setImage(const QImage& img, const QSize& size)
 {
      if(img.isNull())
 	  return;
-     imsize = size;
+
+     if(size.isNull())
+     {
+	  imsize = img.size();
+	  setFixedSize(imsize);
+     }
+     else
+	  imsize = size;
+
      origSize = img.size();
      image = img;
      // if(!imsize.isValid())
@@ -30,9 +37,10 @@ void PreviewWidget::setImage(const QImage& img, const QSize& size)
 	  image = image.scaled(
 	       imsize*zoom, ratio ? Qt::KeepAspectRatio : Qt::IgnoreAspectRatio, (
 		    smooth ? Qt::SmoothTransformation : Qt::FastTransformation));
-     // 	  setFixedSize(imsize);
+      	  //setFixedSize(imsize);
      // }
-     repaint();
+	  update();
+	  // repaint();
 }
 
 void PreviewWidget::paintEvent(QPaintEvent*)
@@ -40,7 +48,7 @@ void PreviewWidget::paintEvent(QPaintEvent*)
      if(image.isNull())
 	  return;
      QPainter p(this);
-     int x = (1-zoom)/2*width()+10;
+     int x = (1-zoom)/2*width();
      int y = (1-zoom)/2*height();
      p.drawImage(x, y, image);
 
@@ -160,4 +168,31 @@ void PreviewWidget::updateMargins()
 
      emit marginsChanged();
      update();
+}
+
+void PreviewWidget::applyBalance(QImage* img, int r, int g, int b)
+{
+     //*img = img->convertToFormat(QImage::Format_RGB888);
+     const int step = img->format() == QImage::Format_RGB888 ? 3 : 4;
+
+     for(int rw=0;rw<img->height();rw++)
+     {
+	  uchar* data = img->scanLine(rw);
+	  for(int i=0;i<img->bytesPerLine();i+=step)
+	  {
+	       data[i] = data[i]+r > 255 ? 255 : data[i]+r < 0 ? 0 : data[i]+r;
+	       data[i+1] = data[i+1]+g > 255 ? 255 : data[i+1]+g < 0 ? 0 : data[i+1]+g;
+	       data[i+2] = data[i+2]+b > 255 ? 255 : data[i+2]+b < 0 ? 0 : data[i+2]+b;
+	  }
+     }
+
+
+     // for(int i=0;i<img->byteCount();i+=step)
+     // {
+     // 	  data[i] = data[i]+r > 255 ? 255 : data[i]+r < 0 ? 0 : data[i]+r;
+     // 	  data[i+1] = data[i+1]+g > 255 ? 255 : data[i+1]+g < 0 ? 0 : data[i+1]+g;
+     // 	  data[i+2] = data[i+2]+b > 255 ? 255 : data[i+2]+b < 0 ? 0 : data[i+2]+b;
+     // }
+     // for(int i=0;i<9;i++)
+     // 	  qDebug() << data[i];
 }

@@ -7,7 +7,10 @@ FramePlayer::FramePlayer(QWidget* parent):QWidget(parent),frames(0),originalSize
 {
      setupUi(this);
      pw = new PreviewWidget(frame);
-     defaultImg = QImage(":/res/playerdefault2.png");
+     // QPixmap def(800,450);
+     // def.fill(Qt::black);
+     // defaultImg = def.toImage();
+     //defaultImg = QImage(":/res/playerdefault.png");
      connect(playButton, SIGNAL(clicked()), this, SLOT(play()));
      connect(stopButton, SIGNAL(clicked()), this, SLOT(stop()));
      connect(pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
@@ -106,8 +109,9 @@ void FramePlayer::nextFrame()
      else 
 	  return;
 
-     emit frameChanged(currentPos);
+     
      pw->setImage(currentFrame,frame->size());
+     emit frameChanged(currentPos);
      updateSlider(currentPos);
      
      updateStatus(timerId == -1 ? Stopped : Playing);

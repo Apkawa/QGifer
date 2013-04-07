@@ -32,7 +32,7 @@ void QMultiSlider::paintEvent(QPaintEvent*)
 
      while(bp<width()-pA.width()/2)
      {
-	  p.drawPixmap(bp,bary, (bp>pixPosA.x() && bp < pixPosB.x()) ? midbar : bar);
+	  p.drawPixmap(bp,bary, (bp>pixPosA.x() && bp < pixPosB.x()+pA.width()/2) ? midbar : bar);
 	  bp += bar.width();
      }
      p.drawPixmap(width()-pA.width()/2,bary, endR);
@@ -83,7 +83,7 @@ void QMultiSlider::mouseMoveEvent(QMouseEvent* e)
 
      f = (min == max && max == 0) ? 0 : (float)(pos-min)/(float)(max-min);
      (drag == 1) ? (emit posAChanged(pos)) : (emit posBChanged(pos));
-     repaint();
+     update();
 }
 
 void QMultiSlider::setPosA(int p, bool emit_signal)
