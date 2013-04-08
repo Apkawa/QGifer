@@ -27,6 +27,11 @@ MainWindow::MainWindow()
      multiSlider->setPosA(0);
      multiSlider->setPosB(0);
 
+     if(checkFFMPEG())
+	  connect(actionConverter, SIGNAL(triggered()), this, SLOT(runConverter()));
+     else
+	  actionConverter->setVisible(false);
+
      connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
      connect(actionOptimizer, SIGNAL(triggered()), this, SLOT(runOptimizer()));
      connect(actionExtractGif, SIGNAL(triggered()), this, SLOT(extractGif()));
@@ -46,6 +51,8 @@ MainWindow::MainWindow()
 
      connect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
      connect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
+     connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
+     connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
 
      connect(multiSlider, SIGNAL(posAChanged(int)), this, SLOT(posAChanged(int)));
      connect(multiSlider, SIGNAL(posBChanged(int)), this, SLOT(posBChanged(int)));
@@ -64,12 +71,15 @@ MainWindow::MainWindow()
      connect(balanceBox, SIGNAL(stateChanged(int)), this, SLOT(balanceChanged()));
      connect(resetBalanceButton, SIGNAL(clicked()), this, SLOT(resetBalance()));
 
+     connect(getWHButton, SIGNAL(clicked()), this, SLOT(estimateOutputSize()));
+     connect(whRatioBox, SIGNAL(stateChanged(int)),this, SLOT(whRatioChanged(int)));
      //marginesy
      connectMargins();
+
      connect(player->previewWidget(), SIGNAL(marginsChanged()), this, SLOT(marginsChanged()));
      //test
      //openVideo("/home/chodak/rec/tkw540.avi");
-
+     loadSettings();
      lock(true);
 }
 
@@ -101,6 +111,7 @@ bool MainWindow::openVideo(const QString& path)
 	 stopBox->setValue(1);
 	 fpsBox->setValue(player->fps());
 	 set->setValue("last_video_dir",QFileInfo(path).absoluteDir().absolutePath());
+	 vidfile = path;
 	 lock(false);
 	 return true;
      }
@@ -137,6 +148,9 @@ void MainWindow::extractGif()
      connect(g, SIGNAL(gifSaved(const QString&)), this, SLOT(gifSaved(const QString&)));
      g->setAttribute(Qt::WA_DeleteOnClose, true);
      g->setPalette(paletteWidget->map());
+     g->suggestName(QFileInfo(vidfile).baseName()+"_"+
+		    QString::number(startBox->value())+"-"+
+		    QString::number(stopBox->value()));
      QProgressDialog pd("Rendering frames...", "Abort", startBox->value(), 
 			      stopBox->value(), this);
      pd.setWindowModality(Qt::WindowModal);
@@ -162,6 +176,10 @@ void MainWindow::posAChanged(int v)
 {
      disconnect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
      startBox->setValue(v);
+     if(autoPaletteBox->isChecked()){
+	  player->seek(v);
+	  updatePalette();
+     }
      connect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
 }
 
@@ -268,6 +286,7 @@ void MainWindow::disconnectMargins()
 void MainWindow::marginBoxChanged(int s)
 {
      player->previewWidget()->enableMargins(s == Qt::Checked);
+     applyMargins();
      player->previewWidget()->update();
 }
 
@@ -327,4 +346,96 @@ QImage MainWindow::finalFrame(long f)
 				      greenSlider->value(),
 				      blueSlider->value());
      return frame;
+}
+
+void MainWindow::loadSettings()
+{
+     zoomSlider->setValue(set->value("zoom",100).toInt());
+     smoothBox->setChecked(set->value("smooth_preview",false).toBool());
+     ratioBox->setChecked(set->value("keep_ratio",false).toBool());
+     switch(set->value("loop",0).toInt())
+     {
+     case 1: laRadio->setChecked(true);break;
+     case 2: ssRadio->setChecked(true); break;
+     default: nlRadio->setChecked(true);
+     }
+     marginBox->setChecked(set->value("use_margins",true).toBool());
+     // leftSpin->setValue(set->value("left_margin",10).toInt());
+     // rightSpin->setValue(set->value("right_margin",10).toInt());
+     // topSpin->setValue(set->value("top_margin",10).toInt());
+     // bottomSpin->setValue(set->value("bottom_margin",10).toInt());
+     widthBox->setValue(set->value("output_width",320).toInt());
+     heightBox->setValue(set->value("output_height",240).toInt());
+     paletteBox->setValue(set->value("palette_size",10).toInt());
+     autoPaletteBox->setChecked(set->value("auto_palette",false).toBool());
+     whRatioBox->setChecked(set->value("wh_ratio",false).toBool());
+}
+
+void MainWindow::saveSettings()
+{
+     set->setValue("zoom",zoomSlider->value());
+     set->setValue("smooth_preview",smoothBox->isChecked());
+     set->setValue("keep_ratio",ratioBox->isChecked());
+     set->setValue("loop",(laRadio->isChecked() ? 1 : ssRadio->isChecked() ? 2 : 0));
+     set->setValue("use_margins",marginBox->isChecked());
+     // set->setValue("left_margin",leftSpin->value());
+     // set->setValue("right_margin",rightSpin->value());
+     // set->setValue("top_margin",topSpin->value());
+     // set->setValue("bottom_margin",bottomSpin->value());
+     set->setValue("output_width",widthBox->value());
+     set->setValue("output_height",heightBox->value());
+     set->setValue("palette_size",paletteBox->value());
+     set->setValue("auto_palette",autoPaletteBox->isChecked());
+     set->setValue("wh_ratio",whRatioBox->isChecked());
+     
+}
+
+void MainWindow::estimateOutputSize()
+{
+     QSize s = player->getCurrentFrame()->size();
+     if(marginBox->isChecked())
+     {
+	  s.setWidth(s.width()-leftSpin->value()-rightSpin->value());
+	  s.setHeight(s.height()-topSpin->value()-bottomSpin->value());	  
+     }
+     float tmp = whRatio;
+     whRatio = -1;
+     widthBox->setValue(s.width());
+     heightBox->setValue(s.height());
+     whRatio = tmp;
+}
+
+
+void MainWindow::outputWidthChanged(int v)
+{
+     if(!whRatioBox->isChecked() || whRatio<=0)
+	  return;
+     heightBox->disconnect();
+     heightBox->setValue(ceil(v/whRatio));
+     connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
+}
+
+void MainWindow::outputHeightChanged(int v)
+{
+     if(!whRatioBox->isChecked() || whRatio<=0)
+	  return;
+     widthBox->disconnect();
+     widthBox->setValue(ceil(v*whRatio));
+     connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
+
+}
+
+void MainWindow::whRatioChanged(int s)
+{
+     if(s == Qt::Checked)
+	  whRatio = (float)widthBox->value()/(float)heightBox->value();
+}
+
+void MainWindow::startChanged(int v)
+{
+     multiSlider->setPosA(v,false);
+     if(autoPaletteBox->isChecked()){
+	  player->seek(v);
+	  updatePalette();
+     }
 }

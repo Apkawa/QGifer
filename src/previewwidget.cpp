@@ -1,10 +1,9 @@
 #include "previewwidget.h"
 
 PreviewWidget::PreviewWidget(QWidget* parent, Qt::WindowFlags f):
-     QWidget(parent,f),smooth(false),imsize(-1,-1),ratio(true),zoom(1),useMr(false)
+     QWidget(parent,f),smooth(false),imsize(-1,-1),ratio(false),zoom(1),useMr(false)
 {
      setFixedSize(480,360);
-     mr = QMargins(30,60,30,60);
      canDrag = drag = mrNone;
      show();
      setMouseTracking(true);

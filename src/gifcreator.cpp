@@ -77,12 +77,15 @@ bool GifCreator::save(const char* filename, int every)
   
   if (!GifFile) return false;
 
+
   if (EGifPutScreenDesc(
         GifFile,
 			  w, h, 8, 0,
         outputPalette
       ) == GIF_ERROR) return false;
 
+  if(!EGifPutComment(GifFile,"Created using QGifer"))
+       return false;
   if (!addLoop(GifFile)) return false;
 
   for (int ni=0; ni<frames.size(); ni+=every) {      
@@ -114,6 +117,8 @@ bool GifCreator::save(const char* filename, int every)
     }
   }
 
+  
+   
   if (EGifCloseFile(GifFile) == GIF_ERROR) return false;
 
   return true;       

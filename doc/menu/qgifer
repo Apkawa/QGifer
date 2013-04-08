@@ -1,0 +1,2 @@
+?package(kpedit): needs="X11" section="Applications/Video" \
+	title="QGifer" longtitle="A video-based animated GIF creator" icon="/usr/share/icons/qgifer.xpm" command="qgifer"

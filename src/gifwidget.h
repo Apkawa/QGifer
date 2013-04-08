@@ -15,7 +15,7 @@ public:
      virtual ~GifWidget();
      void addFrame(const QImage& f);
      void setPalette(ColorMapObject* map){palette = map; gif.setPalette(map);}
-
+     void suggestName(const QString& name){suggestedName = name;}
 signals:
      void gifSaved(const QString&);
 
@@ -24,6 +24,7 @@ private:
      ColorMapObject* palette;
      QSettings* set;
      void createActions();
+     QString suggestedName;
      QList<QImage> prevFrames;
      int timerId;
      int currentFrame;

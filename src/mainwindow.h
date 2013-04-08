@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include "gifwidget.h"
 #include "optimizerdialog.h"
+#include "converterdialog.h"
 #include "ui_mainwindow.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
@@ -19,10 +20,15 @@ private:
      void connectMargins();
      void disconnectMargins();
      void resizeEvent(QResizeEvent*){if(balanceBox->isChecked())balanceChanged();}
+     void closeEvent(QCloseEvent*e){saveSettings();QMainWindow::closeEvent(e);qApp->quit();}
+     bool checkFFMPEG(){return !QProcess::execute("ffmpeg -version");}
      QImage finalFrame(long f);
      QSettings* set;
-
+     QString vidfile;
+     float whRatio;
      private slots:
+	  void loadSettings();
+	  void saveSettings();
 	  void openVideo();
 	  void extractGif();
 	  void updatePalette();
@@ -31,11 +37,12 @@ private:
 	  void stopFromCurrent() 
 	  { stopBox->setValue(player->getCurrentPos()); }
 	  void stopChanged(int v){multiSlider->setPosB(v,false);}
-	  void startChanged(int v){multiSlider->setPosA(v,false);}
+	  void startChanged(int v);
 	  void posAChanged(int);
 	  void posBChanged(int);
 	  void frameChanged(long);
 	  void runOptimizer(){OptimizerDialog od(set); od.exec();}
+	  void runConverter(){ConverterDialog cd(set); cd.exec();}
 	  void marginBoxChanged(int s);
 	  void gifSaved(const QString&);
 	  void zoomChanged(int);
@@ -46,6 +53,10 @@ private:
 	  void balanceChanged();
 	  void resetBalance();
 	  void lock(bool l);
+	  void estimateOutputSize();
+	  void outputWidthChanged(int);
+	  void outputHeightChanged(int);
+	  void whRatioChanged(int);
 };
 
 #endif
