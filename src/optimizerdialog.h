@@ -16,6 +16,8 @@ public:
 private:
      bool convertAvailable();
      void checkIM();
+     QStringList sysEnv();
+     QString findConvert();
      QProcess* proc;
      QSettings* set;
      private slots:

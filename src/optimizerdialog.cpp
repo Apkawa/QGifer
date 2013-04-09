@@ -1,6 +1,7 @@
 #include "optimizerdialog.h"
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QDebug>
 
 OptimizerDialog::OptimizerDialog(QSettings* s)
 {
@@ -11,7 +12,11 @@ OptimizerDialog::OptimizerDialog(QSettings* s)
 	  dstEdit->setText(srcEdit->text().insert(srcEdit->text().size()-4,"_optimized"));
      showBox->setChecked(set->value("show_optimizer",false).toBool());
      proc = new QProcess(this);
+    
+     if(set->value("convert_exec","").toString().isEmpty())
+	  set->setValue("convert_exec",findConvert());
      checkIM();
+
      connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
      connect(srcButton, SIGNAL(clicked()), this, SLOT(setSrc()));
      connect(dstButton, SIGNAL(clicked()), this, SLOT(setDst()));
@@ -21,6 +26,7 @@ OptimizerDialog::OptimizerDialog(QSettings* s)
 	     this, SLOT(finished(int,QProcess::ExitStatus)));
      connect(showBox, SIGNAL(stateChanged(int)), 
 	     this, SLOT(showStateChanged(int)));
+
 }
 
 OptimizerDialog::~OptimizerDialog()
@@ -60,7 +66,7 @@ void OptimizerDialog::setIMDir()
 #if defined(Q_WS_X11)
      path += "/convert";
 #elif defined(Q_WS_WIN)
-     path += "/convert.exe";
+     path += "\\convert.exe";
 #endif
      if(!QFile::exists(path))
      {
@@ -98,7 +104,8 @@ void OptimizerDialog::setDst()
 
 bool OptimizerDialog::convertAvailable()
 {
-     return !QProcess::execute(set->value("convert_exec","convert").toString() + " -version");
+     return !QProcess::execute(set->value("convert_exec","convert").toString(),
+			       QStringList() << "-version");
 }
 
 void OptimizerDialog::checkIM()
@@ -142,4 +149,33 @@ void OptimizerDialog::finished(int,QProcess::ExitStatus status)
 void OptimizerDialog::showStateChanged(int s)
 {
      set->setValue("show_optimizer", s == Qt::Checked);
+}
+
+QStringList OptimizerDialog::sysEnv()
+{
+     QString s(getenv("PATH"));
+#if defined(Q_WS_X11)
+     return s.split(":",QString::SkipEmptyParts);
+#elif defined(Q_WS_WIN)
+     return s.split(";",QString::SkipEmptyParts);
+#endif
+}
+
+QString OptimizerDialog::findConvert()
+{
+     QString exec =
+#if defined(Q_WS_X11)
+	  "/convert";
+#elif defined(Q_WS_WIN)
+     "\\convert.exe";
+#endif
+     QStringList env = sysEnv();
+     qDebug() << "sys env: " << env;
+     for(int i=0;i<env.size();i++)
+	  if(QFile::exists(env.at(i)+exec))
+	  {
+	       qDebug() << "checking: " << env.at(i)+exec;
+	       return env.at(i)+exec;
+	  }
+     return "";
 }
