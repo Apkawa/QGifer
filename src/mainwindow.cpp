@@ -94,7 +94,7 @@ void MainWindow::openVideo()
      QString path = QFileDialog::getOpenFileName(
 	  this, tr("Open video file"), 
 	  set->value("last_video_dir",qApp->applicationDirPath()).toString(),
-	  "Video files (*.avi *.mp4 *.mpg *.ogv *.flv);;All files (*.*)");
+	  "Video files (*.avi *.mp4 *.mpg *.ogv);;All files (*.*)");
      if(!path.isEmpty())
 	  if(!openVideo(path))
 	       QMessageBox::critical(this, tr("Error"),tr("The player failed to load the video file!"));
