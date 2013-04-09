@@ -32,6 +32,7 @@ MainWindow::MainWindow()
      else
 	  actionConverter->setVisible(false);
 
+     connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
      connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
      connect(actionOptimizer, SIGNAL(triggered()), this, SLOT(runOptimizer()));
      connect(actionExtractGif, SIGNAL(triggered()), this, SLOT(extractGif()));

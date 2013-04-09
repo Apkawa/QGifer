@@ -6,6 +6,7 @@
 #include "gifwidget.h"
 #include "optimizerdialog.h"
 #include "converterdialog.h"
+#include "aboutdialog.h"
 #include "ui_mainwindow.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
@@ -57,6 +58,7 @@ private:
 	  void outputWidthChanged(int);
 	  void outputHeightChanged(int);
 	  void whRatioChanged(int);
+	  void about() {AboutDialog ad; ad.exec();}
 };
 
 #endif
