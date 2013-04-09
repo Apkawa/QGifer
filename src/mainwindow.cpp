@@ -149,9 +149,11 @@ void MainWindow::extractGif()
      connect(g, SIGNAL(gifSaved(const QString&)), this, SLOT(gifSaved(const QString&)));
      g->setAttribute(Qt::WA_DeleteOnClose, true);
      g->setPalette(paletteWidget->map());
-     g->suggestName(QFileInfo(vidfile).baseName()+"_"+
+     QString sn = QFileInfo(vidfile).baseName()+"_"+
 		    QString::number(startBox->value())+"-"+
-		    QString::number(stopBox->value()));
+	  QString::number(stopBox->value());
+     g->suggestName(sn);
+     g->setWindowTitle(sn);
      QProgressDialog pd("Rendering frames...", "Abort", startBox->value(), 
 			      stopBox->value(), this);
      pd.setWindowModality(Qt::WindowModal);
