@@ -59,8 +59,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>260</width>
-         <height>419</height>
+         <width>232</width>
+         <height>247</height>
         </rect>
        </property>
        <attribute name="label">
@@ -174,8 +174,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>260</width>
-         <height>419</height>
+         <width>149</width>
+         <height>173</height>
         </rect>
        </property>
        <attribute name="label">
@@ -298,8 +298,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>260</width>
-         <height>419</height>
+         <width>137</width>
+         <height>195</height>
         </rect>
        </property>
        <attribute name="label">
@@ -818,6 +818,9 @@
    </property>
    <property name="text">
     <string>E&amp;xtract GIF...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
   <action name="actionUpdatePalette">

@@ -1,4 +1,5 @@
 #include "gifcreator.h"
+#include <cstring>
 
 GifCreator::GifCreator():duration(0.1)
 {
@@ -6,65 +7,6 @@ GifCreator::GifCreator():duration(0.1)
 
 GifCreator::~GifCreator()
 {
-}
-
-// bool GifCreator::addFrame(Byte* data, float dt)
-// {
-    
-//   unsigned int npix=w*h;
-//   Frame output(npix);
-  
-//     // maunal assignment of color indices
-//     for (int i = 0, j=0; i < npix; i++) {
-//         int minIndex = 0,
-//             minDist = 3 * 256 * 256;
-//         GifColorType *c = outputPalette->Colors;
- 
-//         /* Find closest color in first color map to this color. */
-//         for (int k = 0; k < outputPalette->ColorCount; k++) {
-//           int dr = (int(c[k].Red) - data[j] ) ;
-//           int dg = (int(c[k].Green) - data[j+1] ) ;
-//           int db = (int(c[k].Blue) - data[j+2] ) ;
-          
-//           int dist=dr*dr+dg*dg+db*db;
-          
-//           if (minDist > dist) {
-//             minDist  = dist;
-//             minIndex = k;
-//           }
-//         }
-//         j+=3;
-//         output[i] = minIndex;
-//     }
-
-  
-//   frames.push_back(output);
-
-//   delay.push_back(int(dt*100.0));
-//   return true;       
-// }
-
-
-
-bool GifCreator::addLoop(GifFileType *gf)
-{
-   int loop_count;
-   loop_count=0;
-   {
-     char nsle[12] = "NETSCAPE2.0";
-     char subblock[3];
-     if (EGifPutExtensionFirst(gf, APPLICATION_EXT_FUNC_CODE, 11, nsle) == GIF_ERROR) {
-       return false;
-     }
-     subblock[0] = 1;
-     subblock[2] = loop_count % 256;
-     subblock[1] = loop_count / 256;
-     if (EGifPutExtensionLast(gf, APPLICATION_EXT_FUNC_CODE, 3, subblock) == GIF_ERROR) {
-       return false;
-     }
- 
-    }
-    return true;
 }
 
 
@@ -80,19 +22,36 @@ bool GifCreator::save(const char* filename, int every)
 
   if (EGifPutScreenDesc(
         GifFile,
-			  w, h, 8, 0,
+			  w, h, colorRes, 0,
         outputPalette
       ) == GIF_ERROR) return false;
 
-  if (!addLoop(GifFile)) return false;
+  
 
-  if(EGifPutComment(GifFile,"Created using QGifer") == GIF_ERROR)
-        return false;
+  // ------ loop ------
+  int loop_count;
+   loop_count=0;
+   {
+     char nsle[12] = "NETSCAPE2.0";
+     char subblock[3];
+     if (EGifPutExtensionFirst(GifFile, APPLICATION_EXT_FUNC_CODE, 11, nsle) == GIF_ERROR) {
+       return false;
+     }
+     subblock[0] = 1;
+     subblock[2] = loop_count % 256;
+     subblock[1] = loop_count / 256;
+
+     if (EGifPutExtensionLast(GifFile, APPLICATION_EXT_FUNC_CODE, 3, subblock) == GIF_ERROR) {
+       return false;
+     }
+ 
+    }
+   //------------------
+
 
   for (int ni=0; ni<frames.size(); ni+=every) {      
 
-    static unsigned char
-    ExtStr[4] = { 0x04, 0x00, 0x00, 0xff };
+    unsigned char ExtStr[4] = { 0x04, 0x00, 0x00, 0xff };
  
     
     ExtStr[0] = (false) ? 0x06 : 0x04;
@@ -117,8 +76,10 @@ bool GifCreator::save(const char* filename, int every)
   	  if (EGifPutLine(GifFile, &(frames[ni][j]), w) == GIF_ERROR) return false;
     }
   }
-
   
+  //comment
+  if(EGifPutComment(GifFile,"This GIF file was created using QGifer") == GIF_ERROR)
+          return false;
    
   if (EGifCloseFile(GifFile) == GIF_ERROR) return false;
 

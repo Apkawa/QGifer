@@ -144,12 +144,14 @@ void MainWindow::extractGif()
 	  QMessageBox::critical(this, tr("Error"),tr("Invalid color map!"));
 	  return;
      }
+     if(paletteWidget->map()->ColorCount > pow(2,paletteBox->value()))
+	  updatePalette();
      player->pause();
 
      GifWidget* g = new GifWidget(set);
      connect(g, SIGNAL(gifSaved(const QString&)), this, SLOT(gifSaved(const QString&)));
      g->setAttribute(Qt::WA_DeleteOnClose, true);
-     g->setPalette(paletteWidget->map());
+     g->setPalette(paletteWidget->map(), paletteBox->value());
      
      QString sn = QFileInfo(vidfile).baseName()+"_"+
 		    QString::number(startBox->value())+"-"+
@@ -168,7 +170,8 @@ void MainWindow::extractGif()
      }
      pd.setValue(stopBox->value());
 
-
+     connect(g,SIGNAL(destroyed()),this,SLOT(gifWidgetDestroyed()));
+     actionExtractGif->setEnabled(false);
      g->show();
      g->move(x()+width()/2-g->minimumSize().width()/2,y()+height()/2-g->minimumSize().height()/2);
      g->play();
@@ -352,6 +355,8 @@ void MainWindow::lock(bool l)
 
 QImage MainWindow::finalFrame(long f)
 {
+     heightBox->disconnect();
+     widthBox->disconnect();
      if(heightBox->value()%2)
 	  heightBox->setValue(heightBox->value()+1); //nieparzyste powodowaly bugi (?)
 
@@ -393,6 +398,10 @@ QImage MainWindow::finalFrame(long f)
 				      redSlider->value(),
 				      greenSlider->value(),
 				      blueSlider->value());
+
+     connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
+     connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
+   
      return frame.convertToFormat(QImage::Format_RGB888);
 }
 

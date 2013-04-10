@@ -62,6 +62,7 @@ private:
 	  void outputHeightChanged(int);
 	  void whRatioChanged(int);
 	  void about() {AboutDialog ad; ad.exec();}
+	  void gifWidgetDestroyed(){actionExtractGif->setEnabled(true);}
 };
 
 #endif
