@@ -155,6 +155,7 @@ void MainWindow::extractGif()
      int diff = testframe.byteCount()-(testframe.width()*testframe.height()*3);
      qDebug() << "byte difference: " << diff;
      widthBox->setValue(widthBox->value()+diff/heightBox->value());
+     qApp->processEvents();
      qDebug() << "corrected.";
 
      GifWidget* g = new GifWidget(set);
@@ -172,7 +173,7 @@ void MainWindow::extractGif()
      pd.setWindowModality(Qt::WindowModal);
      pd.show();
      qApp->processEvents();
-     for(long i=startBox->value();i<=stopBox->value();i++)
+     for(long i=startBox->value();i<=stopBox->value() && !pd.wasCanceled();i++)
      {
 	  pd.setValue(i);
 	  g->addFrame(finalFrame(i));
