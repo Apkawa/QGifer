@@ -74,7 +74,7 @@ void GifWidget::save()
 
      QString filename = QFileDialog::getSaveFileName(
 	  this, tr("Save GIF file"), 
-	  set->value("last_gif_dir",qApp->applicationDirPath()).toString()+
+	  set->value("last_gif_dir","").toString()+
 	  (suggestedName.isEmpty() ? "" : "/"+suggestedName+".gif"),
 	  "GIF files (*.gif);;All files (*.*)");
 

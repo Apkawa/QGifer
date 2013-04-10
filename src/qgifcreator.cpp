@@ -47,29 +47,61 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map)
      // for(int i=0;i<img->width();i++)
      // 	  for(int j=0;j<img->height();j++)
      // 	       img->setPixel(i,j,matchPixel(img->pixel(i,j),map));
-     int bytes = img->byteCount();
-     Byte* data = img->bits();
-     Frame frame(bytes);
-     for(int i=0,f=0;i<bytes;i+=3,f++)
+
+     *img = img->convertToFormat(QImage::Format_RGB888);
+     Frame frame(img->bytesPerLine()*img->height());
+     const int step = img->format() == QImage::Format_RGB888 ? 3 : 4;
+     int f = 0;
+     for(int rw=0;rw<img->height();rw++)
      {
-	  int mi = 0, md = 3 * 256 * 256;
-	  for(int j=0;j<map->ColorCount;j++)
+	  uchar* data = img->scanLine(rw);
+	  for(int i=0;i<img->bytesPerLine();i+=step)
 	  {
-	       int r = map->Colors[j].Red-data[i];
-	       int g = map->Colors[j].Green-data[i+1];
-	       int b = map->Colors[j].Blue-data[i+2];
-	       int d = r*r+g*g+b*b;
-	       if(d < md)
+	       int mi = 0, md = 3 * 256 * 256;
+	       for(int j=0;j<map->ColorCount;j++)
 	       {
-		    md = d;
-		    mi = j;
+		    int r = map->Colors[j].Red-data[i];
+		    int g = map->Colors[j].Green-data[i+1];
+		    int b = map->Colors[j].Blue-data[i+2];
+		    int d = r*r+g*g+b*b;
+		    if(d < md)
+		    {
+			 md = d;
+			 mi = j;
+		    }
 	       }
+	       frame[f] = mi;
+	       data[i] = (Byte)map->Colors[mi].Red;
+	       data[i+1] = (Byte)map->Colors[mi].Green;
+	       data[i+2] = (Byte)map->Colors[mi].Blue;
+	       f++;
 	  }
-	  frame[f] = mi;
-	  data[i] = (Byte)map->Colors[mi].Red;
-	  data[i+1] = (Byte)map->Colors[mi].Green;
-	  data[i+2] = (Byte)map->Colors[mi].Blue;			     
      }
+
+//------------ deprecated ---------
+     // int bytes = img->byteCount();
+     // Byte* data = img->bits();
+     
+     // for(int i=0,f=0;i<bytes;i+=3,f++)
+     // {
+     // 	  int mi = 0, md = 3 * 256 * 256;
+     // 	  for(int j=0;j<map->ColorCount;j++)
+     // 	  {
+     // 	       int r = map->Colors[j].Red-data[i];
+     // 	       int g = map->Colors[j].Green-data[i+1];
+     // 	       int b = map->Colors[j].Blue-data[i+2];
+     // 	       int d = r*r+g*g+b*b;
+     // 	       if(d < md)
+     // 	       {
+     // 		    md = d;
+     // 		    mi = j;
+     // 	       }
+     // 	  }
+     // 	  frame[f] = mi;
+     // 	  data[i] = (Byte)map->Colors[mi].Red;
+     // 	  data[i+1] = (Byte)map->Colors[mi].Green;
+     // 	  data[i+2] = (Byte)map->Colors[mi].Blue;			     
+     // }
 
      frames.push_back(frame);
      //delay.push_back(duration);

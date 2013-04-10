@@ -93,7 +93,7 @@ void MainWindow::openVideo()
 {
      QString path = QFileDialog::getOpenFileName(
 	  this, tr("Open video file"), 
-	  set->value("last_video_dir",qApp->applicationDirPath()).toString(),
+	  set->value("last_video_dir","").toString(),
 	  "Video files (*.avi *.mp4 *.mpg *.ogv);;All files (*.*)");
      if(!path.isEmpty())
 	  if(!openVideo(path))
@@ -157,6 +157,7 @@ void MainWindow::extractGif()
      QProgressDialog pd("Rendering frames...", "Abort", startBox->value(), 
 			      stopBox->value(), this);
      pd.setWindowModality(Qt::WindowModal);
+     pd.show();
      qApp->processEvents();
      for(long i=startBox->value();i<=stopBox->value();i++)
      {
@@ -165,6 +166,7 @@ void MainWindow::extractGif()
      }
      pd.setValue(stopBox->value());
      g->show();
+     g->move(x()+width()/2-g->minimumSize().width()/2,y()+height()/2-g->minimumSize().height()/2);
      g->play();
      player->pause();
      QTimer::singleShot(100,g,SLOT(adjustWidgetSize())); //TODO find another way....

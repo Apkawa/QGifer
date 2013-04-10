@@ -84,9 +84,10 @@ bool GifCreator::save(const char* filename, int every)
         outputPalette
       ) == GIF_ERROR) return false;
 
-  if(!EGifPutComment(GifFile,"Created using QGifer"))
-       return false;
   if (!addLoop(GifFile)) return false;
+
+  // if(!EGifPutComment(GifFile,"Created using QGifer"))
+  //       return false;
 
   for (int ni=0; ni<frames.size(); ni+=every) {      
 
