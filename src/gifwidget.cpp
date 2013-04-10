@@ -83,6 +83,11 @@ void GifWidget::save()
 
      if(!prevFrames.size())
 	  return;
+     saveGif(filename);
+}
+
+void GifWidget::saveGif(const QString& filename)
+{
      pause();
      gif.setDuration((double)intervalBox->value()/1000);
      if(!gif.save(filename.toStdString().c_str(),
@@ -100,4 +105,6 @@ void GifWidget::timerEvent(QTimerEvent*)
      if(currentFrame >= prevFrames.size())
 	  currentFrame = skipped = 0;
 }
+
+
 

@@ -16,6 +16,7 @@ public:
      void addFrame(const QImage& f);
      void setPalette(ColorMapObject* map){palette = map; gif.setPalette(map);}
      void suggestName(const QString& name){suggestedName = name;}
+     void saveGif(const QString& gif);
 signals:
      void gifSaved(const QString&);
 

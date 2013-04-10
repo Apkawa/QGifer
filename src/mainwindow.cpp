@@ -145,10 +145,23 @@ void MainWindow::extractGif()
 	  return;
      }
      player->pause();
+
+     //--- korekcja rozdzielczosci, przy niektorych wartosciach wystepuje bug
+     //--- i gif jest przekrzywiony. Liczba byteCount() jest większa od w*h*3
+     //--- o wielokrotnosc h... wyrownamy wiec roznice na podstawie pierwszej klatki
+     if(heightBox->value()%2) heightBox->setValue(heightBox->value()+1);
+     qDebug() << "correcting resolution....";
+     QImage testframe = finalFrame(startBox->value());
+     int diff = testframe.byteCount()-(testframe.width()*testframe.height()*3);
+     qDebug() << "byte difference: " << diff;
+     widthBox->setValue(widthBox->value()+diff/heightBox->value());
+     qDebug() << "corrected.";
+
      GifWidget* g = new GifWidget(set);
      connect(g, SIGNAL(gifSaved(const QString&)), this, SLOT(gifSaved(const QString&)));
      g->setAttribute(Qt::WA_DeleteOnClose, true);
      g->setPalette(paletteWidget->map());
+     
      QString sn = QFileInfo(vidfile).baseName()+"_"+
 		    QString::number(startBox->value())+"-"+
 	  QString::number(stopBox->value());
@@ -165,6 +178,8 @@ void MainWindow::extractGif()
 	  g->addFrame(finalFrame(i));
      }
      pd.setValue(stopBox->value());
+
+
      g->show();
      g->move(x()+width()/2-g->minimumSize().width()/2,y()+height()/2-g->minimumSize().height()/2);
      g->play();
@@ -350,7 +365,7 @@ QImage MainWindow::finalFrame(long f)
 				      redSlider->value(),
 				      greenSlider->value(),
 				      blueSlider->value());
-     return frame;
+     return frame.convertToFormat(QImage::Format_RGB888);
 }
 
 void MainWindow::loadSettings()
