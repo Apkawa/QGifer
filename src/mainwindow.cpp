@@ -146,18 +146,6 @@ void MainWindow::extractGif()
      }
      player->pause();
 
-     //--- korekcja rozdzielczosci, przy niektorych wartosciach wystepuje bug
-     //--- i gif jest przekrzywiony. Liczba byteCount() jest większa od w*h*3
-     //--- o wielokrotnosc h... wyrownamy wiec roznice na podstawie pierwszej klatki
-     if(heightBox->value()%2) heightBox->setValue(heightBox->value()+1);
-     qDebug() << "correcting resolution....";
-     QImage testframe = finalFrame(startBox->value());
-     int diff = testframe.byteCount()-(testframe.width()*testframe.height()*3);
-     qDebug() << "byte difference: " << diff;
-     widthBox->setValue(widthBox->value()+diff/heightBox->value());
-     qApp->processEvents();
-     qDebug() << "corrected.";
-
      GifWidget* g = new GifWidget(set);
      connect(g, SIGNAL(gifSaved(const QString&)), this, SLOT(gifSaved(const QString&)));
      g->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -211,13 +199,25 @@ void MainWindow::posBChanged(int v)
      connect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
 }
 
+void MainWindow::correctRange()
+{
+     if(startBox->value()>stopBox->value())
+	 stopBox->setValue(startBox->value());
+}
+
 void MainWindow::frameChanged(long f)
 {
-     if(laRadio->isChecked() && f >= player->countFrames()-1)
+     if(player->getStatus() == FramePlayer::Playing && 
+	laRadio->isChecked() && f >= player->countFrames()-1)
 	  player->seek(0);
-     else if(ssRadio->isChecked() && (f >= stopBox->value() || f < startBox->value()) && 
-	     stopBox->value() > startBox->value())
+     else if(ssRadio->isChecked() && player->getStatus() == FramePlayer::Playing && 
+	     (f >= stopBox->value() || f < startBox->value()) && 
+	     stopBox->value() >= startBox->value())
+     {
 	  player->seek(startBox->value());
+	  if(stopBox->value() == startBox->value())
+	       player->pause();
+     }
      else if(ssRadio->isChecked() && f >= stopBox->value() && 
 	     stopBox->value() < startBox->value())
      {
@@ -352,6 +352,12 @@ void MainWindow::lock(bool l)
 
 QImage MainWindow::finalFrame(long f)
 {
+     if(heightBox->value()%2)
+	  heightBox->setValue(heightBox->value()+1); //nieparzyste powodowaly bugi (?)
+
+     ow = widthBox->value();
+     oh = heightBox->value();
+     qDebug() << "final frame, ow x oh: " << ow << " x " << oh;
      player->seek(f);
      QSize s = player->getCurrentFrame()->size();
      QImage frame = marginBox->isChecked() ? 
@@ -360,7 +366,28 @@ QImage MainWindow::finalFrame(long f)
 					 s.width()-leftSpin->value()-rightSpin->value(),
 					 s.height()-topSpin->value()-bottomSpin->value()):
 	  *player->getCurrentFrame();
-     frame = frame.scaled(widthBox->value(),heightBox->value());
+     frame = frame.scaled(ow,oh);
+
+     //--- korekcja rozdzielczosci, przy niektorych wartosciach wystepuje bug
+     //--- i gif jest przekrzywiony. Liczba byteCount() jest większa od w*h*3
+     //--- o wielokrotnosc h... wyrownamy wiec roznice na podstawie pierwszej klatki
+     if(oh%2) oh++;
+     qDebug() << "\ncorrecting resolution....";
+     qDebug() << "byte count: " << frame.byteCount();
+     qDebug() << "w*h*3: " << (frame.width()*frame.height()*3);
+     int diff = frame.byteCount()-(frame.width()*frame.height()*3);
+     qDebug() << "byte difference: " << diff;
+     ow = ow+diff/oh;
+     qDebug() << "corrected.\n";
+     
+     if(diff)
+     {
+	  widthBox->setValue(ow);
+	  heightBox->setValue(oh);
+	  qApp->processEvents();
+	  return finalFrame(f);
+     }
+
      if(redSlider->value() || blueSlider->value() || greenSlider->value())
 	  PreviewWidget::applyBalance(&frame,
 				      redSlider->value(),
@@ -459,4 +486,5 @@ void MainWindow::startChanged(int v)
 	  player->seek(v);
 	  updatePalette();
      }
+     correctRange();
 }

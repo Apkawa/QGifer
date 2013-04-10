@@ -230,7 +230,7 @@ void FramePlayer::updateStatus(Status s)
      playButton->setEnabled(status == Stopped);
      prevButton->setEnabled(status == Stopped);
      nextButton->setEnabled(status == Stopped);
-     slider->setEnabled(status == Stopped);
+     //slider->setEnabled(status == Stopped);
 
      long total = countFrames();
      if(total)

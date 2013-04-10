@@ -24,9 +24,12 @@ private:
      void closeEvent(QCloseEvent*e){saveSettings();QMainWindow::closeEvent(e);qApp->quit();}
      bool checkFFMPEG(){return !QProcess::execute("ffmpeg -version");}
      QImage finalFrame(long f);
+     void correctRange();
      QSettings* set;
      QString vidfile;
      float whRatio;
+     int ow;
+     int oh;
      private slots:
 	  void loadSettings();
 	  void saveSettings();
@@ -37,7 +40,7 @@ private:
 	  { startBox->setValue(player->getCurrentPos()); }
 	  void stopFromCurrent() 
 	  { stopBox->setValue(player->getCurrentPos()); }
-	  void stopChanged(int v){multiSlider->setPosB(v,false);}
+	  void stopChanged(int v){multiSlider->setPosB(v,false);correctRange();}
 	  void startChanged(int v);
 	  void posAChanged(int);
 	  void posBChanged(int);
