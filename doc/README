@@ -47,7 +47,7 @@ Compilation and installation
 ============
     cd qgifer_source_dir
     mkdir build && cd build
-    cmake ..
+    cmake .. -DCMAKE_INSTALL_PREFIX="/usr/" -DQUIET_MODE=ON
     make
     sudo make install
 
