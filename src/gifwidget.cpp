@@ -35,12 +35,13 @@ GifWidget::~GifWidget()
 
 }
 
-void GifWidget::addFrame(const QImage& f)
+void GifWidget::addFrame(const QImage& f, ColorMapObject* map)
 {
      QImage i(f);
      i = i.mirrored().convertToFormat(QImage::Format_RGB888);
      gif.resize(i.width(),i.height());
-     gif.prepareFrame(&i, palette);
+     if(map) gif.addPalette(map);
+     gif.prepareFrame(&i, map);
      prevFrames.append(i.mirrored());
      currentFrame = 0;
 }
@@ -111,7 +112,10 @@ void GifWidget::saveGif(const QString& filename)
      gif.setDuration((double)intervalBox->value()/1000);
      if(!gif.save(filename.toStdString().c_str(),
 		  saveEveryBox->isChecked() ? seBox->value() : 1))
+     {
 	  QMessageBox::critical(this,tr("Error"),tr("Unexpected error while saving GIF file!"));
+	  PrintGifError();
+     }
 
      emit gifSaved(filename);
 }

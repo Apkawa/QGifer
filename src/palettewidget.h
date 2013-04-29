@@ -23,6 +23,8 @@
 #include <QWidget>
 #include <gif_lib.h>
 
+#define RGB_MAXD 441.67
+
 class PaletteWidget : public QWidget
 {
      Q_OBJECT;
@@ -30,13 +32,33 @@ public:
      PaletteWidget(QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~PaletteWidget();
      ColorMapObject* map() {return palette;}
-     bool fromImage(const QImage& img, int palette_size);
+     bool fromImage(const QImage& img, int palette_size, bool delPrev = true, float mindiff = 1);
      void setColumnCount(int cc){cols = cc;}
 private:
      int size;
      int cols;
      int sqSize;
      ColorMapObject* palette;
+     //GifColorType candidates[257];
+
+     /* struct ColorItem */
+     /* { */
+     /* ColorItem():count(0),nearest(-1){} */
+     /* 	  GifColorType color; */
+     /* 	  int count; */
+     /* 	  int nearest; */
+     /* 	  float dist; */
+     /* }; */
+
+     /* int quantize(const QImage& img, ColorMapObject* map); */
+     /* int findPixel(const QList<ColorItem>& list, const GifColorType& c); */
+     /* GifColorType newColor(const QList<ColorItem>& list); */
+     /* float distance(const GifColorType& a, const GifColorType& b); */
+     /* void fillNearests(QList<ColorItem>* list); */
+     /* void reduceTo(QList<ColorItem>* list, int limit); */
+     /* int findMinDistIndex(QList<ColorItem>* list); */
+     /* float distance(const GifColorType& a, const GifColorType& b); */
+     float difference(ColorMapObject* a, ColorMapObject* b);
      void paintEvent(QPaintEvent*);
      void resizeEvent(QResizeEvent*){sqSize = (width()-10)/cols;}
      private slots:

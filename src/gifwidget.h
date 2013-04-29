@@ -32,8 +32,8 @@ class GifWidget : public QWidget, public Ui::GifWidget
 public:
      GifWidget(QSettings* s);
      virtual ~GifWidget();
-     void addFrame(const QImage& f);
-     void setPalette(ColorMapObject* map, int res){palette = map; gif.setPalette(map, res);}
+     void addFrame(const QImage& f, ColorMapObject* map = NULL);
+     void setColorRes(int res){gif.setColorRes(res);}
      void suggestName(const QString& name){suggestedName = name;}
      void saveGif(const QString& gif);
 signals:

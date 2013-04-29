@@ -55,7 +55,7 @@ MainWindow::MainWindow()
      connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
      connect(actionOptimizer, SIGNAL(triggered()), this, SLOT(runOptimizer()));
      connect(actionExtractGif, SIGNAL(triggered()), this, SLOT(extractGif()));
-     connect(updatePalButton, SIGNAL(clicked()), this, SLOT(updatePalette()));
+     //connect(updatePalButton, SIGNAL(clicked()), this, SLOT(updatePalette()));
      connect(actionUpdatePalette, SIGNAL(triggered()), this, SLOT(updatePalette()));
 
      connect(actionSetAsStart, SIGNAL(triggered()), this, SLOT(startFromCurrent()));
@@ -85,10 +85,10 @@ MainWindow::MainWindow()
      connect(smoothBox, SIGNAL(stateChanged(int)), this, SLOT(smoothChanged(int)));
      connect(marginBox, SIGNAL(stateChanged(int)), this, SLOT(marginBoxChanged(int)));
 
-     connect(redSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
-     connect(greenSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
-     connect(blueSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
-     connect(balanceBox, SIGNAL(stateChanged(int)), this, SLOT(balanceChanged()));
+     // connect(redSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
+     // connect(greenSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
+     // connect(blueSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
+     // connect(balanceBox, SIGNAL(stateChanged(int)), this, SLOT(balanceChanged()));
      connect(resetBalanceButton, SIGNAL(clicked()), this, SLOT(resetBalance()));
 
      connect(getWHButton, SIGNAL(clicked()), this, SLOT(estimateOutputSize()));
@@ -170,8 +170,10 @@ void MainWindow::extractGif()
      GifWidget* g = new GifWidget(set);
      connect(g, SIGNAL(gifSaved(const QString&)), this, SLOT(gifSaved(const QString&)));
      g->setAttribute(Qt::WA_DeleteOnClose, true);
-     g->setPalette(paletteWidget->map(), paletteBox->value());
+     g->setColorRes(paletteBox->value());
+     //g->setPalette(paletteWidget->map(), );
      
+
      QString sn = QFileInfo(vidfile).baseName()+"_"+
 		    QString::number(startBox->value())+"-"+
 	  QString::number(stopBox->value());
@@ -182,10 +184,23 @@ void MainWindow::extractGif()
      pd.setWindowModality(Qt::WindowModal);
      pd.show();
      qApp->processEvents();
+     ColorMapObject* map = paletteWidget->map();
      for(long i=startBox->value();i<=stopBox->value() && !pd.wasCanceled();i++)
      {
 	  pd.setValue(i);
-	  g->addFrame(finalFrame(i));
+	  if(varPaletteBox->isChecked())
+	  {
+	       player->seek(i);
+	       //updatePalette();
+	       paletteWidget->fromImage(finalFrame(player->getCurrentPos()), 
+					pow(2,paletteBox->value()), 
+					false, i == 0 ? 0 : minDiffBox->value()/100);
+	       map = paletteWidget->map();
+	       g->addFrame(finalFrame(i),map);
+	  }
+	  else
+	       g->addFrame(finalFrame(i), i== startBox->value() ? map : NULL);
+	  
      }
      pd.setValue(stopBox->value());
 
@@ -200,7 +215,9 @@ void MainWindow::extractGif()
 
 void MainWindow::updatePalette()
 {
+     qDebug() << "updating palette from frame " << player->getCurrentPos();
      paletteWidget->fromImage(finalFrame(player->getCurrentPos()), pow(2,paletteBox->value()));
+     qDebug() << "new palette color count: " << paletteWidget->map()->ColorCount;
 }
 
 void MainWindow::posAChanged(int v)
@@ -249,16 +266,11 @@ void MainWindow::frameChanged(long f)
 
 
      
-     if(balanceBox->isChecked() && 
-	(redSlider->value() || blueSlider->value() || greenSlider->value()))
-     {
-	  // PreviewWidget::applyBalance(player->previewWidget()->getImage(),
-	  // 			 redSlider->value(),
-	  // 			 greenSlider->value(),
-	  // 			 blueSlider->value());
-	  // player->previewWidget()->update();
-	  balanceChanged();
-     }
+     // if(balanceBox->isChecked() && 
+     // 	(redSlider->value() || blueSlider->value() || greenSlider->value()))
+     // {
+     // 	  balanceChanged();
+     // }
 }
 
 void MainWindow::gifSaved(const QString& path)
@@ -335,25 +347,25 @@ void MainWindow::marginBoxChanged(int s)
 
 void MainWindow::balanceChanged()
 {
-     if(!balanceBox->isChecked())
-	  return;
-     player->previewWidget()->setImage(*player->getCurrentFrame(),player->previewWidget()->getImage()->size());
-     PreviewWidget::applyBalance(player->previewWidget()->getImage(),
-				 redSlider->value(),
-				 greenSlider->value(),
-				 blueSlider->value());
-     player->previewWidget()->update();
+     // if(!balanceBox->isChecked())
+     // 	  return;
+     // player->previewWidget()->setImage(*player->getCurrentFrame(),player->previewWidget()->getImage()->size());
+     // PreviewWidget::applyBalance(player->previewWidget()->getImage(),
+     // 				 redSlider->value(),
+     // 				 greenSlider->value(),
+     // 				 blueSlider->value());
+     // player->previewWidget()->update();
 
-     redLabel->setText(tr("Red (")+QString::number(redSlider->value())+"):");
-     greenLabel->setText(tr("Green (")+QString::number(greenSlider->value())+"):");
-     blueLabel->setText(tr("Blue (")+QString::number(blueSlider->value())+"):");
+     // redLabel->setText(tr("Red (")+QString::number(redSlider->value())+"):");
+     // greenLabel->setText(tr("Green (")+QString::number(greenSlider->value())+"):");
+     // blueLabel->setText(tr("Blue (")+QString::number(blueSlider->value())+"):");
 }
 
 void MainWindow::resetBalance()
 {
-     redSlider->setValue(0);
-     greenSlider->setValue(0);
-     blueSlider->setValue(0);
+     // redSlider->setValue(0);
+     // greenSlider->setValue(0);
+     // blueSlider->setValue(0);
 }
 
 void MainWindow::lock(bool l)
@@ -396,13 +408,13 @@ QImage MainWindow::finalFrame(long f)
      //--- i gif jest przekrzywiony. Liczba byteCount() jest większa od w*h*3
      //--- o wielokrotnosc h... wyrownamy wiec roznice na podstawie pierwszej klatki
      if(oh%2) oh++;
-     qDebug() << "\ncorrecting resolution....";
-     qDebug() << "byte count: " << frame.byteCount();
-     qDebug() << "w*h*3: " << (frame.width()*frame.height()*3);
+     // qDebug() << "\ncorrecting resolution....";
+     // qDebug() << "byte count: " << frame.byteCount();
+     // qDebug() << "w*h*3: " << (frame.width()*frame.height()*3);
      int diff = frame.byteCount()-(frame.width()*frame.height()*3);
-     qDebug() << "byte difference: " << diff;
+     // qDebug() << "byte difference: " << diff; 
      ow = ow+diff/oh;
-     qDebug() << "corrected.\n";
+     // qDebug() << "corrected.\n";
      
      if(diff)
      {
@@ -412,11 +424,11 @@ QImage MainWindow::finalFrame(long f)
 	  return finalFrame(f);
      }
 
-     if(redSlider->value() || blueSlider->value() || greenSlider->value())
-	  PreviewWidget::applyBalance(&frame,
-				      redSlider->value(),
-				      greenSlider->value(),
-				      blueSlider->value());
+     // if(redSlider->value() || blueSlider->value() || greenSlider->value())
+     // 	  PreviewWidget::applyBalance(&frame,
+     // 				      redSlider->value(),
+     // 				      greenSlider->value(),
+     // 				      blueSlider->value());
 
      connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
      connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));

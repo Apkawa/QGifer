@@ -47,13 +47,14 @@ public:
   
   // Saves the results in a gif file
   bool save(const char* filename, int every = 1);
-  void setPalette(ColorMapObject* palette, int res) {outputPalette = palette; colorRes = res;}
+  void setColorRes(int res) {colorRes = res;}
+  void addPalette(ColorMapObject* pal) {cmaps.push_back(pal);}
   void setDuration(float d){duration = d;}
 
 protected:
   vector<Frame> frames;
   //vector<int> delay; //na razie rezygnujemy z roznych opoznien
-  ColorMapObject* outputPalette;
+  vector<ColorMapObject*> cmaps;
   int w;
   int h;
   int colorRes;

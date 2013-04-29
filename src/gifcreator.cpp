@@ -20,29 +20,44 @@
 #include "gifcreator.h"
 #include <cstring>
 
+#include <iostream>
+using namespace std;
+
 GifCreator::GifCreator():duration(0.1)
 {
 }
 
 GifCreator::~GifCreator()
 {
+     if(cmaps.size() > 1)
+     {
+	  //usuwanie powtórzeń
+	  for(int i=0;i<cmaps.size()-1;i++)
+	       for(int j=i+1;j<cmaps.size();j++)
+		    if(cmaps.at(i) == cmaps.at(j))
+		    {
+			 cmaps.erase(cmaps.begin()+j);
+			 j--;
+		    }
+	      
+	  for(int i=0;i<cmaps.size()-1;i++) //FIXME: ostatnia na razie zostaje, usunie ja widget palety
+		    FreeMapObject(cmaps[i]);
+     }
 }
 
 
 bool GifCreator::save(const char* filename, int every)
 {
-  if (frames.size()==0) return false;
+     if (!frames.size() || !cmaps.size()) return false;
   
   
   GifFileType *GifFile = EGifOpenFileName(filename, FALSE);
   
   if (!GifFile) return false;
 
-
   if (EGifPutScreenDesc(
         GifFile,
-			  w, h, colorRes, 0,
-        outputPalette
+	w, h, colorRes, 0, cmaps.size() > 1 ? NULL : cmaps.at(0)
       ) == GIF_ERROR) return false;
 
   
@@ -84,10 +99,9 @@ bool GifCreator::save(const char* filename, int every)
     /* Dump graphics control block. */
     EGifPutExtension(GifFile, GRAPHICS_EXT_FUNC_CODE, 4, ExtStr);
             
-    
     if (EGifPutImageDesc(
        GifFile,
-		   0, 0, w, h, FALSE, NULL
+       0, 0, w, h, FALSE, cmaps.size() > ni ? cmaps.at(ni) : cmaps.at(cmaps.size()-1)
        ) == GIF_ERROR)  return false;
        
        

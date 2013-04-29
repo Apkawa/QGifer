@@ -63,7 +63,11 @@ QGifCreator::~QGifCreator()
 
 void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map)
 {
-
+     if(!map && cmaps.size())
+	  map = cmaps.at(cmaps.size()-1);
+     else if(!cmaps.size())
+	  return;
+	  
      Frame frame(img->bytesPerLine()*img->height());
      qDebug() << "preparing frame...";
      qDebug() << "bpl*h = " << img->bytesPerLine()*img->height();
