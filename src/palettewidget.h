@@ -38,29 +38,13 @@ private:
      int size;
      int cols;
      int sqSize;
+     int hlIndex;
      ColorMapObject* palette;
-     //GifColorType candidates[257];
-
-     /* struct ColorItem */
-     /* { */
-     /* ColorItem():count(0),nearest(-1){} */
-     /* 	  GifColorType color; */
-     /* 	  int count; */
-     /* 	  int nearest; */
-     /* 	  float dist; */
-     /* }; */
-
-     /* int quantize(const QImage& img, ColorMapObject* map); */
-     /* int findPixel(const QList<ColorItem>& list, const GifColorType& c); */
-     /* GifColorType newColor(const QList<ColorItem>& list); */
-     /* float distance(const GifColorType& a, const GifColorType& b); */
-     /* void fillNearests(QList<ColorItem>* list); */
-     /* void reduceTo(QList<ColorItem>* list, int limit); */
-     /* int findMinDistIndex(QList<ColorItem>* list); */
-     /* float distance(const GifColorType& a, const GifColorType& b); */
      float difference(ColorMapObject* a, ColorMapObject* b);
      void paintEvent(QPaintEvent*);
      void resizeEvent(QResizeEvent*){sqSize = (width()-10)/cols;}
+     void mouseReleaseEvent(QMouseEvent*);
+     void mouseMoveEvent(QMouseEvent*);
      private slots:
 
 };

@@ -563,4 +563,5 @@ void MainWindow::varPaletteBoxChanged(int s)
      actionUpdatePalette->setEnabled(!e);
      autoPaletteBox->setEnabled(!e);
      minDiffBox->setEnabled(e);
+     paletteWidget->setEnabled(!e);
 }
