@@ -22,6 +22,7 @@
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <QWidget>
 #include <QImage>
 #include <QStatusBar>
@@ -91,9 +92,11 @@ public:
      void showDefaultScreen()
      {currentFrame = defaultImg;pw->setImage(defaultImg.scaled(frame->size()));}
      PreviewWidget* previewWidget() {return pw;}
-
+     void setMedianBlur(int m){medianblur = m;}
+     
 private:
      VideoCapture vcap;
+     int medianblur;
      QString filepath;
      Status status;
      Size originalSize;

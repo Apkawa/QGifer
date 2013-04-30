@@ -68,6 +68,7 @@ MainWindow::MainWindow()
      connect(actionPause, SIGNAL(triggered()), player, SLOT(pause()));
      connect(actionNextFrame, SIGNAL(triggered()), player, SLOT(nextFrame()));
      connect(actionPrevFrame, SIGNAL(triggered()), player, SLOT(prevFrame()));
+     connect(actionRestoreDefault, SIGNAL(triggered()), this, SLOT(restoreDefault()));
 
      connect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
      connect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
@@ -84,12 +85,14 @@ MainWindow::MainWindow()
      connect(ratioBox, SIGNAL(stateChanged(int)), this, SLOT(ratioChanged(int)));
      connect(smoothBox, SIGNAL(stateChanged(int)), this, SLOT(smoothChanged(int)));
      connect(marginBox, SIGNAL(stateChanged(int)), this, SLOT(marginBoxChanged(int)));
+     connect(varPaletteBox, SIGNAL(stateChanged(int)), this, SLOT(varPaletteBoxChanged(int)));
 
-     // connect(redSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
-     // connect(greenSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
-     // connect(blueSlider, SIGNAL(valueChanged(int)), this, SLOT(balanceChanged()));
-     // connect(balanceBox, SIGNAL(stateChanged(int)), this, SLOT(balanceChanged()));
-     connect(resetBalanceButton, SIGNAL(clicked()), this, SLOT(resetBalance()));
+     connect(hueSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
+     connect(satSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
+     connect(valSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
+     connect(correctionBox, SIGNAL(stateChanged(int)), this, SLOT(correctionChanged()));
+     connect(resetCorrectionButton, SIGNAL(clicked()), this, SLOT(resetCorrection()));
+     connect(medianSlider, SIGNAL(valueChanged(int)), this, SLOT(medianChanged(int)));
 
      connect(getWHButton, SIGNAL(clicked()), this, SLOT(estimateOutputSize()));
      connect(whRatioBox, SIGNAL(stateChanged(int)),this, SLOT(whRatioChanged(int)));
@@ -191,10 +194,14 @@ void MainWindow::extractGif()
 	  if(varPaletteBox->isChecked())
 	  {
 	       player->seek(i);
-	       //updatePalette();
+	       float diff = minDiffBox->value()/100.0f;
+	       if(i == startBox->value()){
+		    updatePalette();
+		    diff = 0;
+	       }
 	       paletteWidget->fromImage(finalFrame(player->getCurrentPos()), 
 					pow(2,paletteBox->value()), 
-					false, i == 0 ? 0 : minDiffBox->value()/100);
+					false, diff);
 	       map = paletteWidget->map();
 	       g->addFrame(finalFrame(i),map);
 	  }
@@ -266,11 +273,11 @@ void MainWindow::frameChanged(long f)
 
 
      
-     // if(balanceBox->isChecked() && 
-     // 	(redSlider->value() || blueSlider->value() || greenSlider->value()))
-     // {
-     // 	  balanceChanged();
-     // }
+     if(correctionBox->isChecked() && 
+     	(hueSlider->value() || valSlider->value() || satSlider->value()))
+     {
+     	  correctionChanged();
+     }
 }
 
 void MainWindow::gifSaved(const QString& path)
@@ -345,27 +352,27 @@ void MainWindow::marginBoxChanged(int s)
      player->previewWidget()->update();
 }
 
-void MainWindow::balanceChanged()
+void MainWindow::correctionChanged()
 {
-     // if(!balanceBox->isChecked())
-     // 	  return;
-     // player->previewWidget()->setImage(*player->getCurrentFrame(),player->previewWidget()->getImage()->size());
-     // PreviewWidget::applyBalance(player->previewWidget()->getImage(),
-     // 				 redSlider->value(),
-     // 				 greenSlider->value(),
-     // 				 blueSlider->value());
-     // player->previewWidget()->update();
+     hueLabel->setText(tr("Hue (")+QString::number(hueSlider->value())+"):");
+     satLabel->setText(tr("Saturation (")+QString::number(satSlider->value())+"):");
+     valLabel->setText(tr("Brightness (")+QString::number(valSlider->value())+"):");
 
-     // redLabel->setText(tr("Red (")+QString::number(redSlider->value())+"):");
-     // greenLabel->setText(tr("Green (")+QString::number(greenSlider->value())+"):");
-     // blueLabel->setText(tr("Blue (")+QString::number(blueSlider->value())+"):");
+     if(!correctionBox->isChecked())
+     	  return;
+     player->previewWidget()->setImage(*player->getCurrentFrame(),player->previewWidget()->getImage()->size());
+     PreviewWidget::applyCorrection(player->previewWidget()->getImage(),
+     				 hueSlider->value(),
+     				 satSlider->value(),
+     				 valSlider->value());
+     player->previewWidget()->update();
 }
 
-void MainWindow::resetBalance()
+void MainWindow::resetCorrection()
 {
-     // redSlider->setValue(0);
-     // greenSlider->setValue(0);
-     // blueSlider->setValue(0);
+     hueSlider->setValue(0);
+     satSlider->setValue(0);
+     valSlider->setValue(0);
 }
 
 void MainWindow::lock(bool l)
@@ -394,7 +401,8 @@ QImage MainWindow::finalFrame(long f)
      ow = widthBox->value();
      oh = heightBox->value();
      qDebug() << "final frame, ow x oh: " << ow << " x " << oh;
-     player->seek(f);
+     if(f != player->getCurrentPos())
+	  player->seek(f);
      QSize s = player->getCurrentFrame()->size();
      QImage frame = marginBox->isChecked() ? 
 	  player->getCurrentFrame()->copy(leftSpin->value(),
@@ -424,16 +432,20 @@ QImage MainWindow::finalFrame(long f)
 	  return finalFrame(f);
      }
 
-     // if(redSlider->value() || blueSlider->value() || greenSlider->value())
-     // 	  PreviewWidget::applyBalance(&frame,
-     // 				      redSlider->value(),
-     // 				      greenSlider->value(),
-     // 				      blueSlider->value());
+     if(hueSlider->value() || valSlider->value() || satSlider->value())
+     {
+     	  PreviewWidget::applyCorrection(&frame,
+     				      hueSlider->value(),
+     				      satSlider->value(),
+     				      valSlider->value());
+	  qDebug() << "corrected image format: " << frame.format();
+     }
 
      connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
      connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
    
-     return frame.convertToFormat(QImage::Format_RGB888);
+     return frame.format() == QImage::Format_RGB888 ? frame : 
+	  frame.convertToFormat(QImage::Format_RGB888);
 }
 
 void MainWindow::loadSettings()
@@ -457,6 +469,9 @@ void MainWindow::loadSettings()
      paletteBox->setValue(set->value("palette_size",10).toInt());
      autoPaletteBox->setChecked(set->value("auto_palette",false).toBool());
      whRatioBox->setChecked(set->value("wh_ratio",false).toBool());
+     varPaletteBox->setChecked(set->value("var_palette",false).toBool());
+     minDiffBox->setValue(set->value("vp_mindiff",40).toFloat());
+     resetCorrection();
 }
 
 void MainWindow::saveSettings()
@@ -475,7 +490,8 @@ void MainWindow::saveSettings()
      set->setValue("palette_size",paletteBox->value());
      set->setValue("auto_palette",autoPaletteBox->isChecked());
      set->setValue("wh_ratio",whRatioBox->isChecked());
-     
+     set->setValue("var_palette", varPaletteBox->isChecked());
+     set->setValue("vp_mindiff", minDiffBox->value());
 }
 
 void MainWindow::estimateOutputSize()
@@ -527,4 +543,24 @@ void MainWindow::startChanged(int v)
 	  updatePalette();
      }
      correctRange();
+}
+
+void MainWindow::medianChanged(int m)
+{
+     if(m && m%2 == 0)
+		    medianSlider->setValue(m+1); 
+     else 
+     {
+	  player->setMedianBlur(m);
+	  player->seek(player->getCurrentPos());
+	  medianLabel->setText(tr("Median blur (") + QString::number(m) + "):");
+     }
+}
+
+void MainWindow::varPaletteBoxChanged(int s)
+{
+     bool e = s == Qt::Checked;
+     actionUpdatePalette->setEnabled(!e);
+     autoPaletteBox->setEnabled(!e);
+     minDiffBox->setEnabled(e);
 }

@@ -12,7 +12,7 @@ SET(CMAKE_INSTALL_PREFIX "/usr/")
 
 SET(QGIFER_VERSION_MAJOR 0)
 SET(QGIFER_VERSION_MINOR 1)
-SET(QGIFER_VERSION_PATCH 0)
+SET(QGIFER_VERSION_PATCH 1)
 
 OPTION(QUIET_MODE "quiet mode" OFF)
 OPTION(RELEASE_MODE "release mode" ON)
@@ -35,7 +35,7 @@ IF(WIN32)
 	SET(GIF_INCLUDE_DIR "C:\\Program Files\\GnuWin32\\include")
 ENDIF(WIN32)
 
-FIND_PACKAGE( OpenCV REQUIRED core highgui )
+FIND_PACKAGE( OpenCV REQUIRED core highgui imgproc )
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(GIF REQUIRED)
 
@@ -131,7 +131,7 @@ QT4_ADD_RESOURCES(RESOURCES_RCC ${RESOURCES})
 IF(WIN32)
 	SET( OPENCV_LIBS "-lopencv_core244 -lopencv_highgui244" )
 ELSE(WIN32)
-	SET( OPENCV_LIBS "-lopencv_core -lopencv_highgui" )
+	SET( OPENCV_LIBS "-lopencv_core -lopencv_highgui -lopencv_imgproc" )
 ENDIF(WIN32)
 
 SET( GIF_LIBS "-lgif" )	

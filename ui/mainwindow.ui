@@ -15,6 +15,13 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1" rowspan="3">
+     <widget class="Line" name="line_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
     <item row="2" column="2">
      <widget class="QMultiSlider" name="multiSlider" native="true">
       <property name="minimumSize">
@@ -52,7 +59,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page_1">
        <property name="geometry">
@@ -320,7 +327,7 @@
          </spacer>
         </item>
         <item row="0" column="0">
-         <widget class="QCheckBox" name="balanceBox">
+         <widget class="QCheckBox" name="correctionBox">
           <property name="text">
            <string>Show on the preview (slow)</string>
           </property>
@@ -335,7 +342,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="hueLabel">
              <property name="text">
-              <string>Hue:</string>
+              <string>Hue (0):</string>
              </property>
             </widget>
            </item>
@@ -355,7 +362,7 @@
            <item row="2" column="0">
             <widget class="QLabel" name="satLabel">
              <property name="text">
-              <string>Saturation:</string>
+              <string>Saturation (0):</string>
              </property>
             </widget>
            </item>
@@ -373,7 +380,7 @@
             </widget>
            </item>
            <item row="6" column="0">
-            <widget class="QPushButton" name="resetBalanceButton">
+            <widget class="QPushButton" name="resetCorrectionButton">
              <property name="text">
               <string>Reset</string>
              </property>
@@ -382,17 +389,17 @@
            <item row="4" column="0">
             <widget class="QLabel" name="valLabel">
              <property name="text">
-              <string>Brightness:</string>
+              <string>Brightness (0):</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
             <widget class="QSlider" name="hueSlider">
              <property name="minimum">
-              <number>-255</number>
+              <number>-359</number>
              </property>
              <property name="maximum">
-              <number>255</number>
+              <number>359</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -411,7 +418,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="medianLabel">
              <property name="text">
-              <string>Median filter:</string>
+              <string>Median blur (0):</string>
              </property>
             </widget>
            </item>
@@ -619,7 +626,7 @@
         <item row="9" column="2">
          <widget class="QDoubleSpinBox" name="minDiffBox">
           <property name="toolTip">
-           <string>The minimum difference between frames</string>
+           <string>The minimum difference between frames required to generate the new palette</string>
           </property>
           <property name="suffix">
            <string>%</string>
@@ -631,7 +638,7 @@
            <double>100.000000000000000</double>
           </property>
           <property name="value">
-           <double>60.000000000000000</double>
+           <double>40.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -646,13 +653,6 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" rowspan="3">
-     <widget class="Line" name="line_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
@@ -702,6 +702,8 @@
     <addaction name="actionOpenVideo"/>
     <addaction name="actionOptimizer"/>
     <addaction name="actionConverter"/>
+    <addaction name="separator"/>
+    <addaction name="actionRestoreDefault"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -942,6 +944,15 @@
    </property>
    <property name="text">
     <string>MJPEG converter...</string>
+   </property>
+  </action>
+  <action name="actionRestoreDefault">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/restore.png</normaloff>:/res/restore.png</iconset>
+   </property>
+   <property name="text">
+    <string>Restore &amp;default settings</string>
    </property>
   </action>
  </widget>

@@ -22,7 +22,7 @@
 
 FramePlayer::FramePlayer(QWidget* parent):QWidget(parent),frames(0),originalSize(Size(0,0)),
 				    currentPos(-1),timerId(-1), status(Stopped),statusbar(NULL),
-					  raw(false),interval(40)
+					  raw(false),interval(40),medianblur(0)
 {
      setupUi(this);
      pw = new PreviewWidget(frame);
@@ -122,6 +122,8 @@ void FramePlayer::nextFrame()
 	       currentPos = frames-1;
 	  //qDebug() << "current pos: " << currentPos << "/" << frames;
 	  //cvtColor(m,m,CV_BGR2RGB);
+	  if(medianblur)
+	       medianBlur(m,m, medianblur%2 ? medianblur : medianblur+1);
 	  currentFrame = QImage((uchar*)m.data, m.cols, m.rows, m.step, 
 				QImage::Format_RGB888).rgbSwapped();
      }

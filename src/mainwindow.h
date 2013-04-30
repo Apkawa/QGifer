@@ -39,7 +39,7 @@ private:
      bool openVideo(const QString& path);
      void connectMargins();
      void disconnectMargins();
-     void resizeEvent(QResizeEvent*){if(balanceBox->isChecked())balanceChanged();}
+     void resizeEvent(QResizeEvent*){if(correctionBox->isChecked())correctionChanged();}
      void closeEvent(QCloseEvent*e){saveSettings();QMainWindow::closeEvent(e);qApp->quit();}
      bool checkFFMPEG(){return !QProcess::execute("ffmpeg -version");}
      QImage finalFrame(long f);
@@ -73,15 +73,18 @@ private:
 	  void smoothChanged(int);
 	  void applyMargins();
 	  void marginsChanged();
-	  void balanceChanged();
-	  void resetBalance();
+	  void correctionChanged();
+	  void resetCorrection();
+	  void medianChanged(int m);
 	  void lock(bool l);
 	  void estimateOutputSize();
 	  void outputWidthChanged(int);
 	  void outputHeightChanged(int);
 	  void whRatioChanged(int);
+	  void varPaletteBoxChanged(int);
 	  void about() {AboutDialog ad; ad.exec();}
 	  void gifWidgetDestroyed(){actionExtractGif->setEnabled(true);}
+	  void restoreDefault(){set->clear(); loadSettings();}
 };
 
 #endif
