@@ -39,6 +39,7 @@ private slots:
      void setSrc();
      void setDst();
      void finished(int,QProcess::ExitStatus);
+     void timeChanged();
 };
 
 #endif

@@ -29,17 +29,20 @@ ConverterDialog::ConverterDialog(QSettings* s)
      set = s;
      proc = new QProcess(this);
      msgLabel->hide();
+     autonameBox->setChecked(set->value("converter_autoname",true).toBool());
      connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
      connect(srcButton, SIGNAL(clicked()), this, SLOT(setSrc()));
      connect(dstButton, SIGNAL(clicked()), this, SLOT(setDst()));
      connect(convertButton, SIGNAL(clicked()), this, SLOT(convert()));
      connect(proc, SIGNAL(finished(int,QProcess::ExitStatus)), 
 	     this, SLOT(finished(int,QProcess::ExitStatus)));
+     connect(fromEdit, SIGNAL(timeChanged(QTime)), this, SLOT(timeChanged()));
+     connect(toEdit, SIGNAL(timeChanged(QTime)), this, SLOT(timeChanged()));
 }
 
 ConverterDialog::~ConverterDialog()
 {
-     
+     set->setValue("converter_autoname", autonameBox->isChecked());
 }
 
 void ConverterDialog::convert()
@@ -85,7 +88,10 @@ void ConverterDialog::setSrc()
      if(!path.isEmpty())
      {
 	  srcEdit->setText(path);
-	  dstEdit->setText(path.left(path.size()-4)+"_mjpeg.avi");
+	  if(autonameBox->isChecked())
+	       timeChanged();
+	  else
+	       dstEdit->setText(path.left(path.size()-4)+"_mjpeg.avi");
      }
 }
 
@@ -120,4 +126,18 @@ void ConverterDialog::finished(int,QProcess::ExitStatus status)
      srcGroup->setEnabled(true);
      dstGroup->setEnabled(true);
      convertButton->setEnabled(true);
+}
+
+void ConverterDialog::timeChanged()
+{
+     if(!autonameBox->isChecked())
+	  return;
+     if(!srcEdit->text().isEmpty() && QFile::exists(srcEdit->text()))
+     {
+	  static const QString format = "HHmmss";
+	  dstEdit->setText(
+	       srcEdit->text().insert(
+		    srcEdit->text().size()-4,
+		    "_"+fromEdit->time().toString(format)+toEdit->time().toString(format)));
+     }
 }

@@ -83,8 +83,9 @@ private:
 	  void whRatioChanged(int);
 	  void varPaletteBoxChanged(int);
 	  void about() {AboutDialog ad; ad.exec();}
-	  void gifWidgetDestroyed(){actionExtractGif->setEnabled(true);}
 	  void restoreDefault(){set->clear(); loadSettings();}
+	  void openPalette();
+	  void savePalette();
 };
 
 #endif

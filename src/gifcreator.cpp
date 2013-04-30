@@ -29,20 +29,16 @@ GifCreator::GifCreator():duration(0.1)
 
 GifCreator::~GifCreator()
 {
-     if(cmaps.size() > 1)
-     {
-	  //usuwanie powtórzeń
-	  for(int i=0;i<cmaps.size()-1;i++)
-	       for(int j=i+1;j<cmaps.size();j++)
-		    if(cmaps.at(i) == cmaps.at(j))
-		    {
-			 cmaps.erase(cmaps.begin()+j);
-			 j--;
-		    }
-	      
-	  for(int i=0;i<cmaps.size()-1;i++) //FIXME: ostatnia na razie zostaje, usunie ja widget palety
-		    FreeMapObject(cmaps[i]);
-     }
+     //usuwanie powtórzeń
+     for(int i=0;i<cmaps.size()-1;i++)
+	  for(int j=i+1;j<cmaps.size();j++)
+	       if(cmaps.at(i) == cmaps.at(j))
+	       {
+		    cmaps.erase(cmaps.begin()+j);
+		    j--;
+	       }
+     for(int i=0;i<cmaps.size();i++)
+	  FreeMapObject(cmaps[i]);
 }
 
 

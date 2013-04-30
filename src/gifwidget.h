@@ -20,13 +20,13 @@
 #ifndef GIFWIDGET_H
 #define GIFWIDGET_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QList>
 #include <QSettings>
 #include "qgifcreator.h"
 #include "ui_gifwidget.h"
 
-class GifWidget : public QWidget, public Ui::GifWidget
+class GifWidget : public QDialog, public Ui::GifWidget
 {
      Q_OBJECT;
 public:

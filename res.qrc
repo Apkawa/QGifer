@@ -1,5 +1,7 @@
 <RCC>
   <qresource>
+    <file>res/palette-open.png</file>
+    <file>res/palette-save.png</file>
     <file>res/restore.png</file>
     <file>res/eject.png</file>
     <file>res/openvideo.png</file>

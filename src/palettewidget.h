@@ -32,8 +32,12 @@ public:
      PaletteWidget(QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~PaletteWidget();
      ColorMapObject* map() {return palette;}
-     bool fromImage(const QImage& img, int palette_size, bool delPrev = true, float mindiff = 1);
+     ColorMapObject* mapCopy() {return MakeMapObject(size, palette->Colors);}
+     bool fromImage(const QImage& img, int palette_size, float mindiff = 2);
      void setColumnCount(int cc){cols = cc;}
+     bool toFile(const QString& path);
+     bool fromFile(const QString& path);
+     int getSize() const {return size;}
 private:
      int size;
      int cols;
@@ -45,6 +49,7 @@ private:
      void resizeEvent(QResizeEvent*){sqSize = (width()-10)/cols;}
      void mouseReleaseEvent(QMouseEvent*);
      void mouseMoveEvent(QMouseEvent*);
+     void leaveEvent(QEvent*){hlIndex=-1;}
      private slots:
 
 };

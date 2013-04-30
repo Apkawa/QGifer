@@ -691,6 +691,8 @@
     <addaction name="actionExtractGif"/>
     <addaction name="separator"/>
     <addaction name="actionUpdatePalette"/>
+    <addaction name="actionSavePalette"/>
+    <addaction name="actionOpenPalette"/>
     <addaction name="separator"/>
     <addaction name="actionSetAsStart"/>
     <addaction name="actionSetAsStop"/>
@@ -888,7 +890,7 @@
     <string>Update &amp;palette</string>
    </property>
    <property name="toolTip">
-    <string>Update palette (from current frame)</string>
+    <string>Update palette (from the current frame)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
@@ -953,6 +955,24 @@
    </property>
    <property name="text">
     <string>Restore &amp;default settings</string>
+   </property>
+  </action>
+  <action name="actionOpenPalette">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/palette-open.png</normaloff>:/res/palette-open.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open palette...</string>
+   </property>
+  </action>
+  <action name="actionSavePalette">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/palette-save.png</normaloff>:/res/palette-save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sa&amp;ve palette...</string>
    </property>
   </action>
  </widget>

@@ -60,6 +60,8 @@ MainWindow::MainWindow()
 
      connect(actionSetAsStart, SIGNAL(triggered()), this, SLOT(startFromCurrent()));
      connect(actionSetAsStop, SIGNAL(triggered()), this, SLOT(stopFromCurrent()));
+     connect(actionSavePalette, SIGNAL(triggered()), this, SLOT(savePalette()));
+     connect(actionOpenPalette, SIGNAL(triggered()), this, SLOT(openPalette()));
 
      connect(actionOpenVideo, SIGNAL(triggered()), this, SLOT(openVideo()));
      connect(actionCloseVideo, SIGNAL(triggered()), player, SLOT(close()));
@@ -86,7 +88,7 @@ MainWindow::MainWindow()
      connect(smoothBox, SIGNAL(stateChanged(int)), this, SLOT(smoothChanged(int)));
      connect(marginBox, SIGNAL(stateChanged(int)), this, SLOT(marginBoxChanged(int)));
      connect(varPaletteBox, SIGNAL(stateChanged(int)), this, SLOT(varPaletteBoxChanged(int)));
-
+     
      connect(hueSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
      connect(satSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
      connect(valSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
@@ -170,24 +172,23 @@ void MainWindow::extractGif()
 	  updatePalette();
      player->pause();
 
-     GifWidget* g = new GifWidget(set);
-     connect(g, SIGNAL(gifSaved(const QString&)), this, SLOT(gifSaved(const QString&)));
-     g->setAttribute(Qt::WA_DeleteOnClose, true);
-     g->setColorRes(paletteBox->value());
+     GifWidget* gw = new GifWidget(set);
+     gw->setAttribute(Qt::WA_DeleteOnClose, true);
+     gw->setColorRes(paletteBox->value());
      //g->setPalette(paletteWidget->map(), );
      
-
+     connect(actionSavePalette, SIGNAL(triggered()), this, SLOT(savePalette()));
      QString sn = QFileInfo(vidfile).baseName()+"_"+
 		    QString::number(startBox->value())+"-"+
 	  QString::number(stopBox->value());
-     g->suggestName(sn);
-     g->setWindowTitle(sn);
+     gw->suggestName(sn);
+     gw->setWindowTitle(sn);
      QProgressDialog pd("Rendering frames...", "Abort", startBox->value(), 
 			      stopBox->value(), this);
      pd.setWindowModality(Qt::WindowModal);
      pd.show();
      qApp->processEvents();
-     ColorMapObject* map = paletteWidget->map();
+     ColorMapObject* map = paletteWidget->mapCopy();
      for(long i=startBox->value();i<=stopBox->value() && !pd.wasCanceled();i++)
      {
 	  pd.setValue(i);
@@ -200,24 +201,20 @@ void MainWindow::extractGif()
 		    diff = 0;
 	       }
 	       paletteWidget->fromImage(finalFrame(player->getCurrentPos()), 
-					pow(2,paletteBox->value()), 
-					false, diff);
-	       map = paletteWidget->map();
-	       g->addFrame(finalFrame(i),map);
+					pow(2,paletteBox->value()), diff);
+	       map = paletteWidget->mapCopy();
+	       gw->addFrame(finalFrame(i),map);
 	  }
 	  else
-	       g->addFrame(finalFrame(i), i== startBox->value() ? map : NULL);
+	       gw->addFrame(finalFrame(i), i== startBox->value() ? map : NULL);
 	  
      }
      pd.setValue(stopBox->value());
-
-     connect(g,SIGNAL(destroyed()),this,SLOT(gifWidgetDestroyed()));
-     actionExtractGif->setEnabled(false);
-     g->show();
-     g->move(x()+width()/2-g->minimumSize().width()/2,y()+height()/2-g->minimumSize().height()/2);
-     g->play();
+     gw->move(x()+width()/2-gw->minimumSize().width()/2,y()+height()/2-gw->minimumSize().height()/2);
+     gw->show();
+     gw->play();
      player->pause();
-     QTimer::singleShot(100,g,SLOT(adjustWidgetSize())); //TODO find another way....
+     QTimer::singleShot(100,gw,SLOT(adjustWidgetSize())); //TODO find another way....
 }
 
 void MainWindow::updatePalette()
@@ -388,6 +385,8 @@ void MainWindow::lock(bool l)
      actionSetAsStart->setEnabled(l);
      actionSetAsStop->setEnabled(l);
      actionExtractGif->setEnabled(l);
+     actionOpenPalette->setEnabled(l);
+     actionSavePalette->setEnabled(l);
 
 }
 
@@ -561,7 +560,40 @@ void MainWindow::varPaletteBoxChanged(int s)
 {
      bool e = s == Qt::Checked;
      actionUpdatePalette->setEnabled(!e);
+     actionOpenPalette->setEnabled(!e);
+     actionSavePalette->setEnabled(!e);
      autoPaletteBox->setEnabled(!e);
      minDiffBox->setEnabled(e);
      paletteWidget->setEnabled(!e);
+}
+
+void MainWindow::openPalette()
+{
+     QString path = QFileDialog::getOpenFileName(
+	  this, tr("Open QGifer palette file"), 
+	  set->value("last_palette_dir","").toString(),
+	  "QGifer Palette files (*.qgp)");
+     if(!path.isEmpty())
+     {
+	  if(!paletteWidget->fromFile(path))
+	       QMessageBox::critical(this, tr("Error"),tr("The palette file can not be loaded!"));
+	  else
+	       paletteBox->setValue(log(paletteWidget->getSize())/log(2));
+     }
+     
+}
+
+void MainWindow::savePalette()
+{
+     QString path = QFileDialog::getSaveFileName(
+	  this, tr("Save QGifer palette file"), 
+	  set->value("last_palette_dir","").toString(),
+	  "QGifer Palette files (*.qgp)");
+     if(path.isEmpty())
+	  return;
+     if(paletteWidget->toFile(path))
+	  set->setValue("last_palette_dir", path);
+     else
+	  QMessageBox::critical(this, tr("Error"),tr("The palette file can not be saved!"));
+
 }

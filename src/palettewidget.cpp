@@ -21,6 +21,8 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QColorDialog>
+#include <QFile>
+#include <QTextStream>
 #include "qgifcreator.h"
 
 PaletteWidget::PaletteWidget(QWidget* parent, Qt::WindowFlags f): 
@@ -107,10 +109,10 @@ void PaletteWidget::mouseMoveEvent(QMouseEvent* e)
      update();
 }
 
-bool PaletteWidget::fromImage(const QImage& img, int palette_size, bool delPrev, float mindiff)
+bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff)
 {
 
-     if(palette && delPrev)
+     if(palette && mindiff > 1)
      {
 	  FreeMapObject(palette);
 	  palette = NULL;
@@ -155,6 +157,8 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, bool delPrev,
 	  FreeMapObject(palette);
 	  palette = previous;
      }
+     else if(df >= mindiff)
+	  FreeMapObject(previous);
 
      // qDebug() << "palette (" << palette->ColorCount << ") :";
      // for(int i=0;i<size;i++)
@@ -187,3 +191,48 @@ float PaletteWidget::difference(ColorMapObject* a, ColorMapObject* b)
      return (float)same/(float)size;
 }
 
+bool PaletteWidget::toFile(const QString& path)
+{
+     if(!palette)
+	  return false;
+     QFile file(path);
+     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+         return false;
+
+     QTextStream out(&file);
+     for(int i=0;i<palette->ColorCount;i++)
+	  out << palette->Colors[i].Red << ","
+	      << palette->Colors[i].Green << ","
+	      << palette->Colors[i].Blue << ";";
+     file.close();
+
+     return true;
+}
+
+bool PaletteWidget::fromFile(const QString& path)
+{
+     QFile file(path);
+     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+         return false;
+     
+     QStringList rgb = QString(file.readAll()).split(";", QString::SkipEmptyParts);
+     if(palette)
+	  FreeMapObject(palette);
+     palette = MakeMapObject(rgb.size(), NULL);
+     if(!palette)
+	  return false;
+     size = rgb.size();
+     qDebug() << "loaded palette size: " << size;
+     for(int i=0;i<size;i++)
+     {
+	  QStringList c = rgb.at(i).split(",");
+	  if(c.size() != 3)
+	       return false;
+	  palette->Colors[i].Red = c.at(0).toInt();
+	  palette->Colors[i].Green = c.at(1).toInt();
+	  palette->Colors[i].Blue = c.at(2).toInt();
+     }
+     setFixedSize(width(),(size/cols)*sqSize+sqSize+2);
+     update();
+     return true;
+}
