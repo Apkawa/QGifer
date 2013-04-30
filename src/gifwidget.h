@@ -41,6 +41,7 @@ signals:
 
 private:
      QGifCreator gif;
+     bool reversePlay;
      ColorMapObject* palette;
      QSettings* set;
      void createActions();

@@ -115,4 +115,16 @@ bool GifCreator::save(const char* filename, int every)
   return true;       
 }
 
-  
+void GifCreator::appendReversedCopy()
+{
+     if(frames.size() < 2)
+	  return;
+     if(cmaps.size() > 1 && cmaps.size() != frames.size())
+	  cerr << "WARNING: going to append reversed copy of frames but palettes probably won't match!" << endl;
+     for(int i=frames.size()-2;i>0;i--)
+	  frames.push_back(frames.at(i));
+
+     if(cmaps.size() > 1)
+	  for(int i=cmaps.size()-2;i>0;i--)
+	       cmaps.push_back(cmaps.at(i));
+}

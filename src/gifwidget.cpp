@@ -23,7 +23,7 @@
 #include <QProcess>
 #include <QMessageBox>
 
-GifWidget::GifWidget(QSettings* s): timerId(-1), currentFrame(-1)
+GifWidget::GifWidget(QSettings* s): timerId(-1), currentFrame(-1), reversePlay(false)
 {
      setupUi(this);
      set = s;
@@ -72,6 +72,7 @@ void GifWidget::play()
 	  timerId = startTimer(intervalBox->value());
 	  skipped = 0;
 	  currentFrame = 0;
+	  reversePlay = false;
      }
      else
      {
@@ -110,6 +111,8 @@ void GifWidget::saveGif(const QString& filename)
 {
      pause();
      gif.setDuration((double)intervalBox->value()/1000);
+     if(reverseBox->isChecked())
+	  gif.appendReversedCopy();
      if(!gif.save(filename.toStdString().c_str(),
 		  saveEveryBox->isChecked() ? seBox->value() : 1))
      {
@@ -123,10 +126,17 @@ void GifWidget::saveGif(const QString& filename)
 void GifWidget::timerEvent(QTimerEvent*)
 {
      preview->setImage(prevFrames.at(currentFrame));
-     currentFrame += saveEveryBox->isChecked() ? seBox->value() : 1;
+     int d = saveEveryBox->isChecked() ? seBox->value() : 1;
+     currentFrame += reversePlay ? d*-1 : d;
 
-     if(currentFrame >= prevFrames.size())
+     if(reversePlay && currentFrame <= 0)
+	  reversePlay = false;
+     if(!reverseBox->isChecked() && currentFrame >= prevFrames.size())
 	  currentFrame = skipped = 0;
+     else if(reverseBox->isChecked() && currentFrame >= prevFrames.size()-1)
+	  reversePlay = true;
+	  
+     
 }
 
 

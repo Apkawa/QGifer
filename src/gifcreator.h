@@ -50,7 +50,7 @@ public:
   void setColorRes(int res) {colorRes = res;}
   void addPalette(ColorMapObject* pal) {cmaps.push_back(pal);}
   void setDuration(float d){duration = d;}
-
+  void appendReversedCopy();
 protected:
   vector<Frame> frames;
   //vector<int> delay; //na razie rezygnujemy z roznych opoznien

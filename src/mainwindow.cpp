@@ -177,7 +177,7 @@ void MainWindow::extractGif()
      gw->setColorRes(paletteBox->value());
      //g->setPalette(paletteWidget->map(), );
      
-     connect(actionSavePalette, SIGNAL(triggered()), this, SLOT(savePalette()));
+     connect(gw, SIGNAL(gifSaved(QString)), this, SLOT(gifSaved(QString)));
      QString sn = QFileInfo(vidfile).baseName()+"_"+
 		    QString::number(startBox->value())+"-"+
 	  QString::number(stopBox->value());
