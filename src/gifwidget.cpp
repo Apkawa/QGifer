@@ -130,11 +130,17 @@ void GifWidget::timerEvent(QTimerEvent*)
      currentFrame += reversePlay ? d*-1 : d;
 
      if(reversePlay && currentFrame <= 0)
+     {
+	  currentFrame = 0;
 	  reversePlay = false;
+     }
      if(!reverseBox->isChecked() && currentFrame >= prevFrames.size())
 	  currentFrame = skipped = 0;
      else if(reverseBox->isChecked() && currentFrame >= prevFrames.size()-1)
+     {
+	  currentFrame = prevFrames.size()-1;
 	  reversePlay = true;
+     }
 	  
      
 }

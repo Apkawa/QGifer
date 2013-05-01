@@ -2,6 +2,9 @@
 #define WORKSPACE_H
 
 #include "previewwidget.h"
+#include "workspaceobject.h"
+#include <QList>
+#include <QPaintDevice>
 
 class Workspace : public PreviewWidget
 {
@@ -12,7 +15,11 @@ public:
 
      QMargins* margins(){return &mr;}
      void enableMargins(bool enable){useMr = enable;}
-
+     void addObject(WorkspaceObject* wo) {objects.append(wo);}
+     void addObject(const QImage& img, int startFrame, int stopFrame);
+     void updateFrameIndex(int i) {frameIndex = i;}
+     void clear();
+     void drawObjects(QPaintDevice* pd,  bool editMode = true, int x0 = 0, int y0 = 0);
 private:
      void paintEvent(QPaintEvent*);
      void mouseMoveEvent(QMouseEvent*);
@@ -20,8 +27,14 @@ private:
      void mousePressEvent(QMouseEvent*);
      void updateMargins(); //uruchamiane podczas przeciagania
 
+     QList<WorkspaceObject*> objects;
+     WorkspaceObject* hoveredObject;
+
+     int frameIndex;
      QMargins mr;
      bool useMr;
+     float dx; //roznica miedzy kursorem a obiektem w poziomie
+     float dy; //roznica miedzy kursorem a obiektem w pionie
      QMargins pxMr; //marginesy po zoomowaniu
      
      enum Margin{mrLeft,mrTop,mrRight,mrBottom,mrNone};

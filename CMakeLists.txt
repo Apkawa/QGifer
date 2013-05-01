@@ -95,6 +95,7 @@ src/optimizerdialog.h
 src/converterdialog.h
 src/aboutdialog.h
 src/workspace.h
+src/workspaceobject.h
 )
 
 SET (SOURCES 
@@ -111,6 +112,7 @@ src/optimizerdialog.cpp
 src/converterdialog.cpp
 src/aboutdialog.cpp
 src/workspace.cpp
+src/workspaceobject.cpp
 )
 
 SET (RESOURCES 

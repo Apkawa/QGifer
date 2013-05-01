@@ -43,7 +43,7 @@ public:
      const double normalizedY() const 
      {return image.isNull() ? -1 : (double)(cpos.y()-((1-zoom)/2*height()))/(double)image.height();}
      void enableAntialiasing(bool enable) {smooth = enable;}
-     void clear();
+     virtual void clear();
      void keepAspectRatio(bool keep){ratio = keep;}
      void setZoom(double z) {zoom = z;}
      static void applyCorrection(QImage* img, int h, int s, int v);

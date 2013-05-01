@@ -1,23 +1,25 @@
 #include "workspace.h"
 
 Workspace::Workspace(QWidget* parent, Qt::WindowFlags f):
-     PreviewWidget(parent,f),useMr(false)
+     PreviewWidget(parent,f),useMr(false),frameIndex(-1),hoveredObject(NULL)
 {
      canDrag = drag = mrNone;
 }
 
 Workspace::~Workspace()
 {
-
+     clear();
 }
 
 void Workspace::paintEvent(QPaintEvent* e)
 {
      PreviewWidget::paintEvent(e);
-     QPainter p(this);
      int x = (1-zoom)/2*width();
      int y = (1-zoom)/2*height();
-     
+     drawObjects(this,true,x,y);
+
+     QPainter p(this);
+
      //marginesy
      QPen pen;
      pen.setColor(QColor(255,255,255));
@@ -25,7 +27,6 @@ void Workspace::paintEvent(QPaintEvent* e)
      p.setPen(pen);
      if(useMr && !mr.isNull())
      {
-	  
 	  const QColor fc(0,0,0,200);
 	  QPixmap top(image.width(),
 		      (float)mr.top()/(float)origSize.height()*image.height());
@@ -87,18 +88,60 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       canDrag = mrNone;
 	  }
      }
+
+     for(int i=0;i<objects.size();i++)
+     {
+	  WorkspaceObject* o = objects[i];
+	  if(frameIndex >= o->getStart() && frameIndex <= o->getStop())
+	  {
+	       const QRect& r = o->previewRect();
+	       //qDebug() << "checking cpos: " << cpos << ", over o rect: " << r;
+	       if(o->currentMode() == WO::Moving)
+	       {
+		    o->setPosAt(frameIndex, 
+				(float)cpos.x()/(float)image.width() - dx, 
+				(float)cpos.y()/(float)image.height() - dy);
+		    update();
+	       }
+	       else if(cpos.x() > r.x() && cpos.x() < r.x()+r.width() &&
+		  cpos.y() > r.y() && cpos.y() < r.y()+r.height())
+	       {
+		    o->setMode(WO::Movable);
+		    setCursor(Qt::SizeAllCursor);
+		    hoveredObject = o;
+		    update();
+	       }
+	       else if(o->currentMode() != WO::Normal)
+	       {
+		    o->setMode(WO::Normal);
+		    setCursor(Qt::ArrowCursor);
+		    update();
+	       }
+	       
+	  }
+     }
+      
+
      //qDebug() << "mouse x,y: " << cpos;
 }
 
 void Workspace::mousePressEvent(QMouseEvent*)
 {
      drag=canDrag;
+     if(hoveredObject)
+     {
+	  hoveredObject->setMode(WO::Moving);
+	  dx = (float)cpos.x()/(float)image.width() - hoveredObject->posAt(frameIndex).x;
+	  dy = (float)cpos.y()/(float)image.height() - hoveredObject->posAt(frameIndex).y;
+     }
 }
 
 void Workspace::mouseReleaseEvent(QMouseEvent*)
 {
      emit clicked(normalizedX(),normalizedY());
      drag = mrNone;
+     if(hoveredObject)
+	  hoveredObject->setMode(WO::Movable);
 }
 
 void Workspace::updateMargins()
@@ -131,3 +174,62 @@ void Workspace::updateMargins()
 }
 
 
+
+void Workspace::clear()
+{
+     PreviewWidget::clear();
+     for(int i=0;i<objects.size();i++)
+	  delete objects[i];
+     objects.clear();
+}
+
+void Workspace::addObject(const QImage& img, int startFrame, int stopFrame)
+{
+     qDebug() << "adding object...";
+     WorkspaceObject* w = new WorkspaceObject();
+     w->setImage(img);
+     w->setStartFrame(startFrame);
+     w->setStopFrame(stopFrame);
+     objects.append(w);
+     qDebug() << "...done!";
+}
+
+void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
+{
+     //qDebug() << "drawing objects...";
+     //obiekty
+     QPainter p(pd);
+     if(frameIndex >= 0)
+	  for(int i=0;i<objects.size();i++)
+	  {
+	       WorkspaceObject* o = objects[i];
+	       if(frameIndex >= o->getStart() && frameIndex <= o->getStop())
+	       {
+		    QRect r;
+		    if(pd == this)
+			 r = o->updatePreviewRect(
+			      frameIndex, image.size(), this->size(), origSize, zoom);
+		    else
+		    {
+			 QSize pdsize(pd->width(),pd->height());
+			 r = o->updatePreviewRect(
+			      frameIndex, pdsize, pdsize, origSize, 1);
+		    }
+
+		    QImage simg = o->image()->scaled(r.width(), r.height(),
+						     ratio ? Qt::KeepAspectRatio : 
+						     Qt::IgnoreAspectRatio,
+						     smooth || !editMode ? 
+						     Qt::SmoothTransformation : 
+						     Qt::FastTransformation);
+		    p.drawImage(r.x(),r.y(),simg);
+		    
+		    if(!editMode)
+			 continue;
+
+		    //rysowanie ramki
+
+	       }
+	  }
+     //qDebug() << "...done!";
+}

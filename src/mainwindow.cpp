@@ -122,6 +122,8 @@ void MainWindow::openVideo()
      if(!path.isEmpty())
 	  if(!openVideo(path))
 	       QMessageBox::critical(this, tr("Error"),tr("The player failed to load the video file!"));
+
+     player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/trollface100.png"),10,100);
 }
 
 bool MainWindow::openVideo(const QString& path)
@@ -250,6 +252,7 @@ void MainWindow::correctRange()
 
 void MainWindow::frameChanged(long f)
 {
+     player->getWorkspace()->updateFrameIndex(f);
      if(player->getStatus() == FramePlayer::Playing && 
 	laRadio->isChecked() && f >= player->countFrames()-1)
 	  player->seek(0);
@@ -403,12 +406,13 @@ QImage MainWindow::finalFrame(long f)
      if(f != player->getCurrentPos())
 	  player->seek(f);
      QSize s = player->getCurrentFrame()->size();
-     QImage frame = marginBox->isChecked() ? 
-	  player->getCurrentFrame()->copy(leftSpin->value(),
-					 topSpin->value(),
-					 s.width()-leftSpin->value()-rightSpin->value(),
-					 s.height()-topSpin->value()-bottomSpin->value()):
-	  *player->getCurrentFrame();
+     QImage frame = *player->getCurrentFrame();
+     player->getWorkspace()->drawObjects(&frame,false);
+     if(marginBox->isChecked())
+	  frame = frame.copy(leftSpin->value(),
+			     topSpin->value(),
+			     s.width()-leftSpin->value()-rightSpin->value(),
+			     s.height()-topSpin->value()-bottomSpin->value());
      frame = frame.scaled(ow,oh);
 
      //--- korekcja rozdzielczosci, przy niektorych wartosciach wystepuje bug
