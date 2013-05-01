@@ -115,6 +115,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       {
 		    o->setMode(WO::Normal);
 		    setCursor(Qt::ArrowCursor);
+		    hoveredObject = NULL;
 		    update();
 	       }
 	       
@@ -224,11 +225,17 @@ void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
 						     Qt::FastTransformation);
 		    p.drawImage(r.x(),r.y(),simg);
 		    
-		    if(!editMode)
+		    if(!editMode || o != hoveredObject)
 			 continue;
 
 		    //rysowanie ramki
-
+		    QPen pen = p.pen();
+		    pen.setColor(Qt::yellow);
+		    pen.setWidth(2);
+		    pen.setStyle(Qt::DotLine);
+		    p.setPen(pen);
+		    p.drawRect(r);
+		    p.fillRect(r.x()+r.width()-6, r.y()+r.height()-6, 7, 7, QColor(Qt::yellow));
 	       }
 	  }
      //qDebug() << "...done!";
