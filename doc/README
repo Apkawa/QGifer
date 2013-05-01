@@ -38,7 +38,7 @@ QGifer
 Requirements
 ============
  * Qt version 4.8.0, or higher.
- * OpenCV (core, highgui) version 2.3 or higher.
+ * OpenCV (core, highgui, imgproc) version 2.3 or higher.
  * giflib version 4.1 or higher.
  * CMake version 2.6 or higher.
 

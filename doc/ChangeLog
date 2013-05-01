@@ -1,5 +1,15 @@
 QGifer ChangeLog:
 ================
 
+2013-04-30 v0.1.1:
+ * dodano obsluge zmiennej palety
+ * zastapiono balans RGB korekcja barwy, nasycenia i jasnosci
+ * dodano filtr medianowy
+ * dodano moziwosci edycji palety
+ * dodano zapis/odczyt palety do/z pliku
+ * dodano mozliwosc dolaczania odwroconej kopii animacji (dla plynnych petli)
+ * zniesiono ograniczenie liczby okien z wygenerowanym gifem
+ * poprawiono kilka malych bledow
+
 2013-04-08 v0.1:
  * pierwsza udostepniona wersja programu
