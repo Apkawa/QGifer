@@ -46,15 +46,9 @@ public:
      void clear();
      void keepAspectRatio(bool keep){ratio = keep;}
      void setZoom(double z) {zoom = z;}
-     QMargins* margins(){return &mr;}
-     void enableMargins(bool enable){useMr = enable;}
      static void applyCorrection(QImage* img, int h, int s, int v);
-private:
-     void paintEvent(QPaintEvent*);
-     void mouseMoveEvent(QMouseEvent*);
-     void mouseReleaseEvent(QMouseEvent*);
-     void mousePressEvent(QMouseEvent*);
-     void updateMargins(); //uruchamiane podczas przeciagania
+protected:
+     virtual void paintEvent(QPaintEvent*);
      double fit01(double v){if(v<0)return 0;else if(v>1) return 1; else return v;}
      QSize imsize;
      QSize origSize;
@@ -63,13 +57,6 @@ private:
      bool smooth;
      bool ratio;
      double zoom; //0 - 1
-     QMargins mr;
-     bool useMr;
-     QMargins pxMr; //marginesy po zoomowaniu
-     
-     enum Margin{mrLeft,mrTop,mrRight,mrBottom,mrNone};
-     Margin canDrag;
-     Margin drag;
 
      private slots:
 	  
