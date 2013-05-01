@@ -101,7 +101,7 @@ MainWindow::MainWindow()
      //marginesy
      connectMargins();
 
-     connect(player->previewWidget(), SIGNAL(marginsChanged()), this, SLOT(marginsChanged()));
+     connect(player->getWorkspace(), SIGNAL(marginsChanged()), this, SLOT(marginsChanged()));
      //test
      //openVideo("/home/chodak/rec/tkw540.avi");
      loadSettings();
@@ -288,37 +288,37 @@ void MainWindow::gifSaved(const QString& path)
 void MainWindow::zoomChanged(int v)
 {
      zoomLabel->setText(tr("Zoom")+" ("+QString::number(v)+"%):");
-     player->previewWidget()->setZoom((double)v/100.0);
+     player->getWorkspace()->setZoom((double)v/100.0);
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
 }
 
 void MainWindow::ratioChanged(int s)
 {
-     player->previewWidget()->keepAspectRatio(s == Qt::Checked);
+     player->getWorkspace()->keepAspectRatio(s == Qt::Checked);
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
 }
 
 void MainWindow::smoothChanged(int s)
 {
-     player->previewWidget()->enableAntialiasing(s == Qt::Checked);
+     player->getWorkspace()->enableAntialiasing(s == Qt::Checked);
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
 }
 
 void MainWindow::applyMargins()
 {
-     *player->previewWidget()->margins() = QMargins(
+     *player->getWorkspace()->margins() = QMargins(
 	  leftSpin->value(),topSpin->value(),
 	  rightSpin->value(),bottomSpin->value()); 
-     player->previewWidget()->update();
+     player->getWorkspace()->update();
 }
 
 void MainWindow::marginsChanged()
 {
      disconnectMargins();
-     QMargins* m = player->previewWidget()->margins();
+     QMargins* m = player->getWorkspace()->margins();
      leftSpin->setValue(m->left());
      rightSpin->setValue(m->right());
      topSpin->setValue(m->top());
@@ -344,9 +344,9 @@ void MainWindow::disconnectMargins()
 
 void MainWindow::marginBoxChanged(int s)
 {
-     player->previewWidget()->enableMargins(s == Qt::Checked);
+     player->getWorkspace()->enableMargins(s == Qt::Checked);
      applyMargins();
-     player->previewWidget()->update();
+     player->getWorkspace()->update();
 }
 
 void MainWindow::correctionChanged()
@@ -357,12 +357,12 @@ void MainWindow::correctionChanged()
 
      if(!correctionBox->isChecked())
      	  return;
-     player->previewWidget()->setImage(*player->getCurrentFrame(),player->previewWidget()->getImage()->size());
-     PreviewWidget::applyCorrection(player->previewWidget()->getImage(),
+     player->getWorkspace()->setImage(*player->getCurrentFrame(),player->getWorkspace()->getImage()->size());
+     PreviewWidget::applyCorrection(player->getWorkspace()->getImage(),
      				 hueSlider->value(),
      				 satSlider->value(),
      				 valSlider->value());
-     player->previewWidget()->update();
+     player->getWorkspace()->update();
 }
 
 void MainWindow::resetCorrection()

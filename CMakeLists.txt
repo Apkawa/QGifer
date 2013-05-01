@@ -11,8 +11,8 @@ SET(TARGET_NAME qgifer)
 SET(CMAKE_INSTALL_PREFIX "/usr/")
 
 SET(QGIFER_VERSION_MAJOR 0)
-SET(QGIFER_VERSION_MINOR 1)
-SET(QGIFER_VERSION_PATCH 1)
+SET(QGIFER_VERSION_MINOR 2)
+SET(QGIFER_VERSION_PATCH 0)
 
 OPTION(QUIET_MODE "quiet mode" OFF)
 OPTION(RELEASE_MODE "release mode" ON)
@@ -94,6 +94,7 @@ src/qmultislider.h
 src/optimizerdialog.h
 src/converterdialog.h
 src/aboutdialog.h
+src/workspace.h
 )
 
 SET (SOURCES 
@@ -109,6 +110,7 @@ src/qmultislider.cpp
 src/optimizerdialog.cpp
 src/converterdialog.cpp
 src/aboutdialog.cpp
+src/workspace.cpp
 )
 
 SET (RESOURCES 

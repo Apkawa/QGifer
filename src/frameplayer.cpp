@@ -25,7 +25,7 @@ FramePlayer::FramePlayer(QWidget* parent):QWidget(parent),frames(0),originalSize
 					  raw(false),interval(40),medianblur(0)
 {
      setupUi(this);
-     pw = new PreviewWidget(frame);
+     workspace = new Workspace(frame);
      // QPixmap def(800,450);
      // def.fill(Qt::black);
      // defaultImg = def.toImage();
@@ -41,7 +41,7 @@ FramePlayer::FramePlayer(QWidget* parent):QWidget(parent),frames(0),originalSize
 
 FramePlayer::~FramePlayer()
 {
-     //delete pw;
+     //delete workspace;
 }
 
 bool FramePlayer::openSource(const QString& src)
@@ -131,7 +131,7 @@ void FramePlayer::nextFrame()
 	  return;
 
      
-     pw->setImage(currentFrame,frame->size());
+     workspace->setImage(currentFrame,frame->size());
      emit frameChanged(currentPos);
      updateSlider(currentPos);
      
@@ -271,8 +271,8 @@ void FramePlayer::updateStatus(Status s)
 void FramePlayer::resizeEvent(QResizeEvent*)
 {
      //qDebug() << "player resize event";
-     pw->setImage(currentFrame,frame->size());
-     pw->setFixedSize(size());
+     workspace->setImage(currentFrame,frame->size());
+     workspace->setFixedSize(size());
 }
 
 void FramePlayer::setStatusBar(QStatusBar* sb)

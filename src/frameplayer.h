@@ -28,7 +28,7 @@
 #include <QStatusBar>
 #include <QPixmap>
 #include <QMessageBox>
-#include "previewwidget.h"
+#include "workspace.h"
 #include "ui_frameplayer.h"
 
 #define FRAME_LIMIT 1800
@@ -87,11 +87,11 @@ public:
      void setDefaultImage(const QImage& img) 
      {defaultImg = img.copy();}
      void enableAntialiasing(bool enable) 
-     {pw->enableAntialiasing(enable);pw->setImage(currentFrame,frame->size());}
+     {workspace->enableAntialiasing(enable);workspace->setImage(currentFrame,frame->size());}
      QString codecName();
      void showDefaultScreen()
-     {currentFrame = defaultImg;pw->setImage(defaultImg.scaled(frame->size()));}
-     PreviewWidget* previewWidget() {return pw;}
+     {currentFrame = defaultImg;workspace->setImage(defaultImg.scaled(frame->size()));}
+     Workspace* getWorkspace() {return workspace;}
      void setMedianBlur(int m){medianblur = m;}
      
 private:
@@ -102,7 +102,7 @@ private:
      Size originalSize;
      QImage currentFrame;
      QImage defaultImg;
-     PreviewWidget* pw;
+     Workspace* workspace;
      long frames;
      long currentPos;
      int interval;
