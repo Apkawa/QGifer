@@ -22,9 +22,12 @@
 
 int main(int argc, char* argv[])
 {
-     QApplication app(argc,argv);
-     app.setWindowIcon(QIcon(":/res/icon.png"));
-     MainWindow mw;
-     mw.show();
-     return app.exec();
+     QApplication* app = new QApplication(argc,argv);
+     app->setWindowIcon(QIcon(":/res/icon.png"));
+     MainWindow* mw = new MainWindow();
+     mw->show();
+     int r = app->exec();
+     delete mw;
+     delete app;
+     return r;
 }

@@ -123,7 +123,7 @@ void MainWindow::openVideo()
 	  if(!openVideo(path))
 	       QMessageBox::critical(this, tr("Error"),tr("The player failed to load the video file!"));
 
-     player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/trollface100.png"),10,100);
+     
 }
 
 bool MainWindow::openVideo(const QString& path)
@@ -573,6 +573,11 @@ void MainWindow::varPaletteBoxChanged(int s)
 
 void MainWindow::openPalette()
 {
+     //test
+     // qDebug() << "going to add object...";
+     // player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/trollface100.png"),0,10);
+     //return;
+
      QString path = QFileDialog::getOpenFileName(
 	  this, tr("Open QGifer palette file"), 
 	  set->value("last_palette_dir","").toString(),

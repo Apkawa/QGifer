@@ -103,20 +103,107 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 				(float)cpos.y()/(float)image.height() - dy);
 		    update();
 	       }
+	       else if(o->currentMode() == WO::XRScaling) //skalowanie w prawo
+	       {
+		    float ncx = (float)cpos.x()/(float)image.width();
+		    int newwidth = ncx*origSize.width()-o->posAt(frameIndex).x*origSize.width();
+		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(), 
+				  o->scaleAt(frameIndex).h);
+		    update();
+	       }
+	       else if(o->currentMode() == WO::XLScaling) //skalowanie w lewo
+	       {
+		    float ncx = (float)cpos.x()/(float)image.width();
+		    int newwidth = coSize.width()+(clickPos.x()-origSize.width()*ncx);
+		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(),
+			 o->scaleAt(frameIndex).h);
+		    o->setPosAt(frameIndex, ncx, o->posAt(frameIndex).y);
+		    update();
+	       }
+	       else if(o->currentMode() == WO::YBScaling) //skalowanie w dol
+	       {
+		    float ncy = (float)cpos.y()/(float)image.height();
+		    int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
+		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
+				  (float)newheight/(float)o->originalSize().height());
+		    update();
+	       }
+	       else if(o->currentMode() == WO::YTScaling) //skalowanie w gore
+	       {
+		    float ncy = (float)cpos.y()/(float)image.height();
+		    int newheight = coSize.height()+(clickPos.y()-origSize.height()*ncy);
+		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w, 
+				  (float)newheight/(float)o->originalSize().height());
+		    o->setPosAt(frameIndex, o->posAt(frameIndex).x, ncy);
+		    update();
+	       }
+	       else if(o->currentMode() == WO::XYScaling) //skalowanie w dół i prawo z proporcjami
+	       {
+		    float ncx = (float)cpos.x()/(float)image.width();
+		    int newwidth = ncx*origSize.width()-o->posAt(frameIndex).x*origSize.width();
+		    float ncy = (float)cpos.y()/(float)image.height();
+		    int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
+		 
+		    float ratio = (float)coSize.width()/(float)coSize.height();
+		    qDebug() << "ratio: " << ratio;
+		    //float ratio = (float)o->originalSize.width()/(float)o->originalSize.height();
+		    if(newwidth > newheight)
+			 newheight = newwidth/ratio;
+		    else
+			 newwidth = newheight*ratio;
+		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(), 
+				  o->scaleAt(frameIndex).h);
+		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
+				  (float)newheight/(float)o->originalSize().height());
+		    update();
+
+	       }
+	       else if (cpos.x() > r.x()+r.width()-WOSCALE_PX &&  //prawy dolny rog
+			cpos.x() < r.x()+r.width()+WOSCALE_PX && 
+			cpos.y() > r.y()+r.height()-WOSCALE_PX &&
+			cpos.y() < r.y()+r.height()+WOSCALE_PX)
+	       {
+		    o->setMode(WO::XYScalable);
+		    hoverObject(o, Qt::SizeFDiagCursor);
+	       }
+	       else if(cpos.x() > r.x()+r.width()-WOSCALE_PX &&  //prawa krawedz
+		       cpos.x() < r.x()+r.width()+WOSCALE_PX && 
+		       cpos.y() > r.y() && cpos.y() < r.y()+r.height())
+	       {
+		    o->setMode(WO::XRScalable);
+		    hoverObject(o, Qt::SizeHorCursor);
+	       }
+	       else if(cpos.x() > r.x()-WOSCALE_PX && //lewa krawedz
+		       cpos.x() < r.x()+WOSCALE_PX && 
+		       cpos.y() > r.y() && cpos.y() < r.y()+r.height())
+	       {
+		    o->setMode(WO::XLScalable);
+		    hoverObject(o, Qt::SizeHorCursor);
+	       }
+	       else if(cpos.y() > r.y()+r.height()-WOSCALE_PX && //dolna krawedz
+		       cpos.y() < r.y()+r.height()+WOSCALE_PX && 
+		       cpos.x() > r.x() && cpos.x() < r.x()+r.width())
+	       {
+		    o->setMode(WO::YBScalable);
+		    hoverObject(o, Qt::SizeVerCursor);
+	       }
+	       else if(cpos.y() > r.y()-WOSCALE_PX && //gorna krawedz
+		       cpos.y() < r.y()+WOSCALE_PX && 
+		       cpos.x() > r.x() && cpos.x() < r.x()+r.width())
+	       {
+		    o->setMode(WO::YTScalable);
+		    hoverObject(o, Qt::SizeVerCursor);
+	       }
 	       else if(cpos.x() > r.x() && cpos.x() < r.x()+r.width() &&
 		  cpos.y() > r.y() && cpos.y() < r.y()+r.height())
 	       {
 		    o->setMode(WO::Movable);
-		    setCursor(Qt::SizeAllCursor);
-		    hoveredObject = o;
-		    update();
+		    hoverObject(o, Qt::SizeAllCursor);
 	       }
 	       else if(o->currentMode() != WO::Normal)
 	       {
 		    o->setMode(WO::Normal);
-		    setCursor(Qt::ArrowCursor);
-		    hoveredObject = NULL;
-		    update();
+		    hoverObject(NULL, Qt::ArrowCursor);
 	       }
 	       
 	  }
@@ -131,9 +218,12 @@ void Workspace::mousePressEvent(QMouseEvent*)
      drag=canDrag;
      if(hoveredObject)
      {
-	  hoveredObject->setMode(WO::Moving);
 	  dx = (float)cpos.x()/(float)image.width() - hoveredObject->posAt(frameIndex).x;
 	  dy = (float)cpos.y()/(float)image.height() - hoveredObject->posAt(frameIndex).y;
+	  hoveredObject->setMode( (WO::Mode)((int)hoveredObject->currentMode()+1));
+	  coSize = hoveredObject->sizeAt(frameIndex);
+	  clickPos = QPoint((float)cpos.x()/(float)image.width()*origSize.width(),
+			    (float)cpos.y()/(float)image.height()*origSize.height());
      }
 }
 
@@ -218,7 +308,7 @@ void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
 		    }
 
 		    QImage simg = o->image()->scaled(r.width(), r.height(),
-						     ratio ? Qt::KeepAspectRatio : 
+						     //	     ratio ? Qt::KeepAspectRatio : 
 						     Qt::IgnoreAspectRatio,
 						     smooth || !editMode ? 
 						     Qt::SmoothTransformation : 

@@ -6,6 +6,8 @@
 #include <QList>
 #include <QPaintDevice>
 
+#define WOSCALE_PX 3
+
 class Workspace : public PreviewWidget
 {
      Q_OBJECT;
@@ -26,7 +28,8 @@ private:
      void mouseReleaseEvent(QMouseEvent*);
      void mousePressEvent(QMouseEvent*);
      void updateMargins(); //uruchamiane podczas przeciagania
-
+     void hoverObject(WorkspaceObject* o, const QCursor& c) 
+     {setCursor(c);hoveredObject = o; update();}
      QList<WorkspaceObject*> objects;
      WorkspaceObject* hoveredObject;
 
@@ -35,6 +38,8 @@ private:
      bool useMr;
      float dx; //roznica miedzy kursorem a obiektem w poziomie
      float dy; //roznica miedzy kursorem a obiektem w pionie
+     QSize coSize; //rozmiar kliknietego obiektu w momecie klikniecia
+     QPoint clickPos; //pozycja klikniecia
      QMargins pxMr; //marginesy po zoomowaniu
      
      enum Margin{mrLeft,mrTop,mrRight,mrBottom,mrNone};

@@ -14,9 +14,17 @@ WOPos(double ix = 0, double iy = 0):x(ix),y(iy){}
      double y;
 };
 
+struct WOSize
+{
+WOSize(double iw = 0, double ih = 0):w(iw),h(ih){}
+     double w;
+     double h;
+};
+
 namespace WO{
-     enum Mode{Normal, Movable, Moving, XLeftScalable, XRightScalable, 
-	       YTopScalable, YBottomScalable};
+     enum Mode{Normal=0, Movable=1, Moving=2, XLScalable=3, XLScaling=4,
+	       XRScalable=5, XRScaling=6, YTScalable=7, YTScaling=8,
+	       YBScalable=9, YBScaling=10, XYScalable=11, XYScaling=12};
 }
 
 class WorkspaceObject : public QObject
@@ -34,7 +42,11 @@ public:
      void setStopFrame(int s) {stop = s;adjustPosList();}
      int getStart() const {return start;}
      int getStop() const {return stop;}
-     QSize size() const {return img.size();}
+     QSize originalSize() const {return img.size();}
+     QSize sizeAt(int i) const {return QSize(img.size().width()*scale.at(i).w,
+					     img.size().height()*scale.at(i).h);}
+     const WOSize& scaleAt(int i) const {return scale.at(i-start);}
+     void setScaleAt(int i, float xs, float ys);
      void setPreviewRect(const QRect& r) {pwRect = r;}
      const QRect& updatePreviewRect(int frame, const QSize& previewSize, 
 				    const QSize& workspaceSize, 
@@ -51,6 +63,7 @@ private:
      int start;
      int stop;
      QList<WOPos> pos;
+     QList<WOSize> scale;
      private slots:
 
 };

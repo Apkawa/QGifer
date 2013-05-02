@@ -23,6 +23,8 @@ void WorkspaceObject::adjustPosList()
      int d = stop-start+1;
      if(d<=0)
 	  return;
+     
+     //pozycja
      while(d > pos.size())
      {
 	  if(pos.size())
@@ -32,6 +34,17 @@ void WorkspaceObject::adjustPosList()
      }
      while(d < pos.size())
 	  pos.removeLast();  
+
+     //skala
+     while(d > scale.size())
+     {
+	  if(scale.size())
+	       scale.append(scale.last());
+	  else
+	       scale.append(WOSize(1,1));
+     }
+     while(d < scale.size())
+	  scale.removeLast();
 }
 
 const QRect& WorkspaceObject::updatePreviewRect(
@@ -45,16 +58,24 @@ const QRect& WorkspaceObject::updatePreviewRect(
      int y0 = (1-zoom)/2*workspaceSize.height();
      const WOPos& pos = posAt(frame);
 
-     qDebug() << "x0,y0: " << x0 <<","<<y0;
+     //qDebug() << "x0,y0: " << x0 <<","<<y0;
 
      int ox = x0+previewSize.width()*pos.x;
      int oy = y0+previewSize.height()*pos.y;
-     qDebug() << "ox,oy: " << ox << "," << oy;
+     //qDebug() << "ox,oy: " << ox << "," << oy;
 
-     int swidth = size().width()*
+     int swidth = sizeAt(frame).width()*
 	  ((float)previewSize.width()/(float)origFrameSize.width());
-     int sheight = size().height()*
+     int sheight = sizeAt(frame).height()*
 	  ((float)previewSize.height()/(float)origFrameSize.height());
      pwRect = QRect(ox,oy,swidth,sheight);
      return pwRect;
+}
+
+void WorkspaceObject::setScaleAt(int i, float xs, float ys)
+{
+     if(xs <= 0) xs = 1/(float)img.width();
+     if(ys <= 0) ys = 1/(float)img.height();
+     scale[i].w = xs; 
+     scale[i].h = ys;
 }
