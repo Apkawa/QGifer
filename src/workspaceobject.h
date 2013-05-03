@@ -25,6 +25,7 @@ namespace WO{
      enum Mode{Normal=0, Movable=1, Moving=2, XLScalable=3, XLScaling=4,
 	       XRScalable=5, XRScaling=6, YTScalable=7, YTScaling=8,
 	       YBScalable=9, YBScaling=10, XYScalable=11, XYScaling=12};
+     enum Direction{Further, Earlier};
 }
 
 class WorkspaceObject : public QObject
@@ -54,6 +55,8 @@ public:
      const QRect& previewRect() const {return pwRect;}
      void setMode(WO::Mode m) {mode = m;}
      WO::Mode currentMode() const {return mode;}
+     void clonePosAt(int i, WO::Direction d);
+     void cloneScaleAt(int i, WO::Direction d);
 private:
 	  
      void adjustPosList();

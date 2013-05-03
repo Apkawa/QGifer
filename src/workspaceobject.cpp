@@ -79,3 +79,23 @@ void WorkspaceObject::setScaleAt(int i, float xs, float ys)
      scale[i].w = xs; 
      scale[i].h = ys;
 }
+
+void WorkspaceObject::clonePosAt(int i, WO::Direction d)
+{
+     if(d == WO::Further)
+	  for(int j=i+1;j<pos.size();j++)
+	       pos[j] = pos[i];
+     else
+	  for(int j=i-1;j>=0;j--)
+	       pos[j] = pos[i];
+}
+
+void WorkspaceObject::cloneScaleAt(int i, WO::Direction d)
+{
+     if(d == WO::Further)
+	  for(int j=i+1;j<scale.size();j++)
+	       scale[j] = scale[i];
+     else
+	  for(int j=i-1;j>=0;j--)
+	       scale[j] = scale[i];
+}

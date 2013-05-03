@@ -1,7 +1,9 @@
 #include "workspace.h"
+#include <QMenu>
+#include <QMessageBox>
 
 Workspace::Workspace(QWidget* parent, Qt::WindowFlags f):
-     PreviewWidget(parent,f),useMr(false),frameIndex(-1),hoveredObject(NULL)
+     PreviewWidget(parent,f),useMr(false),frameIndex(-1),hoveredObject(NULL),hoIndex(-1)
 {
      canDrag = drag = mrNone;
 }
@@ -147,10 +149,10 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 		    float ratio = (float)coSize.width()/(float)coSize.height();
 		    qDebug() << "ratio: " << ratio;
 		    //float ratio = (float)o->originalSize.width()/(float)o->originalSize.height();
-		    if(newwidth > newheight)
+		    // if(newwidth > newheight)
 			 newheight = newwidth/ratio;
-		    else
-			 newwidth = newheight*ratio;
+		    // else
+		    // 	 newwidth = newheight*ratio;
 		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(), 
 				  o->scaleAt(frameIndex).h);
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
@@ -164,46 +166,52 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 			cpos.y() < r.y()+r.height()+WOSCALE_PX)
 	       {
 		    o->setMode(WO::XYScalable);
-		    hoverObject(o, Qt::SizeFDiagCursor);
+		    hoverObject(i, Qt::SizeFDiagCursor);
+		    break;
 	       }
 	       else if(cpos.x() > r.x()+r.width()-WOSCALE_PX &&  //prawa krawedz
 		       cpos.x() < r.x()+r.width()+WOSCALE_PX && 
 		       cpos.y() > r.y() && cpos.y() < r.y()+r.height())
 	       {
 		    o->setMode(WO::XRScalable);
-		    hoverObject(o, Qt::SizeHorCursor);
+		    hoverObject(i, Qt::SizeHorCursor);
+		    break;
 	       }
 	       else if(cpos.x() > r.x()-WOSCALE_PX && //lewa krawedz
 		       cpos.x() < r.x()+WOSCALE_PX && 
 		       cpos.y() > r.y() && cpos.y() < r.y()+r.height())
 	       {
 		    o->setMode(WO::XLScalable);
-		    hoverObject(o, Qt::SizeHorCursor);
+		    hoverObject(i, Qt::SizeHorCursor);
+		    break;
 	       }
 	       else if(cpos.y() > r.y()+r.height()-WOSCALE_PX && //dolna krawedz
 		       cpos.y() < r.y()+r.height()+WOSCALE_PX && 
 		       cpos.x() > r.x() && cpos.x() < r.x()+r.width())
 	       {
 		    o->setMode(WO::YBScalable);
-		    hoverObject(o, Qt::SizeVerCursor);
+		    hoverObject(i, Qt::SizeVerCursor);
+		    break;
 	       }
 	       else if(cpos.y() > r.y()-WOSCALE_PX && //gorna krawedz
 		       cpos.y() < r.y()+WOSCALE_PX && 
 		       cpos.x() > r.x() && cpos.x() < r.x()+r.width())
 	       {
 		    o->setMode(WO::YTScalable);
-		    hoverObject(o, Qt::SizeVerCursor);
+		    hoverObject(i, Qt::SizeVerCursor);
+		    break;
 	       }
 	       else if(cpos.x() > r.x() && cpos.x() < r.x()+r.width() &&
 		  cpos.y() > r.y() && cpos.y() < r.y()+r.height())
 	       {
 		    o->setMode(WO::Movable);
-		    hoverObject(o, Qt::SizeAllCursor);
+		    hoverObject(i, Qt::SizeAllCursor);
 	       }
 	       else if(o->currentMode() != WO::Normal)
 	       {
 		    o->setMode(WO::Normal);
-		    hoverObject(NULL, Qt::ArrowCursor);
+		    hoverObject(-1, Qt::ArrowCursor);
+		    break;
 	       }
 	       
 	  }
@@ -213,10 +221,10 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
      //qDebug() << "mouse x,y: " << cpos;
 }
 
-void Workspace::mousePressEvent(QMouseEvent*)
+void Workspace::mousePressEvent(QMouseEvent* e)
 {
      drag=canDrag;
-     if(hoveredObject)
+     if(hoveredObject && e->button() == Qt::LeftButton)
      {
 	  dx = (float)cpos.x()/(float)image.width() - hoveredObject->posAt(frameIndex).x;
 	  dy = (float)cpos.y()/(float)image.height() - hoveredObject->posAt(frameIndex).y;
@@ -227,12 +235,17 @@ void Workspace::mousePressEvent(QMouseEvent*)
      }
 }
 
-void Workspace::mouseReleaseEvent(QMouseEvent*)
+void Workspace::mouseReleaseEvent(QMouseEvent* e)
 {
      emit clicked(normalizedX(),normalizedY());
-     drag = mrNone;
-     if(hoveredObject)
-	  hoveredObject->setMode(WO::Movable);
+     if(e->button() == Qt::RightButton && hoveredObject)
+	  execObjectMenu(hoveredObject,e->globalPos());
+     else
+     {
+	  drag = mrNone;
+	  if(hoveredObject)
+	       hoveredObject->setMode(WO::Movable);
+     }
 }
 
 void Workspace::updateMargins()
@@ -281,7 +294,7 @@ void Workspace::addObject(const QImage& img, int startFrame, int stopFrame)
      w->setImage(img);
      w->setStartFrame(startFrame);
      w->setStopFrame(stopFrame);
-     objects.append(w);
+     objects.prepend(w);
      qDebug() << "...done!";
 }
 
@@ -291,7 +304,7 @@ void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
      //obiekty
      QPainter p(pd);
      if(frameIndex >= 0)
-	  for(int i=0;i<objects.size();i++)
+	  for(int i=objects.size()-1;i>=0;i--)
 	  {
 	       WorkspaceObject* o = objects[i];
 	       if(frameIndex >= o->getStart() && frameIndex <= o->getStop())
@@ -329,4 +342,65 @@ void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
 	       }
 	  }
      //qDebug() << "...done!";
+}
+
+void Workspace::execObjectMenu(WorkspaceObject*,const QPoint& p)
+{
+     	  QMenu* m = new QMenu(this);
+	  QAction* btf = new QAction(tr("Bring to &front"),m);
+	  m->addAction(btf);
+
+	  QAction* stb = new QAction(tr("Send to &back"),m);
+	  m->addAction(stb);
+
+	  m->addSeparator();
+
+	  QMenu* posM = new QMenu(tr("&Position"),m);
+	  QAction* ffPos = new QAction(tr("Apply to the &further frames"),posM);
+	  posM->addAction(ffPos);
+	  QAction* efPos = new QAction(tr("Apply to the &earlier frames"),posM);
+	  posM->addAction(efPos);
+	  m->addMenu(posM);
+
+	  QMenu* sizeM = new QMenu(tr("&Size"),m);
+	  QAction* ffSize = new QAction(tr("Apply to the &further frames"),sizeM);
+	  sizeM->addAction(ffSize);
+	  QAction* efSize = new QAction(tr("Apply to the &earlier frames"),sizeM);
+	  sizeM->addAction(efSize);
+	  QAction* resetSize = new QAction(tr("&Restore original size"),sizeM);
+	  sizeM->addAction(resetSize);
+	  m->addMenu(sizeM);
+
+	  m->addSeparator();
+
+	  QAction* props = new QAction(tr("P&roperties..."),m);
+	  m->addAction(props);
+
+	  QAction* del = new QAction(tr("&Delete"),m);
+	  m->addAction(del);
+
+	  QAction* a = m->exec(p);
+	  if(a == btf)
+	       objects.prepend(objects.takeAt(hoIndex));
+	  else if(a == stb)
+	       objects.append(objects.takeAt(hoIndex));
+	  else if(a == ffPos)
+	       hoveredObject->clonePosAt(frameIndex, WO::Further);
+	  else if(a == efPos)
+	       hoveredObject->clonePosAt(frameIndex, WO::Earlier);
+	  else if(a == ffSize)
+	       hoveredObject->cloneScaleAt(frameIndex, WO::Further);
+	  else if(a == efSize)
+	       hoveredObject->cloneScaleAt(frameIndex, WO::Earlier);
+	  else if(a == resetSize)
+	       hoveredObject->setScaleAt(frameIndex, 1, 1);
+	  else if(a == props)
+	       ;
+	  else if(a == del)
+	       if(!QMessageBox::question(this, tr("Question"), 
+					 tr("Do you really want to delete this object?"), 
+					 tr("Yes"), tr("No")))
+		    objects.removeAt(hoIndex);
+	  delete m;
+	  update();
 }

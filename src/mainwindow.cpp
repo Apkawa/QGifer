@@ -575,8 +575,9 @@ void MainWindow::openPalette()
 {
      //test
      // qDebug() << "going to add object...";
-     // player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/trollface100.png"),0,10);
-     //return;
+     // player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/trollface100.png"),0,50);
+     // player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/ecoicon.png"),0,50);
+     // return;
 
      QString path = QFileDialog::getOpenFileName(
 	  this, tr("Open QGifer palette file"), 

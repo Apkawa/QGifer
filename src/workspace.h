@@ -17,7 +17,7 @@ public:
 
      QMargins* margins(){return &mr;}
      void enableMargins(bool enable){useMr = enable;}
-     void addObject(WorkspaceObject* wo) {objects.append(wo);}
+     void addObject(WorkspaceObject* wo) {objects.prepend(wo);}
      void addObject(const QImage& img, int startFrame, int stopFrame);
      void updateFrameIndex(int i) {frameIndex = i;}
      void clear();
@@ -28,10 +28,12 @@ private:
      void mouseReleaseEvent(QMouseEvent*);
      void mousePressEvent(QMouseEvent*);
      void updateMargins(); //uruchamiane podczas przeciagania
-     void hoverObject(WorkspaceObject* o, const QCursor& c) 
-     {setCursor(c);hoveredObject = o; update();}
+     void hoverObject(int i, const QCursor& c) 
+     {setCursor(c);hoveredObject = i < 0 ? NULL : objects[i]; hoIndex = i; update();}
+     void execObjectMenu(WorkspaceObject*,const QPoint& p);
      QList<WorkspaceObject*> objects;
      WorkspaceObject* hoveredObject;
+     int hoIndex;
 
      int frameIndex;
      QMargins mr;
