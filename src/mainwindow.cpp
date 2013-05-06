@@ -17,9 +17,10 @@
 **
 ************************************************************************/
 
-#include "mainwindow.h"
 #include <QTimer>
 #include <QProgressDialog>
+#include "mainwindow.h"
+#include "objectwidget.h"
 
 MainWindow::MainWindow()
 {
@@ -62,6 +63,8 @@ MainWindow::MainWindow()
      connect(actionSetAsStop, SIGNAL(triggered()), this, SLOT(stopFromCurrent()));
      connect(actionSavePalette, SIGNAL(triggered()), this, SLOT(savePalette()));
      connect(actionOpenPalette, SIGNAL(triggered()), this, SLOT(openPalette()));
+     connect(actionInsertObject, SIGNAL(triggered()), this, SLOT(insertObject()));
+     connect(actionInsertText, SIGNAL(triggered()), this, SLOT(insertText()));
 
      connect(actionOpenVideo, SIGNAL(triggered()), this, SLOT(openVideo()));
      connect(actionCloseVideo, SIGNAL(triggered()), player, SLOT(close()));
@@ -102,6 +105,8 @@ MainWindow::MainWindow()
      connectMargins();
 
      connect(player->getWorkspace(), SIGNAL(marginsChanged()), this, SLOT(marginsChanged()));
+     connect(player->getWorkspace(), SIGNAL(propertiesRequested(WorkspaceObject*)),
+	     this, SLOT(showProperties(WorkspaceObject*)));
      //test
      //openVideo("/home/chodak/rec/tkw540.avi");
      loadSettings();
@@ -573,11 +578,6 @@ void MainWindow::varPaletteBoxChanged(int s)
 
 void MainWindow::openPalette()
 {
-     //test
-     qDebug() << "going to add object...";
-     player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/trollface100.png"),0,50);
-     player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/ecoicon.png"),0,50);
-     return;
 
      QString path = QFileDialog::getOpenFileName(
 	  this, tr("Open QGifer palette file"), 
@@ -606,4 +606,25 @@ void MainWindow::savePalette()
      else
 	  QMessageBox::critical(this, tr("Error"),tr("The palette file can not be saved!"));
 
+}
+
+void MainWindow::insertObject()
+{
+     ObjectWidget* ow = new ObjectWidget(player->getWorkspace(), player);
+     ow->setAttribute(Qt::WA_DeleteOnClose);
+     ow->move(x()+width()*0.3, y()+height()*0.2);
+     ow->show();
+}
+
+void MainWindow::insertText()
+{
+
+}
+
+void MainWindow::showProperties(WorkspaceObject* o)
+{
+     ObjectWidget* ow = new ObjectWidget(o,player);
+     ow->setAttribute(Qt::WA_DeleteOnClose);
+     ow->move(x()+width()*0.3, y()+height()*0.2);
+     ow->show();
 }

@@ -23,8 +23,6 @@
 #include <QWidget>
 #include <gif_lib.h>
 
-#define RGB_MAXD 441.67
-
 class PaletteWidget : public QWidget
 {
      Q_OBJECT;

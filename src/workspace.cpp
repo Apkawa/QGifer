@@ -247,7 +247,7 @@ void Workspace::mouseReleaseEvent(QMouseEvent* e)
 {
      emit clicked(normalizedX(),normalizedY());
      if(e->button() == Qt::RightButton && hoveredObject)
-	  execObjectMenu(hoveredObject,e->globalPos());
+	  execObjectMenu(e->globalPos());
      else
      {
 	  drag = mrNone;
@@ -295,11 +295,11 @@ void Workspace::clear()
      objects.clear();
 }
 
-void Workspace::addObject(const QImage& img, int startFrame, int stopFrame)
+void Workspace::addObject(const QString& imgPath, int startFrame, int stopFrame)
 {
      qDebug() << "adding object...";
      WorkspaceObject* w = new WorkspaceObject();
-     w->setImage(img);
+     w->setImage(imgPath);
      w->setStartFrame(startFrame);
      w->setStopFrame(stopFrame);
      objects.prepend(w);
@@ -308,7 +308,7 @@ void Workspace::addObject(const QImage& img, int startFrame, int stopFrame)
 
 void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
 {
-     //qDebug() << "drawing objects...";
+     qDebug() << "drawing objects...";
      //obiekty
      QPainter p(pd);
      if(frameIndex >= 0)
@@ -349,10 +349,10 @@ void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
 		    p.fillRect(r.x()+r.width()-6, r.y()+r.height()-6, 7, 7, QColor(Qt::yellow));
 	       }
 	  }
-     //qDebug() << "...done!";
+     qDebug() << "...done!";
 }
 
-void Workspace::execObjectMenu(WorkspaceObject*,const QPoint& p)
+void Workspace::execObjectMenu(const QPoint& p)
 {
      	  QMenu* m = new QMenu(this);
 	  QAction* btf = new QAction(tr("Bring to &front"),m);
@@ -403,7 +403,7 @@ void Workspace::execObjectMenu(WorkspaceObject*,const QPoint& p)
 	  else if(a == resetSize)
 	       hoveredObject->setScaleAt(frameIndex, 1, 1);
 	  else if(a == props)
-	       ;
+	       emit propertiesRequested(hoveredObject);
 	  else if(a == del)
 	       if(!QMessageBox::question(this, tr("Question"), 
 					 tr("Do you really want to delete this object?"), 

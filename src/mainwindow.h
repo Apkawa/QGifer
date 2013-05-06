@@ -86,6 +86,9 @@ private:
 	  void restoreDefault(){set->clear(); loadSettings();}
 	  void openPalette();
 	  void savePalette();
+	  void insertObject();
+	  void insertText();
+	  void showProperties(WorkspaceObject*);
 };
 
 #endif

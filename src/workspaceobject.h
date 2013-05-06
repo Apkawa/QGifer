@@ -35,8 +35,9 @@ public:
      WorkspaceObject(QObject* parent = NULL);
      virtual ~WorkspaceObject();
 
-     void setImage(const QImage& image) {img = image;}
+     void setImage(const QString& imgpath) {img = QImage(imgpath); imagePath = imgpath;}
      QImage* image() {return &img;}
+     const QString& getImagePath() const {return imagePath;}
      const WOPos& posAt(int i) const {return pos.at(i-start);}
      void setPosAt(int i, double x, double y);
      void setStartFrame(int s) {start = s;adjustPosList();}
@@ -63,6 +64,7 @@ private:
      WO::Mode mode;
      QRect pwRect;
      QImage img;
+     QString imagePath;
      int start;
      int stop;
      QList<WOPos> pos;

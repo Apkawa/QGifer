@@ -45,6 +45,8 @@ void WorkspaceObject::adjustPosList()
      }
      while(d < scale.size())
 	  scale.removeLast();
+
+     qDebug() << "ilosc pozycji: " << pos.size() << ", ilosc skal: " << scale.size();
 }
 
 const QRect& WorkspaceObject::updatePreviewRect(
@@ -82,6 +84,7 @@ void WorkspaceObject::setScaleAt(int i, float xs, float ys)
 
 void WorkspaceObject::clonePosAt(int i, WO::Direction d)
 {
+     i = i-start;
      if(d == WO::Further)
 	  for(int j=i+1;j<pos.size();j++)
 	       pos[j] = pos[i];
@@ -92,6 +95,7 @@ void WorkspaceObject::clonePosAt(int i, WO::Direction d)
 
 void WorkspaceObject::cloneScaleAt(int i, WO::Direction d)
 {
+     i = i-start;
      if(d == WO::Further)
 	  for(int j=i+1;j<scale.size();j++)
 	       scale[j] = scale[i];
