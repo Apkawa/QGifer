@@ -33,14 +33,14 @@ public:
      GifWidget(QSettings* s);
      virtual ~GifWidget();
      void addFrame(const QImage& f, ColorMapObject* map = NULL);
-     void setColorRes(int res){gif.setColorRes(res);}
+     void setColorRes(int res){gif->setColorRes(res);}
      void suggestName(const QString& name){suggestedName = name;}
      void saveGif(const QString& gif);
 signals:
      void gifSaved(const QString&);
 
 private:
-     QGifCreator gif;
+     QGifCreator* gif;
      bool reversePlay;
      ColorMapObject* palette;
      QSettings* set;

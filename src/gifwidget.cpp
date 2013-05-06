@@ -28,20 +28,21 @@ GifWidget::GifWidget(QSettings* s): timerId(-1), currentFrame(-1), reversePlay(f
      setupUi(this);
      set = s;
      createActions();
+     gif = new QGifCreator();
 }
 
 GifWidget::~GifWidget()
 {
-
+     delete gif;
 }
 
 void GifWidget::addFrame(const QImage& f, ColorMapObject* map)
 {
      QImage i(f);
      i = i.mirrored().convertToFormat(QImage::Format_RGB888);
-     gif.resize(i.width(),i.height());
-     if(map) gif.addPalette(map);
-     gif.prepareFrame(&i, map);
+     gif->resize(i.width(),i.height());
+     if(map) gif->addPalette(map);
+     gif->prepareFrame(&i, map);
      prevFrames.append(i.mirrored());
      currentFrame = 0;
 }
@@ -110,14 +111,14 @@ void GifWidget::save()
 void GifWidget::saveGif(const QString& filename)
 {
      pause();
-     gif.setDuration((double)intervalBox->value()/1000);
+     gif->setDuration((double)intervalBox->value()/1000);
      if(reverseBox->isChecked())
-	  gif.appendReversedCopy();
-     if(!gif.save(filename.toStdString().c_str(),
+	  gif->appendReversedCopy();
+     if(!gif->save(filename.toStdString().c_str(),
 		  saveEveryBox->isChecked() ? seBox->value() : 1))
      {
 	  QMessageBox::critical(this,tr("Error"),tr("Unexpected error while saving GIF file!"));
-	  PrintGifError();
+	  //PrintGifError(); przeniesione do save
      }
 
      emit gifSaved(filename);

@@ -776,6 +776,10 @@ p, li { white-space: pre-wrap; }
      <property name="text">
       <string>Close</string>
      </property>
+     <property name="icon">
+      <iconset resource="../res.qrc">
+       <normaloff>:/res/ok.png</normaloff>:/res/ok.png</iconset>
+     </property>
     </widget>
    </item>
    <item row="2" column="0" colspan="3">

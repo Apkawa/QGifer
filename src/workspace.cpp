@@ -98,22 +98,24 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	  {
 	       const QRect& r = o->previewRect();
 	       //qDebug() << "checking cpos: " << cpos << ", over o rect: " << r;
-	       if(o->currentMode() == WO::Moving)
+	       if(o->currentMode() == WO::Moving && o == hoveredObject)
 	       {
 		    o->setPosAt(frameIndex, 
 				(float)cpos.x()/(float)image.width() - dx, 
 				(float)cpos.y()/(float)image.height() - dy);
 		    update();
+		    break;
 	       }
-	       else if(o->currentMode() == WO::XRScaling) //skalowanie w prawo
+	       else if(o->currentMode() == WO::XRScaling && o == hoveredObject) //skalowanie w prawo
 	       {
 		    float ncx = (float)cpos.x()/(float)image.width();
 		    int newwidth = ncx*origSize.width()-o->posAt(frameIndex).x*origSize.width();
 		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(), 
 				  o->scaleAt(frameIndex).h);
 		    update();
+		    break;
 	       }
-	       else if(o->currentMode() == WO::XLScaling) //skalowanie w lewo
+	       else if(o->currentMode() == WO::XLScaling && o == hoveredObject) //skalowanie w lewo
 	       {
 		    float ncx = (float)cpos.x()/(float)image.width();
 		    int newwidth = coSize.width()+(clickPos.x()-origSize.width()*ncx);
@@ -121,16 +123,18 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 			 o->scaleAt(frameIndex).h);
 		    o->setPosAt(frameIndex, ncx, o->posAt(frameIndex).y);
 		    update();
+		    break;
 	       }
-	       else if(o->currentMode() == WO::YBScaling) //skalowanie w dol
+	       else if(o->currentMode() == WO::YBScaling && o == hoveredObject) //skalowanie w dol
 	       {
 		    float ncy = (float)cpos.y()/(float)image.height();
 		    int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
 				  (float)newheight/(float)o->originalSize().height());
 		    update();
+		    break;
 	       }
-	       else if(o->currentMode() == WO::YTScaling) //skalowanie w gore
+	       else if(o->currentMode() == WO::YTScaling && o == hoveredObject) //skalowanie w gore
 	       {
 		    float ncy = (float)cpos.y()/(float)image.height();
 		    int newheight = coSize.height()+(clickPos.y()-origSize.height()*ncy);
@@ -138,8 +142,10 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 				  (float)newheight/(float)o->originalSize().height());
 		    o->setPosAt(frameIndex, o->posAt(frameIndex).x, ncy);
 		    update();
+		    break;
 	       }
-	       else if(o->currentMode() == WO::XYScaling) //skalowanie w dół i prawo z proporcjami
+	       else if(o->currentMode() == WO::XYScaling 
+		       && o == hoveredObject) //skalowanie w dół i prawo z proporcjami
 	       {
 		    float ncx = (float)cpos.x()/(float)image.width();
 		    int newwidth = ncx*origSize.width()-o->posAt(frameIndex).x*origSize.width();
@@ -158,6 +164,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
 				  (float)newheight/(float)o->originalSize().height());
 		    update();
+		    break;
 
 	       }
 	       else if (cpos.x() > r.x()+r.width()-WOSCALE_PX &&  //prawy dolny rog
@@ -201,11 +208,12 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 		    hoverObject(i, Qt::SizeVerCursor);
 		    break;
 	       }
-	       else if(cpos.x() > r.x() && cpos.x() < r.x()+r.width() &&
+	       else if(cpos.x() > r.x() && cpos.x() < r.x()+r.width() && //nad obiektem
 		  cpos.y() > r.y() && cpos.y() < r.y()+r.height())
 	       {
 		    o->setMode(WO::Movable);
 		    hoverObject(i, Qt::SizeAllCursor);
+		    break;
 	       }
 	       else if(o->currentMode() != WO::Normal)
 	       {

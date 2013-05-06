@@ -27,5 +27,9 @@
     <file>res/multislider/b.png</file>
     <file>res/multislider/bar.png</file>
     <file>res/multislider/midbar.png</file>
+    <file>res/insert-text.png</file>
+    <file>res/insert-object.png</file>
+    <file>res/ok.png</file>
+    <file>res/cancel.png</file>
   </qresource>
 </RCC>

@@ -93,10 +93,12 @@ void PreviewWidget::applyCorrection(QImage* img, int h, int s, int v)
 	       //qDebug() << "before correction, rgb:" << data[i] << ", " << data[i+1] << ", " <<data[i+2];
 	       QColor c(data[i],data[i+1],data[i+2]);
 	       c.getHsv(&ch, &cs, &cv);
-	       ch = ch+h > 359 ? 359 : ch+h < 0 ? 0 : ch+h;
-	       cs = cs+s > 255 ? 255 : cs+s < 0 ? 0 : cs+s;
-	       cv = cv+v > 255 ? 255 : cv+v < 0 ? 0 : cv+v;
-
+	       // ch = ch+h > 359 ? 359 : ch+h < 0 ? 0 : ch+h;
+	       // cs = cs+s > 255 ? 255 : cs+s < 0 ? 0 : cs+s;
+	       // cv = cv+v > 255 ? 255 : cv+v < 0 ? 0 : cv+v;
+	       ch = qBound(0,ch+h,359);
+	       cs = qBound(0,cs+s,255);
+	       cv = qBound(0,cv+v,255);
 	       //qDebug() << "correction, hsv:" << ch << ", " << cs << ", " <<cv;
 
 	       c.setHsv(ch,cs,cv);
@@ -105,6 +107,7 @@ void PreviewWidget::applyCorrection(QImage* img, int h, int s, int v)
 	       data[i+1] = c.green();
 	       data[i+2] = c.blue();
 	       
+
 	       //qDebug() << "after correction, rgb:" << data[i] << ", " << data[i+1] << ", " <<data[i+2];
 	  }
      }

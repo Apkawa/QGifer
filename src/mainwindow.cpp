@@ -402,7 +402,7 @@ QImage MainWindow::finalFrame(long f)
 
      ow = widthBox->value();
      oh = heightBox->value();
-     qDebug() << "final frame, ow x oh: " << ow << " x " << oh;
+     //qDebug() << "final frame, ow x oh: " << ow << " x " << oh;
      if(f != player->getCurrentPos())
 	  player->seek(f);
      QSize s = player->getCurrentFrame()->size();
@@ -441,7 +441,7 @@ QImage MainWindow::finalFrame(long f)
      				      hueSlider->value(),
      				      satSlider->value(),
      				      valSlider->value());
-	  qDebug() << "corrected image format: " << frame.format();
+	  //qDebug() << "corrected image format: " << frame.format();
      }
 
      connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
@@ -574,10 +574,10 @@ void MainWindow::varPaletteBoxChanged(int s)
 void MainWindow::openPalette()
 {
      //test
-     // qDebug() << "going to add object...";
-     // player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/trollface100.png"),0,50);
-     // player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/ecoicon.png"),0,50);
-     // return;
+     qDebug() << "going to add object...";
+     player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/trollface100.png"),0,50);
+     player->getWorkspace()->addObject(QImage("/home/chodak/obrazy/ecoicon.png"),0,50);
+     return;
 
      QString path = QFileDialog::getOpenFileName(
 	  this, tr("Open QGifer palette file"), 

@@ -696,6 +696,8 @@
     <addaction name="separator"/>
     <addaction name="actionSetAsStart"/>
     <addaction name="actionSetAsStop"/>
+    <addaction name="actionInsertObject"/>
+    <addaction name="actionInsertText"/>
    </widget>
    <widget class="QMenu" name="menu_Program">
     <property name="title">
@@ -737,6 +739,9 @@
    <addaction name="actionUpdatePalette"/>
    <addaction name="actionSetAsStart"/>
    <addaction name="actionSetAsStop"/>
+   <addaction name="separator"/>
+   <addaction name="actionInsertObject"/>
+   <addaction name="actionInsertText"/>
   </widget>
   <widget class="QToolBar" name="playerToolBar">
    <property name="windowTitle">
@@ -973,6 +978,30 @@
    </property>
    <property name="text">
     <string>Sa&amp;ve palette...</string>
+   </property>
+  </action>
+  <action name="actionInsertObject">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/insert-object.png</normaloff>:/res/insert-object.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insert &amp;object...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionInsertText">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/insert-text.png</normaloff>:/res/insert-text.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insert &amp;text...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
  </widget>

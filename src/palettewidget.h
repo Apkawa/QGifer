@@ -32,7 +32,7 @@ public:
      PaletteWidget(QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~PaletteWidget();
      ColorMapObject* map() {return palette;}
-     ColorMapObject* mapCopy() {return MakeMapObject(size, palette->Colors);}
+     ColorMapObject* mapCopy() {return MakeMapObject(palette->ColorCount, palette->Colors);}
      bool fromImage(const QImage& img, int palette_size, float mindiff = 2);
      void setColumnCount(int cc){cols = cc;}
      bool toFile(const QString& path);
