@@ -2,7 +2,7 @@
 #include <QDebug>
 
 WorkspaceObject::WorkspaceObject(QObject* parent):
-     QObject(parent),start(0),mode(WO::Normal)
+     QObject(parent),start(0),stop(0),mode(WO::Normal)
 {
 
 }
@@ -12,41 +12,80 @@ WorkspaceObject::~WorkspaceObject()
 
 }
 
-void WorkspaceObject::setPosAt(int i, double x, double y)
+void WorkspaceObject::setRange(int startFrame, int stopFrame)
 {
-     pos[i-start].x = x;
-     pos[i-start].y = y;
-}
 
-void WorkspaceObject::adjustPosList()
-{
-     int d = stop-start+1;
-     if(d<=0)
-	  return;
-     
-     //pozycja
-     while(d > pos.size())
-     {
-	  if(pos.size())
-	       pos.append(pos.last());
-	  else
-	       pos.append(WOPos());
+     //pozycja 
+     int startDiff = startFrame-start;
+     while(startDiff > 0 && pos.size()){
+	  pos.removeFirst();
+	  startDiff--;
      }
-     while(d < pos.size())
-	  pos.removeLast();  
+     while(startDiff < 0){
+	  pos.prepend( pos.size() ? pos.at(0) : WOPos() );
+	  startDiff++;
+     }
+
+     int stopDiff = stopFrame-stop;
+     while(stopDiff > 0){
+	  pos.append( pos.size() ? pos.at(pos.size()-1) : WOPos() );
+	  stopDiff--;
+     }
+     while(stopDiff < 0 && pos.size()){
+	  pos.removeLast();
+	  stopDiff++;
+     }
 
      //skala
-     while(d > scale.size())
-     {
-	  if(scale.size())
-	       scale.append(scale.last());
-	  else
-	       scale.append(WOSize(1,1));
+     startDiff = startFrame-start;
+     while(startDiff > 0 && scale.size()){
+	  scale.removeFirst();
+	  startDiff--;
      }
-     while(d < scale.size())
-	  scale.removeLast();
+     while(startDiff < 0){
+	  scale.prepend( scale.size() ? scale.at(0) : WOSize() );
+	  startDiff++;
+     }
 
-     qDebug() << "ilosc pozycji: " << pos.size() << ", ilosc skal: " << scale.size();
+     stopDiff = stopFrame-stop;
+     while(stopDiff > 0){
+	  scale.append( scale.size() ? scale.at(scale.size()-1) : WOSize() );
+	  stopDiff--;
+     }
+     while(stopDiff < 0 && scale.size()){
+	  scale.removeLast();
+	  stopDiff++;
+     }
+     
+     start = startFrame;
+     stop = stopFrame;
+
+
+     // int d = stop-start+1;
+     // if(d<=0)
+     // 	  return;
+     
+     // //pozycja
+     // while(d > pos.size())
+     // {
+     // 	  if(pos.size())
+     // 	       pos.append(pos.last());
+     // 	  else
+     // 	       pos.append(WOPos());
+     // }
+     // while(d < pos.size())
+     // 	  pos.removeLast();  
+
+     // //skala
+     // while(d > scale.size())
+     // {
+     // 	  if(scale.size())
+     // 	       scale.append(scale.last());
+     // 	  else
+     // 	       scale.append(WOSize(1,1));
+     // }
+     // while(d < scale.size())
+     // 	  scale.removeLast();
 }
 
 const QRect& WorkspaceObject::updatePreviewRect(
@@ -76,6 +115,7 @@ const QRect& WorkspaceObject::updatePreviewRect(
 
 void WorkspaceObject::setScaleAt(int i, float xs, float ys)
 {
+     i -= start;
      if(xs <= 0) xs = 1/(float)img.width();
      if(ys <= 0) ys = 1/(float)img.height();
      scale[i].w = xs; 

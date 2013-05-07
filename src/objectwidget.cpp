@@ -41,6 +41,9 @@ void ObjectWidget::init()
      connect(imgButton, SIGNAL(clicked()), this, SLOT(imgSelect()));
      connect(curFromButton, SIGNAL(clicked()), this, SLOT(fromUpdate()));
      connect(curToButton, SIGNAL(clicked()), this, SLOT(toUpdate()));
+     connect(fromBox, SIGNAL(valueChanged(int)), this, SLOT(validate()));     
+     connect(toBox, SIGNAL(valueChanged(int)), this, SLOT(validate()));
+     connect(imgEdit, SIGNAL(textChanged(const QString&)), this, SLOT(validate()));
 }
 
 void ObjectWidget::insert()
@@ -54,8 +57,7 @@ void ObjectWidget::apply()
      if(!object)
 	  return;
      object->setImage(imgEdit->text());
-     object->setStartFrame(fromBox->value());
-     object->setStopFrame(toBox->value());
+     object->setRange(fromBox->value(), toBox->value());
      close();
 }
 

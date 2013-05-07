@@ -16,7 +16,7 @@ WOPos(double ix = 0, double iy = 0):x(ix),y(iy){}
 
 struct WOSize
 {
-WOSize(double iw = 0, double ih = 0):w(iw),h(ih){}
+WOSize(double iw = 1, double ih = 1):w(iw),h(ih){}
      double w;
      double h;
 };
@@ -39,14 +39,24 @@ public:
      QImage* image() {return &img;}
      const QString& getImagePath() const {return imagePath;}
      const WOPos& posAt(int i) const {return pos.at(i-start);}
-     void setPosAt(int i, double x, double y);
-     void setStartFrame(int s) {start = s;adjustPosList();}
-     void setStopFrame(int s) {stop = s;adjustPosList();}
+     void setPosAt(int i, double x, double y){pos[i-start].x = x; pos[i-start].y = y;}
+     /* void setStartFrame(int s) {start = s;adjustPosList();} */
+     /* void setStopFrame(int s) {stop = s;adjustPosList();} */
+
+     /**
+      * Ustawia nowy zakres wyświetlania obiektu. Jeżeli parametr przyjmuje
+      * wartość negatywną, zostanie zastąpiony aktualną klatką startową/końcową.
+      * 
+      * @param startFrame Pierwsza klatka na której wyświetlany będzie obiekt
+      * @param stopFrame Pierwsza klatka na której wyświetlany będzie obiekt
+      */
+     void setRange(int startFrame = -1, int stopFrame = -1);
+
      int getStart() const {return start;}
      int getStop() const {return stop;}
      QSize originalSize() const {return img.size();}
-     QSize sizeAt(int i) const {return QSize(img.size().width()*scale.at(i).w,
-					     img.size().height()*scale.at(i).h);}
+     QSize sizeAt(int i) const {return QSize(img.size().width()*scale.at(i-start).w,
+					     img.size().height()*scale.at(i-start).h);}
      const WOSize& scaleAt(int i) const {return scale.at(i-start);}
      void setScaleAt(int i, float xs, float ys);
      void setPreviewRect(const QRect& r) {pwRect = r;}
@@ -59,8 +69,6 @@ public:
      void clonePosAt(int i, WO::Direction d);
      void cloneScaleAt(int i, WO::Direction d);
 private:
-	  
-     void adjustPosList();
      WO::Mode mode;
      QRect pwRect;
      QImage img;

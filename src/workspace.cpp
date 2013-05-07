@@ -300,15 +300,16 @@ void Workspace::addObject(const QString& imgPath, int startFrame, int stopFrame)
      qDebug() << "adding object...";
      WorkspaceObject* w = new WorkspaceObject();
      w->setImage(imgPath);
-     w->setStartFrame(startFrame);
-     w->setStopFrame(stopFrame);
+     // w->setStartFrame(startFrame);
+     // w->setStopFrame(stopFrame);
+     w->setRange(startFrame, stopFrame);
      objects.prepend(w);
      qDebug() << "...done!";
 }
 
 void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
 {
-     qDebug() << "drawing objects...";
+     //qDebug() << "drawing objects...";
      //obiekty
      QPainter p(pd);
      if(frameIndex >= 0)
@@ -349,7 +350,7 @@ void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
 		    p.fillRect(r.x()+r.width()-6, r.y()+r.height()-6, 7, 7, QColor(Qt::yellow));
 	       }
 	  }
-     qDebug() << "...done!";
+     //qDebug() << "...done!";
 }
 
 void Workspace::execObjectMenu(const QPoint& p)
