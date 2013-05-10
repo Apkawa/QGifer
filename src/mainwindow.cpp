@@ -397,7 +397,9 @@ void MainWindow::lock(bool l)
      actionExtractGif->setEnabled(l);
      actionOpenPalette->setEnabled(l);
      actionSavePalette->setEnabled(l);
-
+     actionInsertText->setEnabled(l);
+     actionInsertObject->setEnabled(l);
+     varPaletteBoxChanged(varPaletteBox->checkState());
 }
 
 QImage MainWindow::finalFrame(long f)

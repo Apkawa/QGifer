@@ -112,16 +112,18 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       }
 	       else if(o->currentMode() == WO::XRScaling && o == hoveredObject) //skalowanie w prawo
 	       {
-		    float ncx = (float)cpos.x()/(float)image.width();
+		    float ncx = ((float)cpos.x()-((1-zoom)/2*width()))/(float)image.width();
 		    int newwidth = ncx*origSize.width()-o->posAt(frameIndex).x*origSize.width();
-		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(), 
+		    double scale = (float)newwidth/(float)o->originalSize().width();
+
+		    o->setScaleAt(frameIndex, scale, 
 				  o->scaleAt(frameIndex).h);
 		    update();
 		    break;
 	       }
 	       else if(o->currentMode() == WO::XLScaling && o == hoveredObject) //skalowanie w lewo
 	       {
-		    float ncx = (float)cpos.x()/(float)image.width();
+		    float ncx = ((float)cpos.x()-((1-zoom)/2*width()))/(float)image.width();
 		    int newwidth = coSize.width()+(clickPos.x()-origSize.width()*ncx);
 		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(),
 			 o->scaleAt(frameIndex).h);
@@ -131,7 +133,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       }
 	       else if(o->currentMode() == WO::YBScaling && o == hoveredObject) //skalowanie w dol
 	       {
-		    float ncy = (float)cpos.y()/(float)image.height();
+		    float ncy = ((float)cpos.y()-((1-zoom)/2*height()))/(float)image.height();
 		    int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
 				  (float)newheight/(float)o->originalSize().height());
@@ -140,7 +142,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       }
 	       else if(o->currentMode() == WO::YTScaling && o == hoveredObject) //skalowanie w gore
 	       {
-		    float ncy = (float)cpos.y()/(float)image.height();
+		    float ncy = ((float)cpos.y()-((1-zoom)/2*height()))/(float)image.height();
 		    int newheight = coSize.height()+(clickPos.y()-origSize.height()*ncy);
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w, 
 				  (float)newheight/(float)o->originalSize().height());
@@ -151,13 +153,13 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       else if(o->currentMode() == WO::XYScaling 
 		       && o == hoveredObject) //skalowanie w dół i prawo z proporcjami
 	       {
-		    float ncx = (float)cpos.x()/(float)image.width();
+		    float ncx = ((float)cpos.x()-((1-zoom)/2*width()))/(float)image.width();
 		    int newwidth = ncx*origSize.width()-o->posAt(frameIndex).x*origSize.width();
-		    float ncy = (float)cpos.y()/(float)image.height();
+		    float ncy = ((float)cpos.y()-((1-zoom)/2*height()))/(float)image.height();
 		    int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
 		 
 		    float ratio = (float)coSize.width()/(float)coSize.height();
-		    qDebug() << "ratio: " << ratio;
+		    //qDebug() << "ratio: " << ratio;
 		    //float ratio = (float)o->originalSize.width()/(float)o->originalSize.height();
 		    // if(newwidth > newheight)
 			 newheight = newwidth/ratio;
