@@ -9,7 +9,7 @@ class ObjectWidget : public QWidget, Ui::ObjectWidget
 {
      Q_OBJECT;
 public:
-     ObjectWidget(Workspace* ws, FramePlayer* fp, QWidget* parent=0, Qt::WindowFlags f=0);
+     ObjectWidget(FramePlayer* fp, QWidget* parent=0, Qt::WindowFlags f=0);
      ObjectWidget(WorkspaceObject* wo, FramePlayer* fp, QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~ObjectWidget();
      void setPlayer(FramePlayer* p);

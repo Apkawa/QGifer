@@ -17,9 +17,10 @@ ObjectWidget::ObjectWidget(WorkspaceObject* wo, FramePlayer* fp, QWidget* parent
      connect(posButton, SIGNAL(clicked()), this, SLOT(apply()));   
 }
 
-ObjectWidget::ObjectWidget(Workspace* ws, FramePlayer* fp, QWidget* parent, Qt::WindowFlags f): 
-     wspace(ws), object(NULL)
+ObjectWidget::ObjectWidget(FramePlayer* fp, QWidget* parent, Qt::WindowFlags f): 
+     object(NULL)
 {
+     wspace = fp->getWorkspace();
      init();
      setPlayer(fp);
      setWindowTitle(tr("Object properties"));

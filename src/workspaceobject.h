@@ -5,6 +5,7 @@
 #include <QImage>
 #include <QList>
 #include <QRect>
+#include <QDebug>
 
 
 struct WOPos
@@ -34,8 +35,9 @@ class WorkspaceObject : public QObject
 public:
      WorkspaceObject(QObject* parent = NULL);
      virtual ~WorkspaceObject();
-
+     virtual QString getTypeName() const {return "WorkspaceObject";}
      void setImage(const QString& imgpath) {img = QImage(imgpath); imagePath = imgpath;}
+     void setImage(const QImage& i) {img = i; imagePath = "";}
      QImage* image() {return &img;}
      const QString& getImagePath() const {return imagePath;}
      const WOPos& posAt(int i) const {return pos.at(i-start);}

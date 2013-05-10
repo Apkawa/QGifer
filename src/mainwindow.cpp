@@ -115,7 +115,9 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
+     qDebug() << "mw destructor..";
      delete set;
+     qDebug() << "destructor ok";
 }
 
 void MainWindow::openVideo()
@@ -610,7 +612,7 @@ void MainWindow::savePalette()
 
 void MainWindow::insertObject()
 {
-     ObjectWidget* ow = new ObjectWidget(player->getWorkspace(), player);
+     ObjectWidget* ow = new ObjectWidget(player);
      ow->setAttribute(Qt::WA_DeleteOnClose);
      ow->move(x()+width()*0.3, y()+height()*0.2);
      ow->show();
@@ -618,13 +620,26 @@ void MainWindow::insertObject()
 
 void MainWindow::insertText()
 {
-
+     TextWidget* tw = new TextWidget(player);
+     tw->setAttribute(Qt::WA_DeleteOnClose);
+     tw->move(x()+width()*0.3, y()+height()*0.2);
+     tw->show();
 }
 
 void MainWindow::showProperties(WorkspaceObject* o)
 {
-     ObjectWidget* ow = new ObjectWidget(o,player);
-     ow->setAttribute(Qt::WA_DeleteOnClose);
-     ow->move(x()+width()*0.3, y()+height()*0.2);
-     ow->show();
+     if(o->getTypeName() == "TextObject")
+     {
+	  TextWidget* tw = new TextWidget(static_cast<TextObject*>(o),player);
+	  tw->setAttribute(Qt::WA_DeleteOnClose);
+	  tw->move(x()+width()*0.3, y()+height()*0.2);
+	  tw->show();
+     }
+     else
+     {
+	  ObjectWidget* ow = new ObjectWidget(o,player);
+	  ow->setAttribute(Qt::WA_DeleteOnClose);
+	  ow->move(x()+width()*0.3, y()+height()*0.2);
+	  ow->show();
+     }
 }

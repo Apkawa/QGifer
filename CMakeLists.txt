@@ -97,6 +97,8 @@ src/aboutdialog.h
 src/workspace.h
 src/workspaceobject.h
 src/objectwidget.h
+src/textwidget.h
+src/textobject.h
 )
 
 SET (SOURCES 
@@ -115,6 +117,8 @@ src/aboutdialog.cpp
 src/workspace.cpp
 src/workspaceobject.cpp
 src/objectwidget.cpp
+src/textwidget.cpp
+src/textobject.cpp
 )
 
 SET (RESOURCES 
@@ -129,6 +133,7 @@ ui/optimizerdialog.ui
 ui/converterdialog.ui
 ui/aboutdialog.ui
 ui/objectwidget.ui
+ui/textwidget.ui
 )
 
 QT4_WRAP_CPP(HEADERS_MOC ${QT_HEADERS})

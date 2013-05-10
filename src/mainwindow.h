@@ -26,6 +26,7 @@
 #include "optimizerdialog.h"
 #include "converterdialog.h"
 #include "aboutdialog.h"
+#include "textwidget.h"
 #include "ui_mainwindow.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow

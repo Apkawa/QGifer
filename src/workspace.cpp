@@ -3,7 +3,8 @@
 #include <QMessageBox>
 
 Workspace::Workspace(QWidget* parent, Qt::WindowFlags f):
-     PreviewWidget(parent,f),useMr(false),frameIndex(-1),hoveredObject(NULL),hoIndex(-1)
+     PreviewWidget(parent,f),useMr(false),frameIndex(-1),hoveredObject(NULL),
+     hoIndex(-1), lmbPressed(false)
 {
      canDrag = drag = mrNone;
 }
@@ -91,14 +92,17 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	  }
      }
 
+     if(canDrag == mrNone)
      for(int i=0;i<objects.size();i++)
      {
 	  WorkspaceObject* o = objects[i];
+	  if(lmbPressed && o != hoveredObject)
+	       continue;
 	  if(frameIndex >= o->getStart() && frameIndex <= o->getStop())
 	  {
 	       const QRect& r = o->previewRect();
 	       //qDebug() << "checking cpos: " << cpos << ", over o rect: " << r;
-	       if(o->currentMode() == WO::Moving && o == hoveredObject)
+	       if(o->currentMode() == WO::Moving && o == hoveredObject) //przesuwanie
 	       {
 		    o->setPosAt(frameIndex, 
 				(float)cpos.x()/(float)image.width() - dx, 
@@ -167,6 +171,9 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 		    break;
 
 	       }
+
+               // -------- podswietlanie i zmiana kursora ----------------
+	       
 	       else if (cpos.x() > r.x()+r.width()-WOSCALE_PX &&  //prawy dolny rog
 			cpos.x() < r.x()+r.width()+WOSCALE_PX && 
 			cpos.y() > r.y()+r.height()-WOSCALE_PX &&
@@ -232,6 +239,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 void Workspace::mousePressEvent(QMouseEvent* e)
 {
      drag=canDrag;
+     lmbPressed = true;
      if(hoveredObject && e->button() == Qt::LeftButton)
      {
 	  dx = (float)cpos.x()/(float)image.width() - hoveredObject->posAt(frameIndex).x;
@@ -245,12 +253,13 @@ void Workspace::mousePressEvent(QMouseEvent* e)
 
 void Workspace::mouseReleaseEvent(QMouseEvent* e)
 {
+     drag = mrNone;
+     lmbPressed = false;
      emit clicked(normalizedX(),normalizedY());
      if(e->button() == Qt::RightButton && hoveredObject)
 	  execObjectMenu(e->globalPos());
      else
      {
-	  drag = mrNone;
 	  if(hoveredObject)
 	       hoveredObject->setMode(WO::Movable);
      }

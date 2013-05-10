@@ -14,6 +14,11 @@ WorkspaceObject::~WorkspaceObject()
 
 void WorkspaceObject::setRange(int startFrame, int stopFrame)
 {
+     if(startFrame < 0)
+	  startFrame = start;
+     if(stopFrame < 0)
+	  stopFrame = stop;
+     const int newSize = stopFrame-startFrame+1;
 
      //pozycja 
      int startDiff = startFrame-start;
@@ -27,10 +32,12 @@ void WorkspaceObject::setRange(int startFrame, int stopFrame)
      }
 
      int stopDiff = stopFrame-stop;
-     while(stopDiff > 0){
+     while(stopDiff >= 0 && pos.size() < newSize){
 	  pos.append( pos.size() ? pos.at(pos.size()-1) : WOPos() );
 	  stopDiff--;
      }
+     
+     stopDiff = stopFrame-stop;
      while(stopDiff < 0 && pos.size()){
 	  pos.removeLast();
 	  stopDiff++;
@@ -48,10 +55,12 @@ void WorkspaceObject::setRange(int startFrame, int stopFrame)
      }
 
      stopDiff = stopFrame-stop;
-     while(stopDiff > 0){
+     while(stopDiff >= 0 && scale.size() < newSize){
 	  scale.append( scale.size() ? scale.at(scale.size()-1) : WOSize() );
 	  stopDiff--;
      }
+
+     stopDiff = stopFrame-stop;
      while(stopDiff < 0 && scale.size()){
 	  scale.removeLast();
 	  stopDiff++;
@@ -60,32 +69,6 @@ void WorkspaceObject::setRange(int startFrame, int stopFrame)
      start = startFrame;
      stop = stopFrame;
 
-
-     // int d = stop-start+1;
-     // if(d<=0)
-     // 	  return;
-     
-     // //pozycja
-     // while(d > pos.size())
-     // {
-     // 	  if(pos.size())
-     // 	       pos.append(pos.last());
-     // 	  else
-     // 	       pos.append(WOPos());
-     // }
-     // while(d < pos.size())
-     // 	  pos.removeLast();  
-
-     // //skala
-     // while(d > scale.size())
-     // {
-     // 	  if(scale.size())
-     // 	       scale.append(scale.last());
-     // 	  else
-     // 	       scale.append(WOSize(1,1));
-     // }
-     // while(d < scale.size())
-     // 	  scale.removeLast();
 }
 
 const QRect& WorkspaceObject::updatePreviewRect(
