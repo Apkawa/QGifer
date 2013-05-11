@@ -81,22 +81,35 @@ void TextWidget::paintEvent(QPaintEvent*)
 
 QImage TextWidget::renderText() const
 {
-     if(lineEdit->text().isEmpty())
-	  return QImage();
-     QPen pen;
-     pen.setColor(QColor(ocEdit->text()));
-     pen.setWidthF(outlineBox->value());
-    
      QFont font = fontComboBox->currentFont();
      font.setPointSize(sizeBox->value());
      font.setItalic(italicBox->isChecked());
      font.setBold(boldBox->isChecked());
 
+     return TextWidget::renderText(lineEdit->text(), 
+		       font, 
+		       QColor(tcEdit->text()),
+		       QColor(ocEdit->text()),
+		       outlineBox->value());
+}
+
+QImage TextWidget::renderText(const QString& text,
+			      const QFont& font,
+			      const QColor& textColor,
+			      const QColor& outlineColor,
+			      int outlineWidth)
+{
+     if(text.isEmpty())
+	  return QImage();
+     QPen pen;
+     pen.setColor(outlineColor);
+     pen.setWidthF(outlineWidth);
+
      QFontMetrics fm(font);
-     QRect r = fm.boundingRect(lineEdit->text());
+     QRect r = fm.boundingRect(text);
 
      QPainterPath path;
-     path.addText(r.width()*0.05, fm.height(), font, lineEdit->text());
+     path.addText(r.width()*0.05, fm.height(), font, text);
 
      //QPixmap pix(QSize(path.boundingRect().width(), path.boundingRect().height()));
      QPixmap pix(QSize(r.width()*1.1f, r.height()*1.3f));
@@ -108,10 +121,16 @@ QImage TextWidget::renderText() const
 
      p.setFont(font);
      p.setPen(pen);
-     p.setBrush(QColor(tcEdit->text()));
+     p.setBrush(textColor);
      p.drawPath(path);
 
      return img;
+}
+
+void TextWidget::renderText(TextObject* o)
+{
+     o->setImage( renderText(o->getText(), o->getFont(), o->getTextColor(), 
+			     o->getOutlineColor(), o->getOutlineWidth()) );
 }
 
 void TextWidget::insert()

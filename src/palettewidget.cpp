@@ -76,17 +76,19 @@ void PaletteWidget::mouseReleaseEvent(QMouseEvent* e)
 {
      if(hlIndex == -1 || hlIndex >= size || !palette)
 	  return;
+
+     int i = hlIndex; //hlIndex zmieni sie w czasie wyswietlania dialogu
      QColor c = QColorDialog::getColor(QColor(
-					    palette->Colors[hlIndex].Red,
-					    palette->Colors[hlIndex].Green,
-					    palette->Colors[hlIndex].Blue));
+					    palette->Colors[i].Red,
+					    palette->Colors[i].Green,
+					    palette->Colors[i].Blue));
+
      if(c.isValid())
      {
-	  palette->Colors[hlIndex].Red = c.red();
-	  palette->Colors[hlIndex].Green = c.green();
-	  palette->Colors[hlIndex].Blue = c.blue();
+     	  palette->Colors[i].Red = c.red();
+     	  palette->Colors[i].Green = c.green();
+     	  palette->Colors[i].Blue = c.blue();
      }
-       
 }
 
 void PaletteWidget::mouseMoveEvent(QMouseEvent* e)
@@ -114,7 +116,9 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
 
      if(palette && mindiff > 1)
      {
+	  qDebug() << "deleting old palette, size: " << size << ", colors: " << palette->ColorCount;
 	  FreeMapObject(palette);
+	  qDebug() << "done";
 	  palette = NULL;
      }
 
@@ -191,31 +195,20 @@ float PaletteWidget::difference(ColorMapObject* a, ColorMapObject* b)
      return (float)same/(float)size;
 }
 
-bool PaletteWidget::toFile(const QString& path)
+
+QString PaletteWidget::toString()
 {
-     if(!palette)
-	  return false;
-     QFile file(path);
-     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-         return false;
-
-     QTextStream out(&file);
+     QString str;
      for(int i=0;i<palette->ColorCount;i++)
-	  out << palette->Colors[i].Red << ","
-	      << palette->Colors[i].Green << ","
-	      << palette->Colors[i].Blue << ";";
-     file.close();
-
-     return true;
+	  str += QString::number(palette->Colors[i].Red) + ","
+	       + QString::number(palette->Colors[i].Green) + ","
+	       + QString::number(palette->Colors[i].Blue) + ";";
+     return str;
 }
 
-bool PaletteWidget::fromFile(const QString& path)
+bool PaletteWidget::fromString(const QString& str)
 {
-     QFile file(path);
-     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-         return false;
-     
-     QStringList rgb = QString(file.readAll()).split(";", QString::SkipEmptyParts);
+     QStringList rgb = QString(str).split(";", QString::SkipEmptyParts);
      if(palette)
 	  FreeMapObject(palette);
      palette = MakeMapObject(rgb.size(), NULL);
@@ -236,3 +229,28 @@ bool PaletteWidget::fromFile(const QString& path)
      update();
      return true;
 }
+
+bool PaletteWidget::toFile(const QString& path)
+{
+     if(!palette)
+	  return false;
+     QFile file(path);
+     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+         return false;
+
+     QTextStream out(&file);
+     out << toString();
+     file.close();
+
+     return true;
+}
+
+bool PaletteWidget::fromFile(const QString& path)
+{
+     QFile file(path);
+     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+         return false;
+     
+     return fromString(file.readAll());
+}
+

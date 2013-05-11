@@ -19,6 +19,10 @@
 
 #include <QTimer>
 #include <QProgressDialog>
+#include <QXmlStreamWriter>
+#include <QXmlStreamReader>
+#include <QFile>
+#include <QTextStream>
 #include "mainwindow.h"
 #include "objectwidget.h"
 
@@ -66,6 +70,11 @@ MainWindow::MainWindow()
      connect(actionInsertObject, SIGNAL(triggered()), this, SLOT(insertObject()));
      connect(actionInsertText, SIGNAL(triggered()), this, SLOT(insertText()));
 
+     connect(actionNewProject, SIGNAL(triggered()), this, SLOT(newProject()));
+     connect(actionOpenProject, SIGNAL(triggered()), this, SLOT(openProject()));
+     connect(actionSaveProject, SIGNAL(triggered()), this, SLOT(saveProject()));
+     connect(actionSaveProjectAs, SIGNAL(triggered()), this, SLOT(saveProjectAs()));
+
      connect(actionOpenVideo, SIGNAL(triggered()), this, SLOT(openVideo()));
      connect(actionCloseVideo, SIGNAL(triggered()), player, SLOT(close()));
      connect(actionPlay, SIGNAL(triggered()), player, SLOT(play()));
@@ -107,10 +116,8 @@ MainWindow::MainWindow()
      connect(player->getWorkspace(), SIGNAL(marginsChanged()), this, SLOT(marginsChanged()));
      connect(player->getWorkspace(), SIGNAL(propertiesRequested(WorkspaceObject*)),
 	     this, SLOT(showProperties(WorkspaceObject*)));
-     //test
-     //openVideo("/home/chodak/rec/tkw540.avi");
      loadSettings();
-     lock(true);
+     newProject();
 }
 
 MainWindow::~MainWindow()
@@ -129,6 +136,7 @@ void MainWindow::openVideo()
      if(!path.isEmpty())
 	  if(!openVideo(path))
 	       QMessageBox::critical(this, tr("Error"),tr("The player failed to load the video file!"));
+     
 
      
 }
@@ -147,6 +155,7 @@ bool MainWindow::openVideo(const QString& path)
 	 set->setValue("last_video_dir",QFileInfo(path).absoluteDir().absolutePath());
 	 vidfile = path;
 	 lock(false);
+	 setChanged();
 	 return true;
      }
      startBox->setMaximum(0);
@@ -228,9 +237,8 @@ void MainWindow::extractGif()
 
 void MainWindow::updatePalette()
 {
-     qDebug() << "updating palette from frame " << player->getCurrentPos();
      paletteWidget->fromImage(finalFrame(player->getCurrentPos()), pow(2,paletteBox->value()));
-     qDebug() << "new palette color count: " << paletteWidget->map()->ColorCount;
+     setChanged();
 }
 
 void MainWindow::posAChanged(int v)
@@ -241,6 +249,7 @@ void MainWindow::posAChanged(int v)
 	  player->seek(v);
 	  updatePalette();
      }
+     setChanged();
      connect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
 }
 
@@ -248,6 +257,7 @@ void MainWindow::posBChanged(int v)
 {
      disconnect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
      stopBox->setValue(v);
+     setChanged();
      connect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
 }
 
@@ -308,6 +318,7 @@ void MainWindow::ratioChanged(int s)
      player->getWorkspace()->keepAspectRatio(s == Qt::Checked);
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
+     setChanged();
 }
 
 void MainWindow::smoothChanged(int s)
@@ -322,6 +333,7 @@ void MainWindow::applyMargins()
      *player->getWorkspace()->margins() = QMargins(
 	  leftSpin->value(),topSpin->value(),
 	  rightSpin->value(),bottomSpin->value()); 
+     setChanged();
      player->getWorkspace()->update();
 }
 
@@ -333,6 +345,7 @@ void MainWindow::marginsChanged()
      rightSpin->setValue(m->right());
      topSpin->setValue(m->top());
      bottomSpin->setValue(m->bottom());
+     setChanged();
      connectMargins();
 }
 
@@ -357,6 +370,7 @@ void MainWindow::marginBoxChanged(int s)
      player->getWorkspace()->enableMargins(s == Qt::Checked);
      applyMargins();
      player->getWorkspace()->update();
+     setChanged();
 }
 
 void MainWindow::correctionChanged()
@@ -373,6 +387,7 @@ void MainWindow::correctionChanged()
      				 satSlider->value(),
      				 valSlider->value());
      player->getWorkspace()->update();
+     setChanged();
 }
 
 void MainWindow::resetCorrection()
@@ -386,7 +401,9 @@ void MainWindow::lock(bool l)
 {
      l=!l;
      toolBox->setEnabled(l);
-     actionUpdatePalette->setEnabled(l);
+     multiSlider->setEnabled(l);
+     actionSaveProject->setEnabled(l);
+     actionSaveProjectAs->setEnabled(l);
      actionPlay->setEnabled(l);
      actionStop->setEnabled(l);
      actionPause->setEnabled(l);
@@ -395,11 +412,13 @@ void MainWindow::lock(bool l)
      actionSetAsStart->setEnabled(l);
      actionSetAsStop->setEnabled(l);
      actionExtractGif->setEnabled(l);
-     actionOpenPalette->setEnabled(l);
-     actionSavePalette->setEnabled(l);
      actionInsertText->setEnabled(l);
      actionInsertObject->setEnabled(l);
+
      varPaletteBoxChanged(varPaletteBox->checkState());
+     actionOpenPalette->setEnabled(l);
+     actionSavePalette->setEnabled(l);
+     actionUpdatePalette->setEnabled(l);
 }
 
 QImage MainWindow::finalFrame(long f)
@@ -484,6 +503,13 @@ void MainWindow::loadSettings()
      varPaletteBox->setChecked(set->value("var_palette",false).toBool());
      minDiffBox->setValue(set->value("vp_mindiff",40).toFloat());
      resetCorrection();
+
+     QSize s = set->value("mw_size",QSize(-1,-1)).toSize();
+     if(s.isValid())
+	  resize(s);
+     QPoint pos = set->value("mw_pos",QPoint(-1,-1)).toPoint();
+     if(pos != QPoint(-1,-1))
+	  move(pos);
 }
 
 void MainWindow::saveSettings()
@@ -508,6 +534,8 @@ void MainWindow::saveSettings()
 
 void MainWindow::estimateOutputSize()
 {
+     bool rb = ratioBox->isChecked();
+     ratioBox->setChecked(false);
      QSize s = player->getCurrentFrame()->size();
      if(marginBox->isChecked())
      {
@@ -519,6 +547,255 @@ void MainWindow::estimateOutputSize()
      widthBox->setValue(s.width());
      heightBox->setValue(s.height());
      whRatio = tmp;
+     ratioBox->setChecked(rb);
+     setChanged();
+}
+
+QString MainWindow::projectToXml()
+{
+     QString xcontent;
+     QXmlStreamWriter stream(&xcontent);
+     stream.setAutoFormatting(true);
+     stream.writeStartDocument();
+
+     stream.writeStartElement("qgifer_project");
+     //zastepujemy sciezke do projektu przez %project_path% jezeli
+     //sciezka do pliku wideo jest w (pod)katalogu projektu
+     stream.writeAttribute("sourcevideo", relativeVideoPath());
+     stream.writeAttribute("startframe", QString::number(startBox->value()));
+     stream.writeAttribute("stopframe", QString::number(stopBox->value()));
+
+     stream.writeAttribute("out_width", QString::number(widthBox->value()));
+     stream.writeAttribute("out_height", QString::number(heightBox->value()));
+     stream.writeAttribute("out_ratio", whRatioBox->isChecked()?"true":"false");
+     stream.writeAttribute("var_palette", varPaletteBox->isChecked()?"true":"false");
+     stream.writeAttribute("auto_palette", autoPaletteBox->isChecked()?"true":"false");
+     stream.writeAttribute("palette_size", QString::number(paletteBox->value()));
+     stream.writeAttribute("mindiff", QString::number(minDiffBox->value()));
+     
+     stream.writeStartElement("margins");
+     stream.writeAttribute("use_margins", marginBox->isChecked()?"true":"false");
+     stream.writeAttribute("top", QString::number(topSpin->value()));
+     stream.writeAttribute("right", QString::number(rightSpin->value()));
+     stream.writeAttribute("bottom", QString::number(bottomSpin->value()));
+     stream.writeAttribute("left", QString::number(leftSpin->value()));
+     stream.writeEndElement(); //margins
+     
+     stream.writeStartElement("filters");
+     stream.writeAttribute("preview", correctionBox->isChecked()?"true":"false");
+     stream.writeAttribute("hue", QString::number(hueSlider->value()));
+     stream.writeAttribute("sat", QString::number(satSlider->value()));
+     stream.writeAttribute("val", QString::number(valSlider->value()));
+     stream.writeAttribute("median", QString::number(medianSlider->value()));
+     stream.writeEndElement(); //filters
+     
+
+      if(!varPaletteBox->isChecked() && paletteWidget->map()){
+	  stream.writeStartElement("palette");
+	  stream.writeCharacters(paletteWidget->toString());
+	  stream.writeEndElement();
+     }
+
+
+     QList<WorkspaceObject*>* objects = player->getWorkspace()->getObjectsList();
+
+     for(int i=0;i<objects->size();i++)
+     {
+	  const WorkspaceObject* o = objects->at(i);
+	  bool isText = o->getTypeName() == "TextObject";
+	  stream.writeStartElement("object");
+	  stream.writeAttribute("type", isText ? "text" : "image" );
+	  stream.writeAttribute("start", QString::number(o->getStart()) );
+	  stream.writeAttribute("stop", QString::number(o->getStop()) );
+
+	  if(isText)
+	  {
+	       const TextObject* to = static_cast<const TextObject*>(o);
+	       stream.writeAttribute("text", to->getText());
+	       stream.writeAttribute("font", to->getFont().toString());
+	       stream.writeAttribute("outline_width", QString::number(to->getOutlineWidth()));
+	       stream.writeAttribute("textcolor", to->getTextColor().name());
+	       stream.writeAttribute("outlinecolor", to->getOutlineColor().name());
+	  }
+	  else
+	       stream.writeAttribute("image", o->getImagePath());
+
+	  for(int p=o->getStart(); p <= o->getStop(); p++){
+	       stream.writeStartElement("pos");
+	       const WOPos& pos = o->posAt(p);
+	       stream.writeAttribute("x", QString::number(pos.x));
+	       stream.writeAttribute("y", QString::number(pos.y));
+	       stream.writeEndElement();
+	  }
+	  for(int s=o->getStart(); s <= o->getStop(); s++){
+	       stream.writeStartElement("scale");
+	       const WOSize& scale = o->scaleAt(s);
+	       stream.writeAttribute("w", QString::number(scale.w));
+	       stream.writeAttribute("h", QString::number(scale.h));
+	       stream.writeEndElement();
+	  }
+
+	  stream.writeEndElement();
+     }
+
+     stream.writeEndElement(); //qgifer_project
+     stream.writeEndDocument();
+     //qDebug() << "xml: " << xcontent;
+     return xcontent;
+}
+
+bool MainWindow::projectFromXml(const QString& xstr)
+{
+     player->getWorkspace()->getObjectsList()->clear();
+     player->close();
+     //clearCache();
+     QXmlStreamReader stream(xstr);
+     
+     WorkspaceObject* currentObject = NULL;
+     int posstart = 0, scalestart = 0;
+     QString lastName;
+     while (!stream.atEnd()) 
+     {
+	  stream.readNext();
+	  if(stream.isStartElement())
+	  {
+	       //qDebug() << "START ELEMENT NAME: " << stream.name();
+	       if(stream.name() == "qgifer_project")
+	       {
+		    QString srcpath = stream.attributes().value("sourcevideo").toString().
+			 replace("%project_path%",projectDir());
+		    if(!QFile::exists(srcpath) && !srcpath.isEmpty())
+			 QMessageBox::warning(
+			      this, tr("Warning"),tr("Source video file: ")+srcpath+" not found");
+		    else
+			 openVideo(srcpath);
+
+		    qDebug() << "loaded width: " << stream.attributes().value("out_width").toString().toInt();
+
+		    startBox->setValue(0);
+		    stopBox->setValue(
+			 stream.attributes().value("stopframe").toString().toInt());
+		    startBox->setValue(
+			 stream.attributes().value("startframe").toString().toInt());
+		    widthBox->setValue(
+			 stream.attributes().value("out_width").toString().toInt());
+		    heightBox->setValue(
+			 stream.attributes().value("out_height").toString().toInt());
+		    paletteBox->setValue(
+			 stream.attributes().value("palette_size").toString().toInt());
+		    minDiffBox->setValue(
+			 stream.attributes().value("mindiff").toString().toInt());
+		    whRatioBox->setChecked(
+			 stream.attributes().value("out_ratio").toString() == "true");
+		    varPaletteBox->setChecked(
+			 stream.attributes().value("var_palette").toString() == "true");
+		    autoPaletteBox->setChecked(
+			 stream.attributes().value("auto_palette").toString() == "true");
+		    
+	       }
+	       else if(stream.name() == "palette")
+	       {
+		    paletteWidget->fromString(stream.readElementText());
+	       }
+	       else if(stream.name() == "margins")
+	       {
+		    marginBox->setChecked(
+			 stream.attributes().value("use_margins").toString() == "true");
+		    topSpin->setValue(
+			 stream.attributes().value("top").toString().toInt());
+		    leftSpin->setValue(
+			 stream.attributes().value("left").toString().toInt());
+		    bottomSpin->setValue(
+			 stream.attributes().value("bottom").toString().toInt());
+		    rightSpin->setValue(
+			 stream.attributes().value("right").toString().toInt());
+	       }
+	       else if(stream.name() == "filters")
+	       {
+		    correctionBox->setChecked(
+			 stream.attributes().value("preview").toString() == "true");
+		    hueSlider->setValue(
+			 stream.attributes().value("hue").toString().toInt());
+		    satSlider->setValue(
+			 stream.attributes().value("sat").toString().toInt());
+		    valSlider->setValue(
+			 stream.attributes().value("val").toString().toInt());
+		    medianSlider->setValue(
+			 stream.attributes().value("median").toString().toInt());
+	       }
+	       else if(stream.name() == "object")
+	       {
+		    if(stream.attributes().value("type").toString() == "text"){
+			 qDebug() << "new text object...";
+			 currentObject = new TextObject();
+			 TextObject* to = static_cast<TextObject*>(currentObject);
+			 to->setText( stream.attributes().value("text").toString() );
+			 QFont f;
+			 f.fromString(stream.attributes().value("font").toString());
+			 to->setFont(f);
+			 to->setTextColor( 
+			      QColor(stream.attributes().value("textcolor").toString()) );
+			 to->setOutlineColor( 
+			      QColor(stream.attributes().value("outlinecolor").toString()) );
+			 to->setOutlineWidth( 
+			      stream.attributes().value("outline_width").toString().toInt() );
+			 TextWidget::renderText(to);
+		    }
+		    else{
+			 qDebug() << "new image object...";
+			 currentObject = new WorkspaceObject();
+			 currentObject->setImage(stream.attributes().value("image").toString());
+		    }
+
+		    posstart = scalestart = stream.attributes().value("start").toString().toInt();
+		    currentObject->setRange(posstart, 
+					    stream.attributes().value("stop").toString().toInt());
+		    player->getWorkspace()->addObject(currentObject);
+
+	       }
+	       else if(stream.name() == "pos")
+	       {
+		    //qDebug() << "addig position at " << posstart;
+		    currentObject->setPosAt(posstart++, 
+					    stream.attributes().value("x").toString().toDouble(),
+					    stream.attributes().value("y").toString().toDouble());
+	       }
+	       else if(stream.name() == "scale")
+	       {
+		    //qDebug() << "addig scale at " << scalestart;
+		    currentObject->setScaleAt(scalestart++, 
+					      stream.attributes().value("w").toString().toDouble(),
+					      stream.attributes().value("h").toString().toDouble());
+	       }
+	  }
+     }
+     if (stream.hasError()) 
+     {
+	  QMessageBox::critical(this, tr("Error"),tr("The project cannot be loaded: ")+stream.errorString());
+	  return false;
+     }
+     
+     return true;
+}
+
+QString MainWindow::projectDir()
+{
+     QString pdir;
+#if defined(Q_WS_X11)
+     QDir dir("/usr/share/qgifer/");
+     if(dir.exists())
+	  pdir = set->value("project_path","/usr/share/qgifer/").toString();
+     else
+#endif
+     pdir = set->value("project_path").toString();
+     int ls = pdir.lastIndexOf("/");
+     return ls != -1 ? pdir.left(ls) : "";
+}
+
+QString MainWindow::relativeVideoPath()
+{
+     QString pdir = projectDir();
+     return pdir.isEmpty() ? "" : QString(player->source()).replace(pdir,"%project_path%");
 }
 
 
@@ -528,6 +805,7 @@ void MainWindow::outputWidthChanged(int v)
 	  return;
      heightBox->disconnect();
      heightBox->setValue(ceil(v/whRatio));
+     setChanged();
      connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
 }
 
@@ -537,6 +815,7 @@ void MainWindow::outputHeightChanged(int v)
 	  return;
      widthBox->disconnect();
      widthBox->setValue(ceil(v*whRatio));
+     setChanged();
      connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
 
 }
@@ -545,6 +824,7 @@ void MainWindow::whRatioChanged(int s)
 {
      if(s == Qt::Checked)
 	  whRatio = (float)widthBox->value()/(float)heightBox->value();
+      setChanged();
 }
 
 void MainWindow::startChanged(int v)
@@ -555,6 +835,7 @@ void MainWindow::startChanged(int v)
 	  updatePalette();
      }
      correctRange();
+     setChanged();
 }
 
 void MainWindow::medianChanged(int m)
@@ -567,6 +848,7 @@ void MainWindow::medianChanged(int m)
 	  player->seek(player->getCurrentPos());
 	  medianLabel->setText(tr("Median blur (") + QString::number(m) + "):");
      }
+     setChanged();
 }
 
 void MainWindow::varPaletteBoxChanged(int s)
@@ -578,6 +860,7 @@ void MainWindow::varPaletteBoxChanged(int s)
      autoPaletteBox->setEnabled(!e);
      minDiffBox->setEnabled(e);
      paletteWidget->setEnabled(!e);
+     setChanged();
 }
 
 void MainWindow::openPalette()
@@ -586,13 +869,15 @@ void MainWindow::openPalette()
      QString path = QFileDialog::getOpenFileName(
 	  this, tr("Open QGifer palette file"), 
 	  set->value("last_palette_dir","").toString(),
-	  "QGifer Palette files (*.qgp)");
+	  "QGifer Palette files (*.qgcm)");
      if(!path.isEmpty())
      {
 	  if(!paletteWidget->fromFile(path))
 	       QMessageBox::critical(this, tr("Error"),tr("The palette file can not be loaded!"));
 	  else
 	       paletteBox->setValue(log(paletteWidget->getSize())/log(2));
+
+	  setChanged();
      }
      
 }
@@ -602,7 +887,7 @@ void MainWindow::savePalette()
      QString path = QFileDialog::getSaveFileName(
 	  this, tr("Save QGifer palette file"), 
 	  set->value("last_palette_dir","").toString(),
-	  "QGifer Palette files (*.qgp)");
+	  "QGifer Palette files (*.qgcm)");
      if(path.isEmpty())
 	  return;
      if(paletteWidget->toFile(path))
@@ -618,6 +903,7 @@ void MainWindow::insertObject()
      ow->setAttribute(Qt::WA_DeleteOnClose);
      ow->move(x()+width()*0.3, y()+height()*0.2);
      ow->show();
+     setChanged();
 }
 
 void MainWindow::insertText()
@@ -626,6 +912,7 @@ void MainWindow::insertText()
      tw->setAttribute(Qt::WA_DeleteOnClose);
      tw->move(x()+width()*0.3, y()+height()*0.2);
      tw->show();
+     setChanged();
 }
 
 void MainWindow::showProperties(WorkspaceObject* o)
@@ -644,4 +931,113 @@ void MainWindow::showProperties(WorkspaceObject* o)
 	  ow->move(x()+width()*0.3, y()+height()*0.2);
 	  ow->show();
      }
+     setChanged();
+}
+
+void MainWindow::newProject()
+{
+     player->close();
+     paletteWidget->clear();
+     player->getWorkspace()->getObjectsList()->clear();
+     topSpin->setValue(10);
+     rightSpin->setValue(10);
+     bottomSpin->setValue(10);
+     leftSpin->setValue(10);
+     resetCorrection();
+     correctionBox->setChecked(false);
+     marginBox->setChecked(true);
+     projectFile.clear();
+     lock(true);
+     setChanged(false);
+}
+
+void MainWindow::openProject()
+{
+     if(isChanged())
+     {
+	  switch(QMessageBox::question(
+		  this, tr("Question"),tr("The project has changed - do you want to save the changes?"), tr("Yes"), tr("No"), tr("Cancel")))
+	  {
+	  case 0: saveProject(); if(isChanged()) return; break;
+	  case 2: return; break;
+	  }
+	       
+     }
+     QString path = QFileDialog::getOpenFileName(
+	  this, tr("Open project file"), projectDir(),
+	  "QGifer project (*.qgp);;All files (*)");
+     if(!path.isEmpty())
+	  if(!loadProject(path))
+	       QMessageBox::critical(this, tr("Error"),tr("Project was not entirely loaded."));
+
+}
+
+bool MainWindow::loadProject(const QString& file)
+{
+     QFile f(file);
+     if(f.open(QFile::Text | QFile::ReadOnly))
+     {
+	  set->setValue("project_path",file);
+	  if(projectFromXml(f.readAll()))
+	  {
+	       projectFile = file;
+	       setChanged(false);
+	       return true;
+	  }
+     }
+     else
+	  QMessageBox::critical(this, tr("Error"),tr("Error reading file: ")+file);
+     return false;
+}
+
+void MainWindow::saveProject()
+{
+     QString file = projectFile.isEmpty() ? QFileDialog::getSaveFileName(
+	  this, tr("Save project file"), projectDir(),
+	  "QGifer project (*.qgp);;All files (*.*)") : projectFile;
+     if(file.isEmpty())
+	  return;
+
+     setChanged(false);
+     QFile f(file);
+     if(f.open(QFile::Text | QFile::WriteOnly))
+     {
+	  set->setValue("project_path",file);
+	  projectFile = file;
+	  QTextStream str(&f);
+	  str << projectToXml();
+	  f.close(); 
+     }
+     else
+	  QMessageBox::critical(this, tr("Error"),tr("Error writing file: ")+file);
+}
+
+void MainWindow::saveProjectAs()
+{
+
+}
+
+void MainWindow::setChanged(bool c)
+{
+     actionSaveProject->setEnabled(c);
+     changed = c;
+     setWindowTitle(projectFile.isEmpty() ? tr("QGifer - video-based GIF creator") : (projectFile + (c ? tr(" [modified] ") : "") + " - QGifer"));
+}
+
+void MainWindow::closeEvent(QCloseEvent* e)
+{
+     if(isChanged())
+     {
+	  switch(QMessageBox::question(
+		  this, tr("Question"),tr("The project has changed - do you want to save the changes before exiting?"), tr("Yes"), tr("No"), tr("Cancel")))
+	  {
+	  case 0: saveProject(); if(!isChanged()) e->accept(); else e->ignore(); break;
+	  case 1: e->accept(); break;
+	  case 2: e->ignore();
+	  }
+	       
+     }
+     saveSettings();
+     set->setValue("mw_size",size());
+     set->setValue("mw_pos",QPoint(x(),y()));
 }

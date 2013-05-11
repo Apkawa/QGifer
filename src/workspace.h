@@ -22,7 +22,7 @@ public:
      void updateFrameIndex(int i) {frameIndex = i;}
      void clear();
      void drawObjects(QPaintDevice* pd,  bool editMode = true, int x0 = 0, int y0 = 0);
-
+     QList<WorkspaceObject*>* getObjectsList() {return &objects;}
 signals:
      void propertiesRequested(WorkspaceObject*);
 

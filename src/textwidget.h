@@ -13,7 +13,12 @@ public:
      TextWidget(TextObject* to, FramePlayer* fp, QWidget* parent=0, Qt::WindowFlags f=0);
      TextWidget(FramePlayer* fp, QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~TextWidget();
-
+     static QImage renderText(const QString& text,
+			      const QFont& font,
+			      const QColor& textColor,
+			      const QColor& outlineColor,
+			      int outlineWidth);
+     static void renderText(TextObject* o);
 private:
      void paintEvent(QPaintEvent*);
      void setPlayer(FramePlayer* fp);

@@ -35,7 +35,10 @@ public:
      void setColumnCount(int cc){cols = cc;}
      bool toFile(const QString& path);
      bool fromFile(const QString& path);
+     QString toString();
+     bool fromString(const QString& str);
      int getSize() const {return size;}
+     void clear() {if(palette) FreeMapObject(palette); palette = NULL; update();}
 private:
      int size;
      int cols;

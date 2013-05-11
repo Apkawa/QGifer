@@ -41,15 +41,23 @@ private:
      void connectMargins();
      void disconnectMargins();
      void resizeEvent(QResizeEvent*){if(correctionBox->isChecked())correctionChanged();}
-     void closeEvent(QCloseEvent*e){saveSettings();QMainWindow::closeEvent(e);qApp->quit();}
+     void closeEvent(QCloseEvent*e);
      bool checkFFMPEG(){return !QProcess::execute("ffmpeg -version");}
+     QString relativeVideoPath();
+     QString projectDir();
      QImage finalFrame(long f);
      void correctRange();
+     QString projectToXml();
+     bool projectFromXml(const QString& xstr);
+     bool loadProject(const QString& file);
+     bool isChanged() {return changed;}
      QSettings* set;
      QString vidfile;
      float whRatio;
      int ow;
      int oh;
+     QString projectFile;
+     bool changed;
      private slots:
 	  void loadSettings();
 	  void saveSettings();
@@ -60,7 +68,7 @@ private:
 	  { startBox->setValue(player->getCurrentPos()); }
 	  void stopFromCurrent() 
 	  { stopBox->setValue(player->getCurrentPos()); }
-	  void stopChanged(int v){multiSlider->setPosB(v,false);correctRange();}
+	  void stopChanged(int v){multiSlider->setPosB(v,false);correctRange();setChanged();}
 	  void startChanged(int v);
 	  void posAChanged(int);
 	  void posBChanged(int);
@@ -90,6 +98,11 @@ private:
 	  void insertObject();
 	  void insertText();
 	  void showProperties(WorkspaceObject*);
+	  void newProject();
+	  void openProject();
+	  void saveProject();
+	  void saveProjectAs();
+	  void setChanged(bool c = true);
 };
 
 #endif

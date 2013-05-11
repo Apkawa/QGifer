@@ -1,5 +1,8 @@
 <RCC>
   <qresource>
+    <file>res/new.png</file>
+    <file>res/saveas.png</file>
+    <file>res/open.png</file>
     <file>res/palette-open.png</file>
     <file>res/palette-save.png</file>
     <file>res/restore.png</file>

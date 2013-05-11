@@ -15,13 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1" rowspan="3">
-     <widget class="Line" name="line_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="2">
      <widget class="QMultiSlider" name="multiSlider" native="true">
       <property name="minimumSize">
@@ -35,6 +28,23 @@
         <width>16777215</width>
         <height>16</height>
        </size>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="3">
+     <widget class="Line" name="line_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" rowspan="2">
+     <widget class="FramePlayer" name="player" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
      </widget>
     </item>
@@ -646,16 +656,6 @@
       </widget>
      </widget>
     </item>
-    <item row="0" column="2" rowspan="2">
-     <widget class="FramePlayer" name="player" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -703,7 +703,13 @@
     <property name="title">
      <string>&amp;Program</string>
     </property>
+    <addaction name="actionNewProject"/>
+    <addaction name="actionOpenProject"/>
     <addaction name="actionOpenVideo"/>
+    <addaction name="separator"/>
+    <addaction name="actionSaveProject"/>
+    <addaction name="actionSaveProjectAs"/>
+    <addaction name="separator"/>
     <addaction name="actionOptimizer"/>
     <addaction name="actionConverter"/>
     <addaction name="separator"/>
@@ -733,15 +739,37 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNewProject"/>
+   <addaction name="actionOpenProject"/>
    <addaction name="actionOpenVideo"/>
+   <addaction name="actionSaveProject"/>
+  </widget>
+  <widget class="QToolBar" name="gifToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
    <addaction name="actionExtractGif"/>
-   <addaction name="separator"/>
-   <addaction name="actionUpdatePalette"/>
    <addaction name="actionSetAsStart"/>
    <addaction name="actionSetAsStop"/>
    <addaction name="separator"/>
    <addaction name="actionInsertObject"/>
    <addaction name="actionInsertText"/>
+   <addaction name="separator"/>
+   <addaction name="actionUpdatePalette"/>
+   <addaction name="actionOpenPalette"/>
+   <addaction name="actionSavePalette"/>
   </widget>
   <widget class="QToolBar" name="playerToolBar">
    <property name="windowTitle">
@@ -761,9 +789,9 @@
    </attribute>
    <addaction name="actionPlay"/>
    <addaction name="actionPause"/>
+   <addaction name="actionStop"/>
    <addaction name="actionPrevFrame"/>
    <addaction name="actionNextFrame"/>
-   <addaction name="actionStop"/>
   </widget>
   <action name="actionOpenVideo">
    <property name="icon">
@@ -941,7 +969,7 @@
      <normaloff>:/res/optimizer.png</normaloff>:/res/optimizer.png</iconset>
    </property>
    <property name="text">
-    <string>GIF &amp;optimizer...</string>
+    <string>GIF opti&amp;mizer...</string>
    </property>
   </action>
   <action name="actionConverter">
@@ -950,7 +978,7 @@
      <normaloff>:/res/converter.png</normaloff>:/res/converter.png</iconset>
    </property>
    <property name="text">
-    <string>MJPEG converter...</string>
+    <string>MJPEG &amp;converter...</string>
    </property>
   </action>
   <action name="actionRestoreDefault">
@@ -1002,6 +1030,54 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionOpenProject">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/open.png</normaloff>:/res/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open &amp;project...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="actionSaveProject">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/save.png</normaloff>:/res/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSaveProjectAs">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/saveas.png</normaloff>:/res/saveas.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save project &amp;as...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionNewProject">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/new.png</normaloff>:/res/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
  </widget>
