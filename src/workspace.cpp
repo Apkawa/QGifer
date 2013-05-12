@@ -28,7 +28,7 @@ void Workspace::paintEvent(QPaintEvent* e)
      pen.setColor(QColor(255,255,255));
      pen.setWidth(2);
      p.setPen(pen);
-     if(useMr && !mr.isNull())
+     if(useMr && !mr.isNull() && !image.isNull())
      {
 	  const QColor fc(0,0,0,200);
 	  QPixmap top(image.width(),

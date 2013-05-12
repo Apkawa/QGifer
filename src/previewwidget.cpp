@@ -80,16 +80,15 @@ void PreviewWidget::paintEvent(QPaintEvent*)
 
 void PreviewWidget::applyCorrection(QImage* img, int h, int s, int v, bool toRGB888)
 {
-     if(toRGB888)
+     if(toRGB888 && img->format() != QImage::Format_RGB888)
 	  *img = img->convertToFormat(QImage::Format_RGB888);
-     else
-	  *img = img->rgbSwapped();
      //qDebug() << "correction hsv: " << h << "," << s << "," <<v;
      const int step = img->format() == QImage::Format_RGB888 ? 3 : 4;
      //const int step = 3;
      int ch,cs,cv;
      for(int rw=0;rw<img->height();rw++)
      {
+	  //qDebug() << "correcting row: " << rw;
 	  uchar* data = img->scanLine(rw);
 	  for(int i=0;i<img->bytesPerLine();i+=step)
 	  {
@@ -113,6 +112,7 @@ void PreviewWidget::applyCorrection(QImage* img, int h, int s, int v, bool toRGB
 
 	       //qDebug() << "after correction, rgb:" << data[i] << ", " << data[i+1] << ", " <<data[i+2];
 	  }
+	  //qDebug() << "row corrected";
      }
 
      // for(int rw=0;rw<img->height();rw++)

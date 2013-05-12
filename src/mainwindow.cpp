@@ -123,9 +123,7 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-     qDebug() << "mw destructor..";
      delete set;
-     qDebug() << "destructor ok";
 }
 
 void MainWindow::openVideo()
@@ -382,12 +380,14 @@ void MainWindow::correctionChanged()
 
      if(!correctionBox->isChecked())
      	  return;
-     player->getWorkspace()->setImage(*player->getCurrentFrame(),player->getWorkspace()->getImage()->size());
-     PreviewWidget::applyCorrection(player->getWorkspace()->getImage(),
+     
+     QImage fp = *player->getCurrentFrame(); //tymczasowa kopia, bez niej mallock crash
+     PreviewWidget::applyCorrection(&fp,
      				 hueSlider->value(),
      				 satSlider->value(),
      				 valSlider->value());
-
+     player->getWorkspace()->setImage(fp, player->frame->size());
+     
      if(filterObjBox->isChecked())
 	  player->getWorkspace()->enableFiltering(
 	       hueSlider->value(),
@@ -395,6 +395,7 @@ void MainWindow::correctionChanged()
 	       valSlider->value());
      else
 	  player->getWorkspace()->disableFiltering();
+
      player->getWorkspace()->update();
      setChanged();
 }
