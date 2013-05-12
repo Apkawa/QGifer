@@ -175,8 +175,8 @@ void TextWidget::setOColor()
 void TextWidget::setPlayer(FramePlayer* fp)
 {
      player = fp;
-     fromBox->setMaximum(player->countFrames());
-     toBox->setMaximum(player->countFrames());
+     fromBox->setMaximum(player->countFrames()-1);
+     toBox->setMaximum(player->countFrames()-1);
 }
 
 void TextWidget::validate()

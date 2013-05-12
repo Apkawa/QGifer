@@ -101,8 +101,8 @@ void ObjectWidget::toUpdate()
 void ObjectWidget::setPlayer(FramePlayer* p)
 {
      player = p;
-     fromBox->setMaximum(player->countFrames());
-     toBox->setMaximum(player->countFrames());
+     fromBox->setMaximum(player->countFrames()-1);
+     toBox->setMaximum(player->countFrames()-1);
      validate();
 }
 

@@ -13,6 +13,7 @@ public:
      ObjectWidget(WorkspaceObject* wo, FramePlayer* fp, QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~ObjectWidget();
      void setPlayer(FramePlayer* p);
+     void setRange(int from, int to){fromBox->setValue(from);toBox->setValue(to);}
 private:
      WorkspaceObject* object;
      Workspace* wspace;

@@ -19,6 +19,7 @@ public:
 			      const QColor& outlineColor,
 			      int outlineWidth);
      static void renderText(TextObject* o);
+     void setRange(int from, int to){fromBox->setValue(from);toBox->setValue(to);}
 private:
      void paintEvent(QPaintEvent*);
      void setPlayer(FramePlayer* fp);

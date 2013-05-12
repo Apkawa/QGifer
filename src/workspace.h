@@ -26,9 +26,10 @@ public:
      QList<WorkspaceObject*>* getObjectsList() {return &objects;}
      void enableFiltering(int h, int s, int v){hue=h;sat=s;val=v;}
      void disableFiltering() {hue=sat=val=0;}
-     
+     void enableAutoObjectDrawing(bool enable){autoObjectDrawing = enable;}
 signals:
      void propertiesRequested(WorkspaceObject*);
+     void objectChanged();
 
 private:
      void paintEvent(QPaintEvent*);
@@ -51,6 +52,7 @@ private:
      QSize coSize; //rozmiar kliknietego obiektu w momecie klikniecia
      QPoint clickPos; //pozycja klikniecia
      QMargins pxMr; //marginesy po zoomowaniu
+     bool autoObjectDrawing; //czy rysować obiekty podczas rysowania workspace
 
      //korekcja
      int hue;

@@ -4,7 +4,7 @@
 
 Workspace::Workspace(QWidget* parent, Qt::WindowFlags f):
      PreviewWidget(parent,f),useMr(false),frameIndex(-1),hoveredObject(NULL),
-     hoIndex(-1), lmbPressed(false), hue(0), sat(0), val(0)
+     hoIndex(-1), lmbPressed(false), hue(0), sat(0), val(0), autoObjectDrawing(true)
 {
      canDrag = drag = mrNone;
 }
@@ -19,7 +19,8 @@ void Workspace::paintEvent(QPaintEvent* e)
      PreviewWidget::paintEvent(e);
      int x = (1-zoom)/2*width();
      int y = (1-zoom)/2*height();
-     drawObjects(this,true,x,y);
+     if(autoObjectDrawing)
+	  drawObjects(this,true,x,y);
 
      QPainter p(this);
 
@@ -107,6 +108,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 		    o->setPosAt(frameIndex, 
 				(float)cpos.x()/(float)image.width() - dx, 
 				(float)cpos.y()/(float)image.height() - dy);
+		    emit objectChanged();
 		    update();
 		    break;
 	       }
@@ -118,6 +120,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 
 		    o->setScaleAt(frameIndex, scale, 
 				  o->scaleAt(frameIndex).h);
+		    emit objectChanged();
 		    update();
 		    break;
 	       }
@@ -128,6 +131,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(),
 			 o->scaleAt(frameIndex).h);
 		    o->setPosAt(frameIndex, ncx, o->posAt(frameIndex).y);
+		    emit objectChanged();
 		    update();
 		    break;
 	       }
@@ -137,6 +141,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 		    int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
 				  (float)newheight/(float)o->originalSize().height());
+		    emit objectChanged();
 		    update();
 		    break;
 	       }
@@ -147,6 +152,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w, 
 				  (float)newheight/(float)o->originalSize().height());
 		    o->setPosAt(frameIndex, o->posAt(frameIndex).x, ncy);
+		    emit objectChanged();
 		    update();
 		    break;
 	       }
@@ -169,6 +175,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 				  o->scaleAt(frameIndex).h);
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
 				  (float)newheight/(float)o->originalSize().height());
+		    emit objectChanged();
 		    update();
 		    break;
 

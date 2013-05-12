@@ -101,6 +101,7 @@ private:
 	  void newProject();
 	  void openProject();
 	  void saveProject();
+	  void saveProject(const QString& file);
 	  void saveProjectAs();
 	  void setChanged(bool c = true);
 };
