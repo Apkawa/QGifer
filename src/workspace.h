@@ -22,7 +22,11 @@ public:
      void updateFrameIndex(int i) {frameIndex = i;}
      void clear();
      void drawObjects(QPaintDevice* pd,  bool editMode = true, int x0 = 0, int y0 = 0);
+     void drawObjects() {drawObjects(&image, false);}
      QList<WorkspaceObject*>* getObjectsList() {return &objects;}
+     void enableFiltering(int h, int s, int v){hue=h;sat=s;val=v;}
+     void disableFiltering() {hue=sat=val=0;}
+     
 signals:
      void propertiesRequested(WorkspaceObject*);
 
@@ -47,6 +51,11 @@ private:
      QSize coSize; //rozmiar kliknietego obiektu w momecie klikniecia
      QPoint clickPos; //pozycja klikniecia
      QMargins pxMr; //marginesy po zoomowaniu
+
+     //korekcja
+     int hue;
+     int sat;
+     int val;
      
      enum Margin{mrLeft,mrTop,mrRight,mrBottom,mrNone};
      Margin canDrag;

@@ -120,7 +120,7 @@ void GifWidget::saveGif(const QString& filename)
 	  QMessageBox::critical(this,tr("Error"),tr("Unexpected error while saving GIF file!"));
 	  //PrintGifError(); przeniesione do save
      }
-
+     gif->removeReversedCopy();
      emit gifSaved(filename);
 }
 

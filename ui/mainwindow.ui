@@ -69,7 +69,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_1">
        <property name="geometry">
@@ -323,7 +323,7 @@
         <string>Filters</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="3" column="0">
+        <item row="5" column="0">
          <spacer name="verticalSpacer_3">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -343,20 +343,20 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="3" column="0">
          <widget class="QGroupBox" name="groupBox_3">
           <property name="title">
            <string>Color correction</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
-           <item row="0" column="0">
+           <item row="1" column="0">
             <widget class="QLabel" name="hueLabel">
              <property name="text">
               <string>Hue (0):</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item row="4" column="0">
             <widget class="QSlider" name="satSlider">
              <property name="minimum">
               <number>-255</number>
@@ -369,14 +369,14 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="3" column="0">
             <widget class="QLabel" name="satLabel">
              <property name="text">
               <string>Saturation (0):</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
+           <item row="6" column="0">
             <widget class="QSlider" name="valSlider">
              <property name="minimum">
               <number>-255</number>
@@ -389,21 +389,21 @@
              </property>
             </widget>
            </item>
-           <item row="6" column="0">
+           <item row="9" column="0">
             <widget class="QPushButton" name="resetCorrectionButton">
              <property name="text">
               <string>Reset</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
+           <item row="5" column="0">
             <widget class="QLabel" name="valLabel">
              <property name="text">
               <string>Brightness (0):</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QSlider" name="hueSlider">
              <property name="minimum">
               <number>-359</number>
@@ -419,7 +419,7 @@
           </layout>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="4" column="0">
          <widget class="QGroupBox" name="groupBox_4">
           <property name="title">
            <string>Non-linear</string>
@@ -443,6 +443,13 @@
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="filterObjBox">
+          <property name="text">
+           <string>Filter objects</string>
+          </property>
          </widget>
         </item>
        </layout>

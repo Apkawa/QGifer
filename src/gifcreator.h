@@ -51,6 +51,7 @@ public:
   void addPalette(ColorMapObject* pal) {cmaps.push_back(pal);}
   void setDuration(float d){duration = d;}
   void appendReversedCopy();
+  void removeReversedCopy();
 protected:
   vector<Frame> frames;
   //vector<int> delay; //na razie rezygnujemy z roznych opoznien
@@ -59,5 +60,6 @@ protected:
   int h;
   int colorRes;
   float duration;
+  int revStart; //indeks klatki od ktorej zaczyna sie odwrocone powtorzenie
   //int paletteSize;
 };

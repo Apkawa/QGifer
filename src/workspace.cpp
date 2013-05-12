@@ -4,7 +4,7 @@
 
 Workspace::Workspace(QWidget* parent, Qt::WindowFlags f):
      PreviewWidget(parent,f),useMr(false),frameIndex(-1),hoveredObject(NULL),
-     hoIndex(-1), lmbPressed(false)
+     hoIndex(-1), lmbPressed(false), hue(0), sat(0), val(0)
 {
      canDrag = drag = mrNone;
 }
@@ -346,6 +346,9 @@ void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
 						     smooth || !editMode ? 
 						     Qt::SmoothTransformation : 
 						     Qt::FastTransformation);
+		    // if(hue || sat || val)
+		    // 	 applyCorrection(&simg, hue, sat, val, false);
+
 		    p.drawImage(r.x(),r.y(),simg);
 		    
 		    if(!editMode || o != hoveredObject)

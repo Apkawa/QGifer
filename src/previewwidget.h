@@ -36,7 +36,7 @@ public:
      PreviewWidget(QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~PreviewWidget();
      void setImage(const QImage& img, const QSize& size = QSize(0,0));
-     QImage* getImage() {return &image;}
+     virtual QImage* getImage() {return &image;}
      const QPoint* getCursorPos() const {return underMouse() ? &cpos : NULL;}
      const double normalizedX() const 
      {return image.isNull() ? -1 : (double)(cpos.x()-((1-zoom)/2*width()))/(double)image.width();}
@@ -46,7 +46,7 @@ public:
      virtual void clear();
      void keepAspectRatio(bool keep){ratio = keep;}
      void setZoom(double z) {zoom = z;}
-     static void applyCorrection(QImage* img, int h, int s, int v);
+     static void applyCorrection(QImage* img, int h, int s, int v, bool toRGB888 = true);
 protected:
      virtual void paintEvent(QPaintEvent*);
      double fit01(double v){if(v<0)return 0;else if(v>1) return 1; else return v;}

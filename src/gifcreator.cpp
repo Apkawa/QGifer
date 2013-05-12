@@ -23,7 +23,7 @@
 #include <iostream>
 using namespace std;
 
-GifCreator::GifCreator():duration(0.1)
+GifCreator::GifCreator():duration(0.1), revStart(-1)
 {
 }
 
@@ -144,10 +144,22 @@ void GifCreator::appendReversedCopy()
 	  return;
      if(cmaps.size() > 1 && cmaps.size() != frames.size())
 	  cerr << "WARNING: going to append reversed copy of frames but palettes probably won't match!" << endl;
+     revStart = frames.size();
      for(int i=frames.size()-2;i>0;i--)
 	  frames.push_back(frames.at(i));
 
      if(cmaps.size() > 1)
 	  for(int i=cmaps.size()-2;i>0;i--)
 	       cmaps.push_back(cmaps.at(i));
+}
+
+void GifCreator::removeReversedCopy()
+{
+     if(revStart < 0)
+	  return;
+
+     while(frames.size() > revStart)
+	  frames.erase(frames.begin()+frames.size()-1);
+     while(cmaps.size() > revStart)
+	  cmaps.erase(cmaps.begin()+cmaps.size()-1);
 }

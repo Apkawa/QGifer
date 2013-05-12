@@ -105,6 +105,7 @@ MainWindow::MainWindow()
      connect(satSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
      connect(valSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
      connect(correctionBox, SIGNAL(stateChanged(int)), this, SLOT(correctionChanged()));
+     connect(filterObjBox, SIGNAL(stateChanged(int)), this, SLOT(correctionChanged()));
      connect(resetCorrectionButton, SIGNAL(clicked()), this, SLOT(resetCorrection()));
      connect(medianSlider, SIGNAL(valueChanged(int)), this, SLOT(medianChanged(int)));
 
@@ -386,6 +387,14 @@ void MainWindow::correctionChanged()
      				 hueSlider->value(),
      				 satSlider->value(),
      				 valSlider->value());
+
+     if(filterObjBox->isChecked())
+	  player->getWorkspace()->enableFiltering(
+	       hueSlider->value(),
+	       satSlider->value(),
+	       valSlider->value());
+     else
+	  player->getWorkspace()->disableFiltering();
      player->getWorkspace()->update();
      setChanged();
 }
@@ -435,7 +444,8 @@ QImage MainWindow::finalFrame(long f)
 	  player->seek(f);
      QSize s = player->getCurrentFrame()->size();
      QImage frame = *player->getCurrentFrame();
-     player->getWorkspace()->drawObjects(&frame,false);
+     // if(filterObjBox->isChecked())
+     // 	  player->getWorkspace()->drawObjects(&frame,false);
      if(marginBox->isChecked())
 	  frame = frame.copy(leftSpin->value(),
 			     topSpin->value(),
@@ -471,7 +481,8 @@ QImage MainWindow::finalFrame(long f)
      				      valSlider->value());
 	  //qDebug() << "corrected image format: " << frame.format();
      }
-
+     // if(!filterObjBox->isChecked())
+     // 	  player->getWorkspace()->drawObjects(&frame,false);
      connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
      connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
    
@@ -599,7 +610,7 @@ QString MainWindow::projectToXml()
 
      QList<WorkspaceObject*>* objects = player->getWorkspace()->getObjectsList();
 
-     for(int i=0;i<objects->size();i++)
+     for(int i=objects->size()-1;i>=0;i--)
      {
 	  const WorkspaceObject* o = objects->at(i);
 	  bool isText = o->getTypeName() == "TextObject";
