@@ -248,8 +248,10 @@ void Workspace::mousePressEvent(QMouseEvent* e)
 	  dy = (float)cpos.y()/(float)image.height() - hoveredObject->posAt(frameIndex).y;
 	  hoveredObject->setMode( (WO::Mode)((int)hoveredObject->currentMode()+1));
 	  coSize = hoveredObject->sizeAt(frameIndex);
-	  clickPos = QPoint((float)cpos.x()/(float)image.width()*origSize.width(),
-			    (float)cpos.y()/(float)image.height()*origSize.height());
+	  clickPos = QPoint(((float)cpos.x()-((1-zoom)/2*width()))/(float)image.width()
+			    *origSize.width(),
+			    ((float)cpos.y()-((1-zoom)/2*height()))/(float)image.height()
+			    *origSize.height());
      }
 }
 
