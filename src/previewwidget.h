@@ -35,7 +35,8 @@ class PreviewWidget : public QWidget
 public:
      PreviewWidget(QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~PreviewWidget();
-     void setImage(const QImage& img, const QSize& size = QSize(0,0));
+     void setImage(const QImage& img, const QSize& size = QSize(0,0), 
+		   bool forceRatio = false, bool forceSmooth = false);
      virtual QImage* getImage() {return &image;}
      const QPoint* getCursorPos() const {return underMouse() ? &cpos : NULL;}
      const double normalizedX() const 
@@ -46,6 +47,7 @@ public:
      virtual void clear();
      void keepAspectRatio(bool keep){ratio = keep;}
      void setZoom(double z) {zoom = z;}
+     double getZoom() const {return zoom;}
      static void applyCorrection(QImage* img, int h, int s, int v, bool toRGB888 = true);
 protected:
      virtual void paintEvent(QPaintEvent*);

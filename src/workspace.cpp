@@ -392,6 +392,9 @@ void Workspace::execObjectMenu(const QPoint& p)
 	  posM->addAction(ffPos);
 	  QAction* efPos = new QAction(tr("Apply to the &earlier frames"),posM);
 	  posM->addAction(efPos);
+	  posM->addSeparator();
+	  QAction* interpPos = new QAction(tr("&Interpolate..."),posM);
+	  posM->addAction(interpPos);
 	  m->addMenu(posM);
 
 	  QMenu* sizeM = new QMenu(tr("&Size"),m);
@@ -401,6 +404,9 @@ void Workspace::execObjectMenu(const QPoint& p)
 	  sizeM->addAction(efSize);
 	  QAction* resetSize = new QAction(tr("&Restore original size"),sizeM);
 	  sizeM->addAction(resetSize);
+	  sizeM->addSeparator();
+	  QAction* interpSize = new QAction(tr("&Interpolate..."),sizeM);
+	  sizeM->addAction(interpSize);
 	  m->addMenu(sizeM);
 
 	  m->addSeparator();

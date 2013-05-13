@@ -104,6 +104,14 @@ private:
 	  void saveProject(const QString& file);
 	  void saveProjectAs();
 	  void setChanged(bool c = true);
+	  void dockLevelChanged(bool top);
+
+	  //view
+	  void showOutputProp(){toolBox->setCurrentIndex(3);}
+	  void showPreviewProp(){toolBox->setCurrentIndex(0);}
+	  void showFilters(){toolBox->setCurrentIndex(2);}
+	  void showMargins(){toolBox->setCurrentIndex(1);}
+	  void toggleDock(){toolDock->setFloating(!toolDock->isFloating());}
 };
 
 #endif

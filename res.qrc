@@ -1,5 +1,10 @@
 <RCC>
   <qresource>
+    <file>res/filters.png</file>
+    <file>res/margins.png</file>
+    <file>res/preview-props.png</file>
+    <file>res/output-prop.png</file>
+    <file>res/undock.png</file>
     <file>res/new.png</file>
     <file>res/saveas.png</file>
     <file>res/open.png</file>

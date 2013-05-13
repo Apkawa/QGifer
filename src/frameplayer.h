@@ -90,10 +90,11 @@ public:
      {workspace->enableAntialiasing(enable);workspace->setImage(currentFrame,frame->size());}
      QString codecName();
      void showDefaultScreen()
-     {currentFrame = defaultImg;workspace->setImage(defaultImg.scaled(frame->size()));}
+     {currentFrame = defaultImg; workspace->setImage(defaultImg, frame->size(), true, true);
+	  centerWorkspace();}
      Workspace* getWorkspace() {return workspace;}
      void setMedianBlur(int m){medianblur = m;}
-     
+
 private:
      VideoCapture vcap;
      int medianblur;
@@ -123,6 +124,7 @@ public slots:
      void close();
      void setInterval(int i){interval=i;if(status==Playing){pause();play();}}
      void setFps(double f){ setInterval(1000/f);}
+     void centerWorkspace();
 signals:
      void frameChanged(long);
      void statusUpdated(FramePlayer::Status status);

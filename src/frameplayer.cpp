@@ -26,10 +26,10 @@ FramePlayer::FramePlayer(QWidget* parent):QWidget(parent),frames(0),originalSize
 {
      setupUi(this);
      workspace = new Workspace(frame);
-     // QPixmap def(800,450);
-     // def.fill(Qt::black);
+     // QPixmap def(1,1);
+     // def.fill(Qt::transparent);
      // defaultImg = def.toImage();
-     //defaultImg = QImage(":/res/playerdefault.png");
+     defaultImg = QImage(":/res/playerdefault.png");
      connect(playButton, SIGNAL(clicked()), this, SLOT(play()));
      connect(stopButton, SIGNAL(clicked()), this, SLOT(stop()));
      connect(pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
@@ -87,6 +87,8 @@ bool FramePlayer::openSource(const QString& src)
      slider->setMaximum(countFrames()-1);
      //updateSlider(0);
      slider->setValue(0);
+     nextFrame();
+     centerWorkspace();
      return true;
 }
 
@@ -271,8 +273,12 @@ void FramePlayer::updateStatus(Status s)
 void FramePlayer::resizeEvent(QResizeEvent*)
 {
      //qDebug() << "player resize event";
-     workspace->setImage(currentFrame,frame->size());
+     if(countFrames())
+	  workspace->setImage(currentFrame,frame->size());
+     else
+	  showDefaultScreen();
      workspace->setFixedSize(size());
+     centerWorkspace();
 }
 
 void FramePlayer::setStatusBar(QStatusBar* sb)
@@ -288,4 +294,11 @@ QString FramePlayer::codecName()
      int ex = static_cast<int>(vcap.get(CV_CAP_PROP_FOURCC));
      char EXT[] = {(char)(ex & 0XFF) , (char)((ex & 0XFF00) >> 8),(char)((ex & 0XFF0000) >> 16),(char)((ex & 0XFF000000) >> 24), 0};
      return QString(EXT);
+}
+
+void FramePlayer::centerWorkspace()
+{
+workspace->move(
+     (frame->width()*workspace->getZoom()-workspace->getImage()->width())/2, 
+     (frame->height()*workspace->getZoom()-workspace->getImage()->height())/2);
 }

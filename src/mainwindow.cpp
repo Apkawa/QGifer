@@ -23,6 +23,7 @@
 #include <QXmlStreamReader>
 #include <QFile>
 #include <QTextStream>
+#include <QDesktopWidget>
 #include "mainwindow.h"
 #include "objectwidget.h"
 
@@ -96,6 +97,7 @@ MainWindow::MainWindow()
      connect(player, SIGNAL(frameChanged(long)), this, SLOT(frameChanged(long)));
 
      connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoomChanged(int)));
+     connect(zoomSlider, SIGNAL(sliderReleased()), player, SLOT(centerWorkspace()));
      connect(ratioBox, SIGNAL(stateChanged(int)), this, SLOT(ratioChanged(int)));
      connect(smoothBox, SIGNAL(stateChanged(int)), this, SLOT(smoothChanged(int)));
      connect(marginBox, SIGNAL(stateChanged(int)), this, SLOT(marginBoxChanged(int)));
@@ -118,6 +120,15 @@ MainWindow::MainWindow()
      connect(player->getWorkspace(), SIGNAL(marginsChanged()), this, SLOT(marginsChanged()));
      connect(player->getWorkspace(), SIGNAL(propertiesRequested(WorkspaceObject*)),
 	     this, SLOT(showProperties(WorkspaceObject*)));
+
+     connect(toolDock, SIGNAL(topLevelChanged(bool)),
+			      this, SLOT(dockLevelChanged(bool)));
+
+     connect(actionOutputProp, SIGNAL(triggered()), this, SLOT(showOutputProp()));
+     connect(actionFilters, SIGNAL(triggered()), this, SLOT(showFilters()));
+     connect(actionMargins, SIGNAL(triggered()), this, SLOT(showMargins()));
+     connect(actionPreviewProp, SIGNAL(triggered()), this, SLOT(showPreviewProp()));
+     connect(actionUndock, SIGNAL(triggered()), this, SLOT(toggleDock()));
 
      toolBox->setMinimumWidth(270);
      loadSettings();
@@ -164,7 +175,6 @@ bool MainWindow::openVideo(const QString& path)
 {
      if(player->openSource(path))
      {
-         player->nextFrame();
 	 startBox->setMaximum(player->countFrames()-1);
 	 stopBox->setMaximum(player->countFrames()-1);
 	 multiSlider->setMaximum(player->countFrames()-1);
@@ -330,6 +340,7 @@ void MainWindow::zoomChanged(int v)
 {
      zoomLabel->setText(tr("Zoom")+" ("+QString::number(v)+"%):");
      player->getWorkspace()->setZoom((double)v/100.0);
+     //player->centerWorkspace();
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
 }
@@ -339,6 +350,7 @@ void MainWindow::ratioChanged(int s)
      player->getWorkspace()->keepAspectRatio(s == Qt::Checked);
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
+     player->centerWorkspace();
      setChanged();
 }
 
@@ -458,6 +470,11 @@ void MainWindow::lock(bool l)
      actionInsertText->setEnabled(l);
      actionInsertObject->setEnabled(l);
 
+     actionOutputProp->setEnabled(l);
+     actionPreviewProp->setEnabled(l);
+     actionMargins->setEnabled(l);
+     actionFilters->setEnabled(l);
+
      varPaletteBoxChanged(varPaletteBox->checkState());
      actionOpenPalette->setEnabled(l);
      actionSavePalette->setEnabled(l);
@@ -527,8 +544,8 @@ QImage MainWindow::finalFrame(long f)
 void MainWindow::loadSettings()
 {
      zoomSlider->setValue(set->value("zoom",100).toInt());
-     smoothBox->setChecked(set->value("smooth_preview",false).toBool());
-     ratioBox->setChecked(set->value("keep_ratio",false).toBool());
+     smoothBox->setChecked(set->value("smooth_preview",true).toBool());
+     ratioBox->setChecked(set->value("keep_ratio",true).toBool());
      switch(set->value("loop",0).toInt())
      {
      case 1: laRadio->setChecked(true);break;
@@ -543,7 +560,7 @@ void MainWindow::loadSettings()
      widthBox->setValue(set->value("output_width",320).toInt());
      heightBox->setValue(set->value("output_height",240).toInt());
      paletteBox->setValue(set->value("palette_size",10).toInt());
-     autoPaletteBox->setChecked(set->value("auto_palette",false).toBool());
+     autoPaletteBox->setChecked(set->value("auto_palette",true).toBool());
      whRatioBox->setChecked(set->value("wh_ratio",false).toBool());
      varPaletteBox->setChecked(set->value("var_palette",false).toBool());
      minDiffBox->setValue(set->value("vp_mindiff",40).toFloat());
@@ -957,6 +974,7 @@ void MainWindow::insertText()
      TextWidget* tw = new TextWidget(player);
      tw->setAttribute(Qt::WA_DeleteOnClose);
      tw->move(x()+width()*0.3, y()+height()*0.2);
+     tw->setRange(startBox->value(),stopBox->value());
      tw->show();
      setChanged();
 }
@@ -1003,6 +1021,7 @@ void MainWindow::newProject()
      projectFile.clear();
      lock(true);
      setChanged(false);
+     player->showDefaultScreen();
 }
 
 void MainWindow::openProject()
@@ -1105,4 +1124,22 @@ void MainWindow::closeEvent(QCloseEvent* e)
 	       
      }
      saveSettings();
+}
+
+void MainWindow::dockLevelChanged(bool top)
+{
+     actionUndock->setText(top ? tr("Dock &toolbox") : tr("Undock &toolbox"));
+     if(top)
+     {
+	  toolDock->resize(280,frameSize().height());
+	  QSize dsize = QApplication::desktop()->size();
+	  int space = 10;
+	  //miejsce z lewej
+	  if(x() > toolDock->width()+space)
+	       toolDock->move(x()-toolDock->width()-space, y());
+	  //miejsce z prawej
+	  else if( dsize.width()-(x()+frameSize().width()) > toolDock->width()+space )
+	       toolDock->move(x()+frameSize().width()+space, y());
+     }
+
 }

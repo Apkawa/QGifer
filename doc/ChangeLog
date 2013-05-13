@@ -1,6 +1,17 @@
 QGifer ChangeLog:
 ================
 
+2013-05-12 v0.2.0:
+ * dodano warstwę przestrzeni roboczej na odtwarzaczu
+ * dodano możliwość wstawiania obrazów
+ * dodano rendering i wstawianie tekstów
+ * dodano zarządzanie obiektami
+ * dodano możliwość zapisu i odczytu projektu
+ * dodano zapis stanu okna
+ * dodano możliwość oddokowania panelu narzędziowego
+ * wprowadzono kilka mniejszych zmian w interfejsie
+ * poprawiono kilka błędów
+
 2013-04-30 v0.1.1:
  * dodano obsluge zmiennej palety
  * zastapiono balans RGB korekcja barwy, nasycenia i jasnosci
