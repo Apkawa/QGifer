@@ -3,6 +3,7 @@
 
 #include "previewwidget.h"
 #include "workspaceobject.h"
+#include "interpolationdialog.h"
 #include <QList>
 #include <QPaintDevice>
 

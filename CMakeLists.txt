@@ -12,7 +12,7 @@ SET(CMAKE_INSTALL_PREFIX "/usr/")
 
 SET(QGIFER_VERSION_MAJOR 0)
 SET(QGIFER_VERSION_MINOR 2)
-SET(QGIFER_VERSION_PATCH 0)
+SET(QGIFER_VERSION_PATCH 1)
 
 OPTION(QUIET_MODE "quiet mode" OFF)
 OPTION(RELEASE_MODE "release mode" ON)
@@ -99,6 +99,7 @@ src/workspaceobject.h
 src/objectwidget.h
 src/textwidget.h
 src/textobject.h
+src/interpolationdialog.h
 )
 
 SET (SOURCES 
@@ -119,6 +120,7 @@ src/workspaceobject.cpp
 src/objectwidget.cpp
 src/textwidget.cpp
 src/textobject.cpp
+src/interpolationdialog.cpp
 )
 
 SET (RESOURCES 
@@ -134,6 +136,7 @@ ui/converterdialog.ui
 ui/aboutdialog.ui
 ui/objectwidget.ui
 ui/textwidget.ui
+ui/interpolationdialog.ui
 )
 
 QT4_WRAP_CPP(HEADERS_MOC ${QT_HEADERS})

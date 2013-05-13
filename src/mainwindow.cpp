@@ -85,8 +85,8 @@ MainWindow::MainWindow()
      connect(actionPrevFrame, SIGNAL(triggered()), player, SLOT(prevFrame()));
      connect(actionRestoreDefault, SIGNAL(triggered()), this, SLOT(restoreDefault()));
 
-     connect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
-     connect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
+     connect(stopBox, SIGNAL(editingFinished()), this, SLOT(stopChanged()));
+     connect(startBox, SIGNAL(editingFinished()), this, SLOT(startChanged()));
      connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
      connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
 
@@ -889,13 +889,20 @@ void MainWindow::whRatioChanged(int s)
       setChanged();
 }
 
-void MainWindow::startChanged(int v)
+void MainWindow::startChanged()
 {
-     multiSlider->setPosA(v,false);
+     multiSlider->setPosA(startBox->value(),false);
      if(autoPaletteBox->isChecked()){
-	  player->seek(v);
+	  player->seek(startBox->value());
 	  updatePalette();
      }
+     correctRange();
+     setChanged();
+}
+
+void MainWindow::stopChanged()
+{
+     multiSlider->setPosB(stopBox->value(),false);
      correctRange();
      setChanged();
 }

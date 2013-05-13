@@ -1,7 +1,10 @@
 QGifer ChangeLog:
 ================
+2013-05-14 v0.2.1:
+ * dodano możliwość interpolacji pozycji i rozmiaru obiektów
+ * drobne poprawki w interfejsie
 
-2013-05-12 v0.2.0:
+2013-05-11 v0.2.0:
  * dodano warstwę przestrzeni roboczej na odtwarzaczu
  * dodano możliwość wstawiania obrazów
  * dodano rendering i wstawianie tekstów

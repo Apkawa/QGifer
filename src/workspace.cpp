@@ -426,12 +426,32 @@ void Workspace::execObjectMenu(const QPoint& p)
 	       hoveredObject->clonePosAt(frameIndex, WO::Further);
 	  else if(a == efPos)
 	       hoveredObject->clonePosAt(frameIndex, WO::Earlier);
+	  else if(a == interpPos){
+	       if(hoveredObject->getStop()-hoveredObject->getStart() < 2){
+		    QMessageBox::information(
+			 this, tr("Information"),
+			 tr("There is no enough frames with this object to perform the interpolation"));
+		    return;
+	       }
+	       InterpolationDialog id(this, hoveredObject);
+	       id.exec();
+	  }
 	  else if(a == ffSize)
 	       hoveredObject->cloneScaleAt(frameIndex, WO::Further);
 	  else if(a == efSize)
 	       hoveredObject->cloneScaleAt(frameIndex, WO::Earlier);
 	  else if(a == resetSize)
 	       hoveredObject->setScaleAt(frameIndex, 1, 1);
+	  else if(a == interpSize){
+	       if(hoveredObject->getStop()-hoveredObject->getStart() < 2){
+		    QMessageBox::information(
+			 this, tr("Information"),
+			 tr("There is no enough frames with this object to perform the interpolation"));
+		    return;
+	       }
+	       InterpolationDialog id(this, hoveredObject, InterpolationDialog::Size);
+	       id.exec();
+	  }
 	  else if(a == props)
 	       emit propertiesRequested(hoveredObject);
 	  else if(a == del)

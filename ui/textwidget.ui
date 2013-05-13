@@ -25,6 +25,9 @@
         <property name="text">
          <string>Bold</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="3" column="0">
@@ -117,7 +120,7 @@
          <double>0.500000000000000</double>
         </property>
         <property name="value">
-         <double>1.000000000000000</double>
+         <double>2.500000000000000</double>
         </property>
        </widget>
       </item>
