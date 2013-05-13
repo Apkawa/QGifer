@@ -144,7 +144,7 @@ QT4_WRAP_UI(FORMS_HEADERS ${FORMS})
 QT4_ADD_RESOURCES(RESOURCES_RCC ${RESOURCES})
 
 IF(WIN32)
-	SET( OPENCV_LIBS "-lopencv_core244 -lopencv_highgui244" )
+	SET( OPENCV_LIBS "-lopencv_core244 -lopencv_highgui244 -lopencv_imgproc244" )
 ELSE(WIN32)
 	SET( OPENCV_LIBS "-lopencv_core -lopencv_highgui -lopencv_imgproc" )
 ENDIF(WIN32)
