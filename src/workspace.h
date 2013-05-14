@@ -39,7 +39,8 @@ private:
      void mousePressEvent(QMouseEvent*);
      void updateMargins(); //uruchamiane podczas przeciagania
      void hoverObject(int i, const QCursor& c) 
-     {if(drag!=mrNone) return; setCursor(c);hoveredObject = i < 0 ? NULL : objects[i]; hoIndex = i; update();}
+     {if(drag!=mrNone) return; setCursor(c);hoveredObject = i < 0 ? NULL :
+	  objects[i]; hoIndex = i; update();}
      void execObjectMenu(const QPoint& p);
      QList<WorkspaceObject*> objects;
      WorkspaceObject* hoveredObject;

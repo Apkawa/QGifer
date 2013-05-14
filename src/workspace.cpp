@@ -509,7 +509,10 @@ void Workspace::execObjectMenu(const QPoint& p)
 	       if(!QMessageBox::question(this, tr("Question"), 
 					 tr("Do you really want to delete this object?"), 
 					 tr("Yes"), tr("No")))
+	       {
 		    objects.removeAt(hoIndex);
+		    hoverObject(-1, Qt::ArrowCursor);
+	       }
 	  
 	  if(a)
 	       emit objectChanged();
