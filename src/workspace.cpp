@@ -387,20 +387,26 @@ void Workspace::execObjectMenu(const QPoint& p)
 
 	  m->addSeparator();
 
+	  //pozycja
 	  QMenu* posM = new QMenu(tr("&Position"),m);
-	  QAction* ffPos = new QAction(tr("Apply to the &further frames"),posM);
+	  QAction* afPos = new QAction(tr("Apply to &all frames"),posM);
+	  posM->addAction(afPos);
+	  QAction* ffPos = new QAction(tr("Apply to &further frames"),posM);
 	  posM->addAction(ffPos);
-	  QAction* efPos = new QAction(tr("Apply to the &earlier frames"),posM);
+	  QAction* efPos = new QAction(tr("Apply to &earlier frames"),posM);
 	  posM->addAction(efPos);
 	  posM->addSeparator();
 	  QAction* interpPos = new QAction(tr("&Interpolate..."),posM);
 	  posM->addAction(interpPos);
 	  m->addMenu(posM);
 
+	  //rozmiar
 	  QMenu* sizeM = new QMenu(tr("&Size"),m);
-	  QAction* ffSize = new QAction(tr("Apply to the &further frames"),sizeM);
+	  QAction* afSize = new QAction(tr("Apply to &all frames"),sizeM);
+	  sizeM->addAction(afSize);
+	  QAction* ffSize = new QAction(tr("Apply to &further frames"),sizeM);
 	  sizeM->addAction(ffSize);
-	  QAction* efSize = new QAction(tr("Apply to the &earlier frames"),sizeM);
+	  QAction* efSize = new QAction(tr("Apply to &earlier frames"),sizeM);
 	  sizeM->addAction(efSize);
 	  QAction* resetSize = new QAction(tr("&Restore original size"),sizeM);
 	  sizeM->addAction(resetSize);
@@ -408,6 +414,19 @@ void Workspace::execObjectMenu(const QPoint& p)
 	  QAction* interpSize = new QAction(tr("&Interpolate..."),sizeM);
 	  sizeM->addAction(interpSize);
 	  m->addMenu(sizeM);
+
+	  //pozycja i rozmiar
+	  QMenu* psM = new QMenu(tr("Position &and size"),m);
+	  QAction* afPS = new QAction(tr("Apply to &all frames"),psM);
+	  psM->addAction(afPS);
+	  QAction* ffPS = new QAction(tr("Apply to &further frames"),psM);
+	  psM->addAction(ffPS);
+	  QAction* efPS = new QAction(tr("Apply to &earlier frames"),psM);
+	  psM->addAction(efPS);
+	  psM->addSeparator();
+	  QAction* interpPS = new QAction(tr("&Interpolate..."),psM);
+	  psM->addAction(interpPS);
+	  m->addMenu(psM);
 
 	  m->addSeparator();
 
@@ -422,6 +441,10 @@ void Workspace::execObjectMenu(const QPoint& p)
 	       objects.prepend(objects.takeAt(hoIndex));
 	  else if(a == stb)
 	       objects.append(objects.takeAt(hoIndex));
+	  else if(a == afPos){
+	       hoveredObject->clonePosAt(frameIndex, WO::Earlier);
+	       hoveredObject->clonePosAt(frameIndex, WO::Further);
+	  }
 	  else if(a == ffPos)
 	       hoveredObject->clonePosAt(frameIndex, WO::Further);
 	  else if(a == efPos)
@@ -435,6 +458,10 @@ void Workspace::execObjectMenu(const QPoint& p)
 	       }
 	       InterpolationDialog id(this, hoveredObject);
 	       id.exec();
+	  }
+	  else if(a == afSize){
+	       hoveredObject->cloneScaleAt(frameIndex, WO::Earlier);
+	       hoveredObject->cloneScaleAt(frameIndex, WO::Further);
 	  }
 	  else if(a == ffSize)
 	       hoveredObject->cloneScaleAt(frameIndex, WO::Further);
@@ -452,6 +479,30 @@ void Workspace::execObjectMenu(const QPoint& p)
 	       InterpolationDialog id(this, hoveredObject, InterpolationDialog::Size);
 	       id.exec();
 	  }
+	  else if(a == afPS){
+	       hoveredObject->clonePosAt(frameIndex, WO::Earlier);
+	       hoveredObject->clonePosAt(frameIndex, WO::Further);
+	       hoveredObject->cloneScaleAt(frameIndex, WO::Earlier);
+	       hoveredObject->cloneScaleAt(frameIndex, WO::Further);
+	  }
+	  else if(a == ffPS){
+	       hoveredObject->clonePosAt(frameIndex, WO::Further);
+	       hoveredObject->cloneScaleAt(frameIndex, WO::Further);
+	  }
+	  else if(a == efPS){
+	       hoveredObject->clonePosAt(frameIndex, WO::Earlier);
+	       hoveredObject->cloneScaleAt(frameIndex, WO::Earlier);
+	       }
+	  else if(a == interpPS){
+	       // if(hoveredObject->getStop()-hoveredObject->getStart() < 2){
+	       // 	    QMessageBox::information(
+	       // 		 this, tr("Information"),
+	       // 		 tr("There is no enough frames with this object to perform the interpolation"));
+	       // 	    return;
+	       // }
+	       // InterpolationDialog id(this, hoveredObject);
+	       // id.exec();
+	  }
 	  else if(a == props)
 	       emit propertiesRequested(hoveredObject);
 	  else if(a == del)
@@ -459,6 +510,10 @@ void Workspace::execObjectMenu(const QPoint& p)
 					 tr("Do you really want to delete this object?"), 
 					 tr("Yes"), tr("No")))
 		    objects.removeAt(hoIndex);
+	  
+	  if(a)
+	       emit objectChanged();
+
 	  delete m;
 	  update();
 }
