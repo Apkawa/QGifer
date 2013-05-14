@@ -456,8 +456,10 @@ void Workspace::execObjectMenu(const QPoint& p)
 			 tr("There is no enough frames with this object to perform the interpolation"));
 		    return;
 	       }
-	       InterpolationDialog id(this, hoveredObject);
-	       id.exec();
+	       InterpolationDialog* id = new InterpolationDialog(this, hoveredObject,
+				      InterpolationDialog::Position);
+	       id->setAttribute(Qt::WA_DeleteOnClose);
+	       id->show();
 	  }
 	  else if(a == afSize){
 	       hoveredObject->cloneScaleAt(frameIndex, WO::Earlier);
@@ -476,8 +478,10 @@ void Workspace::execObjectMenu(const QPoint& p)
 			 tr("There is no enough frames with this object to perform the interpolation"));
 		    return;
 	       }
-	       InterpolationDialog id(this, hoveredObject, InterpolationDialog::Size);
-	       id.exec();
+	       InterpolationDialog* id = new InterpolationDialog(this, hoveredObject,
+				      InterpolationDialog::Size);
+	       id->setAttribute(Qt::WA_DeleteOnClose);
+	       id->show();
 	  }
 	  else if(a == afPS){
 	       hoveredObject->clonePosAt(frameIndex, WO::Earlier);
@@ -500,9 +504,10 @@ void Workspace::execObjectMenu(const QPoint& p)
 	       		 tr("There is no enough frames with this object to perform the interpolation"));
 	       	    return;
 	       }
-	       InterpolationDialog id(this, hoveredObject,
+	       InterpolationDialog* id = new InterpolationDialog(this, hoveredObject,
 				      InterpolationDialog::Size | InterpolationDialog::Position);
-	       id.exec();
+	       id->setAttribute(Qt::WA_DeleteOnClose);
+	       id->show();
 	  }
 	  else if(a == props)
 	       emit propertiesRequested(hoveredObject);

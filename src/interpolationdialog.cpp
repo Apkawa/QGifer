@@ -1,10 +1,11 @@
 #include <QMessageBox>
 #include "interpolationdialog.h"
 
-InterpolationDialog::InterpolationDialog(QWidget* parent, WorkspaceObject* object,
-     int mode): QDialog(parent)
+InterpolationDialog::InterpolationDialog(Workspace* workspace, WorkspaceObject* object,
+     int mode): QDialog(workspace)
 {
      setupUi(this);
+     this->workspace = workspace;
      this->mode = mode;
      this->object = object;
 
@@ -18,6 +19,8 @@ InterpolationDialog::InterpolationDialog(QWidget* parent, WorkspaceObject* objec
      toBox->setMinimum(object->getStart()+2);
      toBox->setValue(toBox->maximum());
 
+     connect(curFromButton, SIGNAL(clicked()), this, SLOT(fromUpdate()));
+     connect(curToButton, SIGNAL(clicked()), this, SLOT(toUpdate()));
      connect(posButton, SIGNAL(clicked()), this, SLOT(interpolate()));
      connect(negButton, SIGNAL(clicked()), this, SLOT(close()));
 }
@@ -55,4 +58,14 @@ void InterpolationDialog::interpolate()
      }
 
      close();
+}
+
+void InterpolationDialog::toUpdate()
+{
+     toBox->setValue(workspace->currentFrameIndex());
+}
+
+void InterpolationDialog::fromUpdate()
+{
+     fromBox->setValue(workspace->currentFrameIndex());
 }

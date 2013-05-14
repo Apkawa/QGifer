@@ -9,6 +9,8 @@
 
 #define WOSCALE_PX 3
 
+class InterpolationDialog;
+
 class Workspace : public PreviewWidget
 {
      Q_OBJECT;
@@ -21,6 +23,7 @@ public:
      void addObject(WorkspaceObject* wo) {objects.prepend(wo);}
      void addObject(const QString& imgPath, int startFrame, int stopFrame);
      void updateFrameIndex(int i) {frameIndex = i;}
+     int currentFrameIndex() const {return frameIndex;}
      void clear();
      void drawObjects(QPaintDevice* pd,  bool editMode = true);
      void drawObjects() {drawObjects(&image, false);}

@@ -134,6 +134,7 @@ void FramePlayer::nextFrame()
 
      
      workspace->setImage(currentFrame,frame->size());
+     workspace->updateFrameIndex(currentPos);
      emit frameChanged(currentPos);
      updateSlider(currentPos);
      

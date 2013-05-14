@@ -297,7 +297,7 @@ void MainWindow::correctRange()
 
 void MainWindow::frameChanged(long f)
 {
-     player->getWorkspace()->updateFrameIndex(f);
+     
      if(player->getStatus() == FramePlayer::Playing && 
 	laRadio->isChecked() && f >= player->countFrames()-1)
 	  player->seek(0);
