@@ -487,10 +487,12 @@ void MainWindow::lock(bool l)
      actionMargins->setEnabled(l);
      actionFilters->setEnabled(l);
 
-     varPaletteBoxChanged(varPaletteBox->checkState());
      actionOpenPalette->setEnabled(l);
      actionSavePalette->setEnabled(l);
      actionUpdatePalette->setEnabled(l);
+
+     varPaletteBoxChanged(varPaletteBox->checkState());
+     autoPaletteBoxChanged(autoPaletteBox->checkState());
 }
 
 QImage MainWindow::finalFrame(long f)
@@ -601,6 +603,7 @@ void MainWindow::loadSettings()
      resetCorrection();
      restoreState(set->value("windowstate").toByteArray());
      restoreGeometry(set->value("geometry").toByteArray());
+
 }
 
 void MainWindow::saveSettings()
@@ -959,6 +962,8 @@ void MainWindow::medianChanged(int m)
 
 void MainWindow::varPaletteBoxChanged(int s)
 {
+     if(!varPaletteBox->isEnabled())
+	  return;
      bool e = s == Qt::Checked;
      actionUpdatePalette->setEnabled(!e);
      actionOpenPalette->setEnabled(!e);
@@ -971,6 +976,8 @@ void MainWindow::varPaletteBoxChanged(int s)
 
 void MainWindow::autoPaletteBoxChanged(int s)
 {
+     if(!autoPaletteBox->isEnabled())
+	  return;
      bool e = s == Qt::Checked;
      actionUpdatePalette->setEnabled(!e);
      actionOpenPalette->setEnabled(!e);
