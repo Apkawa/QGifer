@@ -37,7 +37,7 @@ MainWindow::MainWindow()
      player->setStatusBar(statusbar);
      //player->showDefaultScreen();
      set = new QSettings("QGifer","QGifer");
-     
+     set->setIniCodec("UTF-8");
      // upStartButton->setIcon(QIcon(":/res/fromimg.png"));
      // upStartButton->setDefaultAction(actionSetAsStart);
      // upStopButton->setDefaultAction(actionSetAsStop);

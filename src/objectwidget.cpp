@@ -72,6 +72,7 @@ void ObjectWidget::validate()
 void ObjectWidget::imgSelect()
 {
      QSettings set("QGifer","QGifer");
+     set.setIniCodec("UTF-8");
      QString path = QFileDialog::getOpenFileName(
 	  this, tr("Open image"), 
 	  set.value("last_objects_dir","").toString(),
