@@ -48,7 +48,8 @@ public:
      void keepAspectRatio(bool keep){ratio = keep;}
      void setZoom(double z) {zoom = z;}
      double getZoom() const {return zoom;}
-     static void applyCorrection(QImage* img, int h, int s, int v, bool toRGB888 = true);
+     static void applyCorrection(QImage* img, int h, int s, int v, 
+				 bool toRGB888 = true, QRect rect = QRect());
 protected:
      virtual void paintEvent(QPaintEvent*);
      double fit01(double v){if(v<0)return 0;else if(v>1) return 1; else return v;}

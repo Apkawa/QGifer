@@ -76,8 +76,6 @@ const QRect& WorkspaceObject::updatePreviewRect(
      const QSize& workspaceSize, 
      const QSize& origFrameSize, double zoom)
 {
-
-
      int x0 = (1-zoom)/2*workspaceSize.width();
      int y0 = (1-zoom)/2*workspaceSize.height();
      const WOPos& pos = posAt(frame);

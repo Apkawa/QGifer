@@ -20,7 +20,7 @@ void Workspace::paintEvent(QPaintEvent* e)
      int x = (1-zoom)/2*width();
      int y = (1-zoom)/2*height();
      if(autoObjectDrawing)
-	  drawObjects(this,true,x,y);
+	  drawObjects(this,true);
 
      QPainter p(this);
 
@@ -327,7 +327,7 @@ void Workspace::addObject(const QString& imgPath, int startFrame, int stopFrame)
      qDebug() << "...done!";
 }
 
-void Workspace::drawObjects(QPaintDevice* pd, bool editMode, int x0, int y0)
+void Workspace::drawObjects(QPaintDevice* pd, bool editMode)
 {
      //qDebug() << "drawing objects...";
      //obiekty

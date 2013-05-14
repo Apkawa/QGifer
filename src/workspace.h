@@ -22,7 +22,7 @@ public:
      void addObject(const QString& imgPath, int startFrame, int stopFrame);
      void updateFrameIndex(int i) {frameIndex = i;}
      void clear();
-     void drawObjects(QPaintDevice* pd,  bool editMode = true, int x0 = 0, int y0 = 0);
+     void drawObjects(QPaintDevice* pd,  bool editMode = true);
      void drawObjects() {drawObjects(&image, false);}
      QList<WorkspaceObject*>* getObjectsList() {return &objects;}
      void enableFiltering(int h, int s, int v){hue=h;sat=s;val=v;}

@@ -272,28 +272,26 @@ void MainWindow::updatePalette()
 
 void MainWindow::posAChanged(int v)
 {
-     disconnect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
      startBox->setValue(v);
      if(autoPaletteBox->isChecked()){
 	  player->seek(v);
 	  updatePalette();
      }
      setChanged();
-     connect(startBox, SIGNAL(valueChanged(int)), this, SLOT(startChanged(int)));
 }
 
 void MainWindow::posBChanged(int v)
 {
-     disconnect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
      stopBox->setValue(v);
      setChanged();
-     connect(stopBox, SIGNAL(valueChanged(int)), this, SLOT(stopChanged(int)));
 }
 
 void MainWindow::correctRange()
 {
-     if(startBox->value()>stopBox->value())
+     if(startBox->value()>stopBox->value()){
 	 stopBox->setValue(startBox->value());
+	 stopChanged();
+     }
 }
 
 void MainWindow::frameChanged(long f)
@@ -378,6 +376,10 @@ void MainWindow::marginsChanged()
      rightSpin->setValue(m->right());
      topSpin->setValue(m->top());
      bottomSpin->setValue(m->bottom());
+
+     if(correctionBox->isChecked())
+	  correctionChanged();
+
      setChanged();
      connectMargins();
 }
@@ -435,10 +437,15 @@ void MainWindow::correctionChanged()
 	  player->getWorkspace()->enableAutoObjectDrawing(true);
      }
 
+     QRect marginRect = QRect(leftSpin->value()-1,
+			      topSpin->value()-1,
+			      fp.width()-leftSpin->value()-rightSpin->value()+2,
+			      fp.height()-topSpin->value()-bottomSpin->value()+2);
      PreviewWidget::applyCorrection(&fp,
      				 hueSlider->value(),
      				 satSlider->value(),
-     				 valSlider->value());
+				    valSlider->value(),
+				    true, marginRect);
 
      player->getWorkspace()->setImage(fp, player->frame->size());
      player->getWorkspace()->update();
@@ -495,45 +502,67 @@ QImage MainWindow::finalFrame(long f)
 	  player->seek(f);
      QSize s = player->getCurrentFrame()->size();
      QImage frame = *player->getCurrentFrame();
+
+     //rysowanie obiektow przed filtrowaniem
      if(filterObjBox->isChecked())
      	  player->getWorkspace()->drawObjects(&frame,false);
+
+     QRect marginRect = QRect(leftSpin->value(),
+			      topSpin->value(),
+			      s.width()-leftSpin->value()-rightSpin->value(),
+			      s.height()-topSpin->value()-bottomSpin->value());
+     
+     if(hueSlider->value() || valSlider->value() || satSlider->value())
+     {
+     	  PreviewWidget::applyCorrection(
+	       &frame,
+	       hueSlider->value(),
+	       satSlider->value(),
+	       valSlider->value(), 
+	       true, marginRect);
+	  //qDebug() << "corrected image format: " << frame.format();
+     }
+     
+     //rysowanie obiektow po filtrowaniu
+     if(!filterObjBox->isChecked())
+     	  player->getWorkspace()->drawObjects(&frame,false);
+
+     //marginesy
      if(marginBox->isChecked())
-	  frame = frame.copy(leftSpin->value(),
-			     topSpin->value(),
-			     s.width()-leftSpin->value()-rightSpin->value(),
-			     s.height()-topSpin->value()-bottomSpin->value());
-     frame = frame.scaled(ow,oh);
+	  frame = frame.copy(marginRect);
+
+     //skalowanie
+     frame = frame.scaled(ow,oh,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+     //qDebug() << "skalowane do " << ow <<"x"<<oh<<", wyszlo: " << frame.size();
+     //frame = frame.scaled(ow,oh);
+
+
+/* ##### PRZY SMOOTH TRANSFORMATION BLAD ZDAJE SIE NIE WYSTEPOWAC #######
 
      //--- korekcja rozdzielczosci, przy niektorych wartosciach wystepuje bug
      //--- i gif jest przekrzywiony. Liczba byteCount() jest większa od w*h*3
      //--- o wielokrotnosc h... wyrownamy wiec roznice na podstawie pierwszej klatki
      if(oh%2) oh++;
      // qDebug() << "\ncorrecting resolution....";
-     // qDebug() << "byte count: " << frame.byteCount();
-     // qDebug() << "w*h*3: " << (frame.width()*frame.height()*3);
+     qDebug() << "byte count: " << frame.byteCount();
+     qDebug() << "w*h*3: " << (frame.width()*frame.height()*3);
      int diff = frame.byteCount()-(frame.width()*frame.height()*3);
-     // qDebug() << "byte difference: " << diff; 
+     qDebug() << "byte difference: " << diff; 
      ow = ow+diff/oh;
      // qDebug() << "corrected.\n";
      
      if(diff)
      {
+	  qDebug() << "new size recursion...";
 	  widthBox->setValue(ow);
 	  heightBox->setValue(oh);
 	  qApp->processEvents();
 	  return finalFrame(f);
      }
 
-     if(hueSlider->value() || valSlider->value() || satSlider->value())
-     {
-     	  PreviewWidget::applyCorrection(&frame,
-     				      hueSlider->value(),
-     				      satSlider->value(),
-     				      valSlider->value());
-	  //qDebug() << "corrected image format: " << frame.format();
-     }
-     if(!filterObjBox->isChecked())
-     	  player->getWorkspace()->drawObjects(&frame,false);
+*/
+
+
      connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
      connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
    
@@ -737,6 +766,8 @@ bool MainWindow::projectFromXml(const QString& xstr)
 			 stream.attributes().value("stopframe").toString().toInt());
 		    startBox->setValue(
 			 stream.attributes().value("startframe").toString().toInt());
+		    startChanged();
+		    stopChanged();
 		    widthBox->setValue(
 			 stream.attributes().value("out_width").toString().toInt());
 		    heightBox->setValue(
@@ -891,19 +922,19 @@ void MainWindow::whRatioChanged(int s)
 
 void MainWindow::startChanged()
 {
-     multiSlider->setPosA(startBox->value(),false);
      if(autoPaletteBox->isChecked()){
 	  player->seek(startBox->value());
 	  updatePalette();
      }
      correctRange();
+     multiSlider->setPosA(startBox->value(),false);
      setChanged();
 }
 
 void MainWindow::stopChanged()
 {
-     multiSlider->setPosB(stopBox->value(),false);
      correctRange();
+     multiSlider->setPosB(stopBox->value(),false);
      setChanged();
 }
 
@@ -1136,6 +1167,7 @@ void MainWindow::closeEvent(QCloseEvent* e)
 void MainWindow::dockLevelChanged(bool top)
 {
      actionUndock->setText(top ? tr("Dock &toolbox") : tr("Undock &toolbox"));
+     qDebug() << "top: " << top;
      if(top)
      {
 	  toolDock->resize(280,frameSize().height());
@@ -1149,4 +1181,6 @@ void MainWindow::dockLevelChanged(bool top)
 	       toolDock->move(x()+frameSize().width()+space, y());
      }
 
+     if(correctionBox->isChecked())
+	  correctionChanged();
 }
