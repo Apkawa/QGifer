@@ -204,7 +204,7 @@ void MainWindow::extractGif()
 	  return;
      }
 
-     if(!paletteWidget->map())
+     if(!paletteWidget->map() || autoPaletteBox->isChecked())
      {
 	  player->seek(startBox->value());
 	  updatePalette();
@@ -215,6 +215,7 @@ void MainWindow::extractGif()
 	  QMessageBox::critical(this, tr("Error"),tr("Invalid color map!"));
 	  return;
      }
+
      if(paletteWidget->map()->ColorCount > pow(2,paletteBox->value()))
 	  updatePalette();
      player->pause();
@@ -868,6 +869,7 @@ bool MainWindow::projectFromXml(const QString& xstr)
 	  return false;
      }
      
+     player->seek(startBox->value());
      return true;
 }
 

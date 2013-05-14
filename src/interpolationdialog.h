@@ -9,15 +9,15 @@ class InterpolationDialog : public QDialog, public Ui::InterpolationDialog
 {
      Q_OBJECT;
 public:
-     enum Mode{Position,Size};
+     enum Mode{Position=1,Size=2};
 
      InterpolationDialog(QWidget* parent, WorkspaceObject* object, 
-			 InterpolationDialog::Mode = InterpolationDialog::Position);
+			 int mode = (int)InterpolationDialog::Position);
      virtual ~InterpolationDialog();
 
 private:
      WorkspaceObject* object;
-     Mode mode;
+     int mode;
      private slots:
 	  void interpolate();
 };

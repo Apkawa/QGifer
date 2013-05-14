@@ -494,14 +494,15 @@ void Workspace::execObjectMenu(const QPoint& p)
 	       hoveredObject->cloneScaleAt(frameIndex, WO::Earlier);
 	       }
 	  else if(a == interpPS){
-	       // if(hoveredObject->getStop()-hoveredObject->getStart() < 2){
-	       // 	    QMessageBox::information(
-	       // 		 this, tr("Information"),
-	       // 		 tr("There is no enough frames with this object to perform the interpolation"));
-	       // 	    return;
-	       // }
-	       // InterpolationDialog id(this, hoveredObject);
-	       // id.exec();
+	       if(hoveredObject->getStop()-hoveredObject->getStart() < 2){
+	       	    QMessageBox::information(
+	       		 this, tr("Information"),
+	       		 tr("There is no enough frames with this object to perform the interpolation"));
+	       	    return;
+	       }
+	       InterpolationDialog id(this, hoveredObject,
+				      InterpolationDialog::Size | InterpolationDialog::Position);
+	       id.exec();
 	  }
 	  else if(a == props)
 	       emit propertiesRequested(hoveredObject);

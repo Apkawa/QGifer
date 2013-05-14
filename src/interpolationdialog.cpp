@@ -2,14 +2,16 @@
 #include "interpolationdialog.h"
 
 InterpolationDialog::InterpolationDialog(QWidget* parent, WorkspaceObject* object,
-     InterpolationDialog::Mode mode): QDialog(parent)
+     int mode): QDialog(parent)
 {
      setupUi(this);
      this->mode = mode;
      this->object = object;
 
-     setWindowTitle(mode == Position ? tr("Interpolate object position") :
-	  tr("Interpolate object size") );
+     setWindowTitle( (mode == (Position | Size)) ? 
+		     tr("Interpolate object position and size") :
+		     (mode & Size) ? tr("Interpolate object size") : 
+		     tr("Interpolate object position") );
      fromBox->setMaximum(object->getStop());
      fromBox->setMinimum(object->getStart());
      toBox->setMaximum(object->getStop());
@@ -35,7 +37,7 @@ void InterpolationDialog::interpolate()
 	  return;
      }
 
-     if(mode == Position)
+     if(mode & Position)
      {
 	  WOPos start = object->posAt(fromBox->value());
 	  WOPos stop = object->posAt(toBox->value());
@@ -43,7 +45,7 @@ void InterpolationDialog::interpolate()
 	  for(int i=fromBox->value()+1, s = 1; i < toBox->value(); i++, s++)
 	       object->setPosAt(i, start.x+step.x*s, start.y+step.y*s);
      }
-     else
+     if(mode & Size)
      {
 	  WOSize start = object->scaleAt(fromBox->value());
 	  WOSize stop = object->scaleAt(toBox->value());
