@@ -23,12 +23,15 @@
 #include <QXmlStreamReader>
 #include <QFile>
 #include <QTextStream>
+#include <QTextCodec>
 #include <QDesktopWidget>
 #include "mainwindow.h"
 #include "objectwidget.h"
 
 MainWindow::MainWindow()
 {
+     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
      setupUi(this);
      player->controlPanel->hide();
      player->setStatusBar(statusbar);
