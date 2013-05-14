@@ -102,6 +102,7 @@ MainWindow::MainWindow()
      connect(smoothBox, SIGNAL(stateChanged(int)), this, SLOT(smoothChanged(int)));
      connect(marginBox, SIGNAL(stateChanged(int)), this, SLOT(marginBoxChanged(int)));
      connect(varPaletteBox, SIGNAL(stateChanged(int)), this, SLOT(varPaletteBoxChanged(int)));
+     connect(autoPaletteBox, SIGNAL(stateChanged(int)), this, SLOT(autoPaletteBoxChanged(int)));
      
      connect(hueSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
      connect(satSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
@@ -964,6 +965,19 @@ void MainWindow::varPaletteBoxChanged(int s)
      paletteWidget->setEnabled(!e);
      setChanged();
 }
+
+void MainWindow::autoPaletteBoxChanged(int s)
+{
+     bool e = s == Qt::Checked;
+     actionUpdatePalette->setEnabled(!e);
+     actionOpenPalette->setEnabled(!e);
+     actionSavePalette->setEnabled(!e);
+     varPaletteBox->setEnabled(!e);
+     minDiffBox->setEnabled(!e);
+     paletteWidget->setEnabled(!e);
+     setChanged();
+}
+
 
 void MainWindow::openPalette()
 {

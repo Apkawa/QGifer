@@ -91,6 +91,7 @@ private:
 	  void outputHeightChanged(int);
 	  void whRatioChanged(int);
 	  void varPaletteBoxChanged(int);
+	  void autoPaletteBoxChanged(int);
 	  void about() {AboutDialog ad; ad.exec();}
 	  void restoreDefault(){set->clear(); loadSettings();}
 	  void openPalette();
