@@ -651,6 +651,7 @@ QString MainWindow::projectToXml()
 {
      QString xcontent;
      QXmlStreamWriter stream(&xcontent);
+     stream.setCodec("UTF-8");
      stream.setAutoFormatting(true);
      stream.writeStartDocument();
 
@@ -1138,6 +1139,8 @@ void MainWindow::saveProject(const QString& file)
 	  set->setValue("project_path",file);
 	  projectFile = file;
 	  QTextStream str(&f);
+	  str.setCodec("UTF-8");
+	  str.setAutoDetectUnicode(true);
 	  str << projectToXml();
 	  f.close(); 
      }
