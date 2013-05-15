@@ -43,7 +43,7 @@ private:
      void resizeEvent(QResizeEvent*){if(correctionBox->isChecked())correctionChanged();}
      void closeEvent(QCloseEvent*e);
      bool checkFFMPEG(){return !QProcess::execute("ffmpeg -version");}
-     QString relativeVideoPath();
+     QString projectRelativePath(const QString& path);
      QString projectDir();
      QImage finalFrame(long f);
      void correctRange();

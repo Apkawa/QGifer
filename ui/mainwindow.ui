@@ -221,7 +221,7 @@
         <string/>
        </property>
        <property name="currentIndex">
-        <number>3</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="page_1">
         <property name="geometry">
@@ -600,7 +600,7 @@
          <item row="1" column="0">
           <widget class="QCheckBox" name="filterObjBox">
            <property name="text">
-            <string>Filter objects</string>
+            <string>Compose objects</string>
            </property>
           </widget>
          </item>

@@ -20,7 +20,13 @@ void Workspace::paintEvent(QPaintEvent* e)
      int x = (1-zoom)/2*width();
      int y = (1-zoom)/2*height();
      if(autoObjectDrawing)
-	  drawObjects(this,true);
+	  drawObjects(this);
+     // else if(hoveredObject)
+     // {
+     // 	  hoveredObject->updatePreviewRect(
+     // 			      frameIndex, image.size(), this->size(), origSize, zoom);
+     // 	  drawSelection(this);
+     // }
 
      QPainter p(this);
 
@@ -327,7 +333,7 @@ void Workspace::addObject(const QString& imgPath, int startFrame, int stopFrame)
      qDebug() << "...done!";
 }
 
-void Workspace::drawObjects(QPaintDevice* pd, bool editMode)
+void Workspace::drawObjects(QPaintDevice* pd)
 {
      //qDebug() << "drawing objects...";
      //obiekty
@@ -352,28 +358,35 @@ void Workspace::drawObjects(QPaintDevice* pd, bool editMode)
 		    QImage simg = o->image()->scaled(r.width(), r.height(),
 						     //	     ratio ? Qt::KeepAspectRatio : 
 						     Qt::IgnoreAspectRatio,
-						     smooth || !editMode ? 
-						     Qt::SmoothTransformation : 
+						     smooth ? Qt::SmoothTransformation : 
 						     Qt::FastTransformation);
 		    // if(hue || sat || val)
 		    // 	 applyCorrection(&simg, hue, sat, val, false);
 
 		    p.drawImage(r.x(),r.y(),simg);
-		    
-		    if(!editMode || o != hoveredObject)
-			 continue;
-
-		    //rysowanie ramki
-		    QPen pen = p.pen();
-		    pen.setColor(Qt::yellow);
-		    pen.setWidth(2);
-		    pen.setStyle(Qt::DotLine);
-		    p.setPen(pen);
-		    p.drawRect(r);
-		    p.fillRect(r.x()+r.width()-6, r.y()+r.height()-6, 7, 7, QColor(Qt::yellow));
+		    	    
 	       }
 	  }
+     p.end();
+     //if(pd == this)
+	  drawSelection(pd);
      //qDebug() << "...done!";
+}
+
+void Workspace::drawSelection(QPaintDevice* pd)
+{
+     if(!hoveredObject)
+	  return;
+     QRect r = hoveredObject->previewRect();
+     QPainter p(pd);
+     //rysowanie ramki
+     QPen pen = p.pen();
+     pen.setColor(Qt::yellow);
+     pen.setWidth(2);
+     pen.setStyle(Qt::DotLine);
+     p.setPen(pen);
+     p.drawRect(r);
+     p.fillRect(r.x()+r.width()-6, r.y()+r.height()-6, 7, 7, QColor(Qt::yellow));
 }
 
 void Workspace::execObjectMenu(const QPoint& p)
@@ -525,4 +538,17 @@ void Workspace::execObjectMenu(const QPoint& p)
 
 	  delete m;
 	  update();
+}
+
+void Workspace::hoverObject(int i, const QCursor& c)
+{
+     WorkspaceObject* o = i < 0 || !autoObjectDrawing ? NULL : objects[i];
+     emit objectHovered(o);
+     if(drag!=mrNone)
+	  return; 
+
+     if(autoObjectDrawing)
+	  setCursor(c);
+     hoveredObject = o;
+     hoIndex = i; update();
 }

@@ -118,6 +118,8 @@ MainWindow::MainWindow()
      connect(getWHButton, SIGNAL(clicked()), this, SLOT(estimateOutputSize()));
      connect(whRatioBox, SIGNAL(stateChanged(int)),this, SLOT(whRatioChanged(int)));
      connect(player->getWorkspace(), SIGNAL(objectChanged()), this, SLOT(setChanged()));
+     // connect(player->getWorkspace(), SIGNAL(objectHovered(WorkspaceObject*)),
+     // 	     this, SLOT(objectHovered(WorkspaceObject*)));
      //marginesy
      connectMargins();
 
@@ -427,13 +429,12 @@ void MainWindow::correctionChanged()
      }
      
      QImage fp = *player->getCurrentFrame(); //tymczasowa kopia, bez niej mallock crash
-     
      if(filterObjBox->isChecked()){
 	  player->getWorkspace()->enableFiltering(
 	       hueSlider->value(),
 	       satSlider->value(),
 	       valSlider->value());
-	  player->getWorkspace()->drawObjects(&fp,false);
+	  player->getWorkspace()->drawObjects(&fp);
 	  player->getWorkspace()->enableAutoObjectDrawing(false);
      }
      else
@@ -512,7 +513,7 @@ QImage MainWindow::finalFrame(long f)
 
      //rysowanie obiektow przed filtrowaniem
      if(filterObjBox->isChecked())
-     	  player->getWorkspace()->drawObjects(&frame,false);
+     	  player->getWorkspace()->drawObjects(&frame);
 
      QRect marginRect = QRect(leftSpin->value(),
 			      topSpin->value(),
@@ -532,7 +533,7 @@ QImage MainWindow::finalFrame(long f)
      
      //rysowanie obiektow po filtrowaniu
      if(!filterObjBox->isChecked())
-     	  player->getWorkspace()->drawObjects(&frame,false);
+     	  player->getWorkspace()->drawObjects(&frame);
 
      //marginesy
      if(marginBox->isChecked())
@@ -658,7 +659,7 @@ QString MainWindow::projectToXml()
      stream.writeStartElement("qgifer_project");
      //zastepujemy sciezke do projektu przez %project_path% jezeli
      //sciezka do pliku wideo jest w (pod)katalogu projektu
-     stream.writeAttribute("sourcevideo", relativeVideoPath());
+     stream.writeAttribute("sourcevideo", projectRelativePath(player->source()));
      stream.writeAttribute("startframe", QString::number(startBox->value()));
      stream.writeAttribute("stopframe", QString::number(stopBox->value()));
 
@@ -716,7 +717,7 @@ QString MainWindow::projectToXml()
 	       stream.writeAttribute("outlinecolor", to->getOutlineColor().name());
 	  }
 	  else
-	       stream.writeAttribute("image", o->getImagePath());
+	       stream.writeAttribute("image", projectRelativePath(o->getImagePath()));
 
 	  for(int p=o->getStart(); p <= o->getStop(); p++){
 	       stream.writeStartElement("pos");
@@ -895,12 +896,11 @@ QString MainWindow::projectDir()
      return ls != -1 ? pdir.left(ls) : "";
 }
 
-QString MainWindow::relativeVideoPath()
+QString MainWindow::projectRelativePath(const QString& path)
 {
      QString pdir = projectDir();
-     return pdir.isEmpty() ? "" : QString(player->source()).replace(pdir,"%project_path%");
+     return QString(path).replace(pdir,"%project_path%");
 }
-
 
 void MainWindow::outputWidthChanged(int v)
 {
@@ -1213,3 +1213,5 @@ void MainWindow::dockLevelChanged(bool top)
      if(correctionBox->isChecked())
 	  correctionChanged();
 }
+
+

@@ -25,8 +25,9 @@ public:
      void updateFrameIndex(int i) {frameIndex = i;}
      int currentFrameIndex() const {return frameIndex;}
      void clear();
-     void drawObjects(QPaintDevice* pd,  bool editMode = true);
-     void drawObjects() {drawObjects(&image, false);}
+     void drawObjects(QPaintDevice* pd);
+     void drawObjects() {drawObjects(&image);}
+     void drawSelection(QPaintDevice* pd);
      QList<WorkspaceObject*>* getObjectsList() {return &objects;}
      void enableFiltering(int h, int s, int v){hue=h;sat=s;val=v;}
      void disableFiltering() {hue=sat=val=0;}
@@ -34,16 +35,14 @@ public:
 signals:
      void propertiesRequested(WorkspaceObject*);
      void objectChanged();
-
+     void objectHovered(WorkspaceObject* obj);
 private:
      void paintEvent(QPaintEvent*);
      void mouseMoveEvent(QMouseEvent*);
      void mouseReleaseEvent(QMouseEvent*);
      void mousePressEvent(QMouseEvent*);
      void updateMargins(); //uruchamiane podczas przeciagania
-     void hoverObject(int i, const QCursor& c) 
-     {if(drag!=mrNone) return; setCursor(c);hoveredObject = i < 0 ? NULL :
-	  objects[i]; hoIndex = i; update();}
+     void hoverObject(int i, const QCursor& c);
      void execObjectMenu(const QPoint& p);
      QList<WorkspaceObject*> objects;
      WorkspaceObject* hoveredObject;
