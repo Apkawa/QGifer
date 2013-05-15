@@ -368,7 +368,7 @@ void Workspace::drawObjects(QPaintDevice* pd)
 	       }
 	  }
      p.end();
-     //if(pd == this)
+     if(pd == this)
 	  drawSelection(pd);
      //qDebug() << "...done!";
 }
