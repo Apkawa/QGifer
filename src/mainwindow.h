@@ -65,9 +65,9 @@ private:
 	  void extractGif();
 	  void updatePalette();
 	  void startFromCurrent() 
-	  { startBox->setValue(player->getCurrentPos()); }
+	  { startBox->setValue(player->getCurrentPos()); startChanged(); }
 	  void stopFromCurrent() 
-	  { stopBox->setValue(player->getCurrentPos()); }
+	  { stopBox->setValue(player->getCurrentPos()); stopChanged(); }
 	  void stopChanged();
 	  void startChanged();
 	  void posAChanged(int);

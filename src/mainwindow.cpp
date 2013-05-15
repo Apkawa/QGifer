@@ -631,8 +631,9 @@ void MainWindow::saveSettings()
 
 void MainWindow::estimateOutputSize()
 {
-     bool rb = ratioBox->isChecked();
-     ratioBox->setChecked(false);
+
+     disconnect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
+     disconnect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
      QSize s = player->getCurrentFrame()->size();
      if(marginBox->isChecked())
      {
@@ -644,8 +645,10 @@ void MainWindow::estimateOutputSize()
      widthBox->setValue(s.width());
      heightBox->setValue(s.height());
      whRatio = tmp;
-     ratioBox->setChecked(rb);
      setChanged();
+     whRatioChanged(ratioBox->checkState());
+     connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
+     connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
 }
 
 QString MainWindow::projectToXml()
