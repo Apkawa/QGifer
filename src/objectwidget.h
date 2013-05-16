@@ -3,9 +3,10 @@
 
 #include <QWidget>
 #include "frameplayer.h"
+#include "retranslatable.h"
 #include "ui_objectwidget.h"
 
-class ObjectWidget : public QWidget, Ui::ObjectWidget
+class ObjectWidget : public QWidget, public Ui::ObjectWidget, public Retranslatable
 {
      Q_OBJECT;
 public:
@@ -14,7 +15,10 @@ public:
      virtual ~ObjectWidget();
      void setPlayer(FramePlayer* p);
      void setRange(int from, int to){fromBox->setValue(from);toBox->setValue(to);}
+     void retranslate(){retranslateUi(this);}
 private:
+     void setWindowTitle()
+     {QWidget::setWindowTitle(object?tr("Object properties"):tr("Insert object"));}
      WorkspaceObject* object;
      Workspace* wspace;
      FramePlayer* player;

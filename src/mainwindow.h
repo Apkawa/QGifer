@@ -22,20 +22,23 @@
 
 #include <QObject>
 #include <QFileDialog>
+#include <QTranslator>
 #include "gifwidget.h"
 #include "optimizerdialog.h"
 #include "converterdialog.h"
 #include "aboutdialog.h"
 #include "textwidget.h"
+#include "retranslatable.h"
 #include "ui_mainwindow.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class MainWindow : public QMainWindow, private Ui::MainWindow, public Retranslatable
 {
      Q_OBJECT;
 public:
      MainWindow();
      virtual ~MainWindow();
-     
+     void retranslate()
+     {QString t = windowTitle();retranslateUi(this);setWindowTitle(t);}
 private:
      bool openVideo(const QString& path);
      void connectMargins();
@@ -51,6 +54,9 @@ private:
      bool projectFromXml(const QString& xstr);
      bool loadProject(const QString& file);
      bool isChanged() {return changed;}
+     QString dataDir();
+     void loadLanguages(); //uzupelnia hash 'langs' i tworzy menu wyboru jezyka
+     void loadLanguage(const QString& basename, const QString& qmpath);
      QSettings* set;
      QString vidfile;
      float whRatio;
@@ -58,6 +64,8 @@ private:
      int oh;
      QString projectFile;
      bool changed;
+     QHash<QAction*, QString> langs;
+     QTranslator* translator;
      private slots:
 	  void loadSettings();
 	  void saveSettings();
@@ -106,6 +114,7 @@ private:
 	  void saveProjectAs();
 	  void setChanged(bool c = true);
 	  void dockLevelChanged(bool top);
+	  void languageChanged(QAction*);
 
 	  //view
 	  void showOutputProp(){toolBox->setCurrentIndex(3);}

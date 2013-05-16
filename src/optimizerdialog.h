@@ -23,15 +23,16 @@
 #include <QDialog>
 #include <QProcess>
 #include <QSettings>
+#include "retranslatable.h"
 #include "ui_optimizerdialog.h"
 
-class OptimizerDialog : public QDialog, public Ui::OptimizerDialog
+class OptimizerDialog : public QDialog, public Ui::OptimizerDialog, public Retranslatable
 {
      Q_OBJECT;
 public:
      OptimizerDialog(QSettings* s);
      virtual ~OptimizerDialog();
-
+     void retranslate(){retranslateUi(this);}
 private:
      bool convertAvailable();
      void checkIM();

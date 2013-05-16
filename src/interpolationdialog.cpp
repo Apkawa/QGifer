@@ -9,10 +9,8 @@ InterpolationDialog::InterpolationDialog(Workspace* workspace, WorkspaceObject* 
      this->mode = mode;
      this->object = object;
 
-     setWindowTitle( (mode == (Position | Size)) ? 
-		     tr("Interpolate object position and size") :
-		     (mode & Size) ? tr("Interpolate object size") : 
-		     tr("Interpolate object position") );
+     setWindowTitle();
+     
      fromBox->setMaximum(object->getStop());
      fromBox->setMinimum(object->getStart());
      toBox->setMaximum(object->getStop());
@@ -28,6 +26,14 @@ InterpolationDialog::InterpolationDialog(Workspace* workspace, WorkspaceObject* 
 InterpolationDialog::~InterpolationDialog()
 {
      
+}
+
+void InterpolationDialog::setWindowTitle()
+{
+     QWidget::setWindowTitle( (mode == (Position | Size)) ? 
+		     tr("Interpolate object position and size") :
+		     (mode & Size) ? tr("Interpolate object size") : 
+		     tr("Interpolate object position") );
 }
 
 void InterpolationDialog::interpolate()

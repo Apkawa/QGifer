@@ -11,19 +11,16 @@ TextWidget::TextWidget(FramePlayer* fp, QWidget* parent, Qt::WindowFlags f):
      lineEdit->setText("QGifer");
      tcEdit->setText("#FFFFFF");
      ocEdit->setText("#000000");
-     posButton->setText(tr("Insert"));
-     negButton->setText(tr("Cancel"));
+     
      connect(posButton, SIGNAL(clicked()), this, SLOT(insert()));
      validate();
 }
 
 TextWidget::TextWidget(TextObject* to, FramePlayer* fp, QWidget* parent, Qt::WindowFlags f): 
-     QWidget(parent,f), editMode(true)
+     QWidget(parent,f), editMode(true), textObject(to)
 {
      init();
-     textObject = to;
      setPlayer(fp);
-     
      lineEdit->setText(textObject->getText());
      tcEdit->setText(textObject->getTextColor().name());
      ocEdit->setText(textObject->getOutlineColor().name());
@@ -35,12 +32,15 @@ TextWidget::TextWidget(TextObject* to, FramePlayer* fp, QWidget* parent, Qt::Win
      fromBox->setValue( textObject->getStart() );
      toBox->setValue( textObject->getStop() );
 
-     posButton->setText(tr("Apply"));
-     negButton->setText(tr("Close"));
      connect(posButton, SIGNAL(clicked()), this, SLOT(apply()));
      validate();
 }
 
+void TextWidget::setCaptions()
+{
+     posButton->setText(textObject ? tr("Apply") : tr("Insert"));
+     negButton->setText(textObject ? tr("Close") : tr("Cancel"));
+}
 
 TextWidget::~TextWidget()
 {
@@ -51,6 +51,7 @@ void TextWidget::init()
 {
      qDebug() << "initializing text widget...";
      setupUi(this);
+     setCaptions();
      connect(sizeBox, SIGNAL(valueChanged(int)), this, SLOT(update()));
      connect(outlineBox, SIGNAL(valueChanged(double)), this, SLOT(update()));
      connect(boldBox, SIGNAL(stateChanged(int)), this, SLOT(update()));

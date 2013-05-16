@@ -24,11 +24,12 @@
 #include <QFile>
 #include <QTextStream>
 #include <QTextCodec>
+#include <QDirIterator>
 #include <QDesktopWidget>
 #include "mainwindow.h"
 #include "objectwidget.h"
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(): translator(NULL)
 {
      QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
      QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
@@ -136,6 +137,8 @@ MainWindow::MainWindow()
      connect(actionPreviewProp, SIGNAL(triggered()), this, SLOT(showPreviewProp()));
      connect(actionUndock, SIGNAL(triggered()), this, SLOT(toggleDock()));
 
+     connect(menuLanguage, SIGNAL(triggered(QAction*)), this, SLOT(languageChanged(QAction*)));
+
      toolBox->setMinimumWidth(270);
      loadSettings();
      changed = false;
@@ -146,6 +149,7 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {
      delete set;
+     delete translator;
 }
 
 void MainWindow::openVideo()
@@ -604,7 +608,10 @@ void MainWindow::loadSettings()
      resetCorrection();
      restoreState(set->value("windowstate").toByteArray());
      restoreGeometry(set->value("geometry").toByteArray());
-
+     loadLanguages();
+     QString qm = set->value("qmfile","").toString();
+     if(!qm.isEmpty() && QFile::exists(dataDir()+"/locale/"+qm+".qm"))
+	  loadLanguage(qm, dataDir()+"/locale/");
 }
 
 void MainWindow::saveSettings()
@@ -1193,7 +1200,10 @@ void MainWindow::closeEvent(QCloseEvent* e)
 	  }
 	       
      }
-     saveSettings();
+     if(e->isAccepted()){
+	  saveSettings();
+	  qApp->quit();
+     }
 }
 
 void MainWindow::dockLevelChanged(bool top)
@@ -1217,4 +1227,58 @@ void MainWindow::dockLevelChanged(bool top)
 	  correctionChanged();
 }
 
+QString MainWindow::dataDir()
+{
+     QDir dir("/usr/share/qgifer");
+     return (dir.exists() ? dir.absolutePath() : qApp->applicationDirPath())+"/";
+}
 
+void MainWindow::loadLanguages()
+{
+     langs.clear();
+     menuLanguage->clear();
+     QStringList availableLanguages;
+     QString qmpath = dataDir()+"locale/";
+     QDirIterator qmIt(qmpath, QStringList() << "*.qm", QDir::Files);
+     QAction* a = new QAction(tr("English"), menuLanguage);
+     menuLanguage->addAction(a);
+     langs.insert(a, "");
+     while(qmIt.hasNext())
+     {
+	  qmIt.next();
+	  QFileInfo finfo = qmIt.fileInfo();
+	  QTranslator translator;
+	  translator.load(finfo.baseName(), qmpath);
+	  // qDebug() << "sciezka: " << qmpath;
+	  // qDebug() << "plik: " << finfo.baseName();
+	  QAction* a = new QAction(translator.translate("APPLICATION", "LANGUAGE_NAME"), 
+				   menuLanguage);
+	  menuLanguage->addAction(a);
+	  langs.insert(a, finfo.baseName());
+     }
+}
+
+void MainWindow::loadLanguage(const QString& basename, const QString& qmpath)
+{
+     set->setValue("qmfile",basename);
+     if(basename.isEmpty() || !QFile::exists(qmpath+"/"+basename+".qm")){
+	  if(translator)
+	       qApp->removeTranslator(translator);
+	  else
+	       return;
+     }
+	  
+     if(!translator)
+	  translator = new QTranslator();
+
+     translator->load(basename, qmpath);
+     qApp->installTranslator(translator);
+     retranslateAll();
+}
+
+void MainWindow::languageChanged(QAction* a)
+{
+     QString langfile = langs.value(a);
+     qDebug() << "new language file: " << langfile;
+     loadLanguage(langfile, dataDir()+"/locale");
+}

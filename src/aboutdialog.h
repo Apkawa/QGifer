@@ -22,15 +22,16 @@
 
 #include <QDialog>
 #include "version.h"
+#include "retranslatable.h"
 #include "ui_aboutdialog.h"
 
-class AboutDialog : public QDialog, public Ui::AboutDialog
+class AboutDialog : public QDialog, public Ui::AboutDialog, public Retranslatable
 {
      Q_OBJECT;
 public:
      AboutDialog();
      virtual ~AboutDialog();
-
+     void retranslate(){retranslateUi(this);}
 private:
 
      private slots:

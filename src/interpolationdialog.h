@@ -3,11 +3,12 @@
 
 #include <QDialog>
 #include "workspace.h"
+#include "retranslatable.h"
 #include "ui_interpolationdialog.h"
 
 class Workspace;
 
-class InterpolationDialog : public QDialog, public Ui::InterpolationDialog
+class InterpolationDialog : public QDialog, public Ui::InterpolationDialog, public Retranslatable
 {
      Q_OBJECT;
 public:
@@ -16,8 +17,9 @@ public:
      InterpolationDialog(Workspace* workspace, WorkspaceObject* object, 
 			 int mode = (int)InterpolationDialog::Position);
      virtual ~InterpolationDialog();
-
+     void retranslate(){retranslateUi(this);setWindowTitle();}
 private:
+     void setWindowTitle();
      WorkspaceObject* object;
      Workspace* workspace;
      int mode;

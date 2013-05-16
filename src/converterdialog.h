@@ -23,14 +23,16 @@
 #include <QDialog>
 #include <QSettings>
 #include <QProcess>
+#include "retranslatable.h"
 #include "ui_converterdialog.h"
 
-class ConverterDialog : public QDialog, public Ui::ConverterDialog
+class ConverterDialog : public QDialog, public Ui::ConverterDialog, public Retranslatable
 {
      Q_OBJECT;
 public:
      ConverterDialog(QSettings* s);
      virtual ~ConverterDialog();
+     void retranslate(){retranslateUi(this);}
 private:
      QProcess* proc;
      QSettings* set;

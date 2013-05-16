@@ -7,7 +7,6 @@ ObjectWidget::ObjectWidget(WorkspaceObject* wo, FramePlayer* fp, QWidget* parent
 {
      init();
      setPlayer(fp);
-     setWindowTitle(tr("Insert object"));
      posButton->setText(tr("Apply"));
      negButton->setText(tr("Close"));
      fromBox->setValue(object->getStart());
@@ -23,7 +22,6 @@ ObjectWidget::ObjectWidget(FramePlayer* fp, QWidget* parent, Qt::WindowFlags f):
      wspace = fp->getWorkspace();
      init();
      setPlayer(fp);
-     setWindowTitle(tr("Object properties"));
      posButton->setText(tr("Insert"));
      negButton->setText(tr("Cancel"));
      connect(posButton, SIGNAL(clicked()), this, SLOT(insert()));
@@ -37,6 +35,7 @@ ObjectWidget::~ObjectWidget()
 void ObjectWidget::init()
 {
      setupUi(this);
+     setWindowTitle();
      validate();
      connect(negButton, SIGNAL(clicked()), this, SLOT(close()));
      connect(imgButton, SIGNAL(clicked()), this, SLOT(imgSelect()));

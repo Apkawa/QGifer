@@ -72,7 +72,7 @@
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
-     <string>&amp;About</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
@@ -110,20 +110,27 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menu_View">
+   <widget class="QMenu" name="menuView">
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <widget class="QMenu" name="menuLanguage">
+     <property name="title">
+      <string>Language</string>
+     </property>
+    </widget>
     <addaction name="actionOutputProp"/>
     <addaction name="actionFilters"/>
     <addaction name="actionMargins"/>
     <addaction name="actionPreviewProp"/>
     <addaction name="separator"/>
     <addaction name="actionUndock"/>
+    <addaction name="separator"/>
+    <addaction name="menuLanguage"/>
    </widget>
    <addaction name="menu_Program"/>
    <addaction name="menuEdit"/>
-   <addaction name="menu_View"/>
+   <addaction name="menuView"/>
    <addaction name="menuPlayer"/>
    <addaction name="menu_Help"/>
   </widget>
@@ -227,14 +234,14 @@
         <string/>
        </property>
        <property name="currentIndex">
-        <number>3</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page_1">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>246</width>
+          <width>257</width>
           <height>421</height>
          </rect>
         </property>
@@ -349,7 +356,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>246</width>
+          <width>257</width>
           <height>421</height>
          </rect>
         </property>
@@ -373,7 +380,7 @@
             <item row="1" column="0">
              <widget class="QLabel" name="label_8">
               <property name="text">
-               <string>Right</string>
+               <string>Right:</string>
               </property>
              </widget>
             </item>
@@ -406,14 +413,14 @@
             <item row="2" column="0">
              <widget class="QLabel" name="label_9">
               <property name="text">
-               <string>Left</string>
+               <string>Left:</string>
               </property>
              </widget>
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="label_10">
               <property name="text">
-               <string>Bottom</string>
+               <string>Bottom:</string>
               </property>
              </widget>
             </item>
@@ -473,7 +480,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>246</width>
+          <width>257</width>
           <height>421</height>
          </rect>
         </property>
@@ -618,7 +625,7 @@
           <x>0</x>
           <y>0</y>
           <width>257</width>
-          <height>404</height>
+          <height>421</height>
          </rect>
         </property>
         <attribute name="label">
@@ -669,7 +676,7 @@
               <x>0</x>
               <y>0</y>
               <width>243</width>
-              <height>168</height>
+              <height>185</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_4">
@@ -1172,6 +1179,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
    </property>
   </action>
  </widget>

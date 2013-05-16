@@ -19,7 +19,7 @@ OPTION(RELEASE_MODE "release mode" ON)
 
 IF(UNIX)
 	SET(BIN_INSTALL_DIR "bin")
-	# SET(DATA_INSTALL_DIR "share/qgifer")
+	SET(DATA_INSTALL_DIR "share/qgifer")
 	SET(ICON_INSTALL_DIR "share/icons")
 	SET(DESKTOP_INSTALL_DIR "share/applications")
 	SET(MENU_INSTALL_DIR "share/menu")
@@ -168,6 +168,11 @@ IF(UNIX)
 	INSTALL(FILES "doc/menu/qgifer" DESTINATION ${MENU_INSTALL_DIR})
 	INSTALL(FILES "doc/qgifer.desktop" DESTINATION ${DESKTOP_INSTALL_DIR})
 	INSTALL(FILES "doc/qgifer.xpm" DESTINATION ${ICON_INSTALL_DIR})
+	INSTALL(FILES 
+	locale/pl.qm
+	locale/pt.qm
+	locale/ru.qm
+	DESTINATION ${DATA_INSTALL_DIR}/locale/)
 	INSTALL(FILES "doc/README" "doc/LICENSE" "doc/COPYRIGHT" "doc/ChangeLog" 
 	DESTINATION ${DOC_INSTALL_DIR})
 ENDIF(UNIX)

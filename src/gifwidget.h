@@ -24,9 +24,10 @@
 #include <QList>
 #include <QSettings>
 #include "qgifcreator.h"
+#include "retranslatable.h"
 #include "ui_gifwidget.h"
 
-class GifWidget : public QDialog, public Ui::GifWidget
+class GifWidget : public QDialog, public Ui::GifWidget, public Retranslatable
 {
      Q_OBJECT;
 public:
@@ -36,6 +37,8 @@ public:
      void setColorRes(int res){gif->setColorRes(res);}
      void suggestName(const QString& name){suggestedName = name;}
      void saveGif(const QString& gif);
+      void retranslate()
+     {QString t = windowTitle();retranslateUi(this);setWindowTitle(t);}
 signals:
      void gifSaved(const QString&);
 

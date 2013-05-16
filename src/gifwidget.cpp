@@ -146,5 +146,3 @@ void GifWidget::timerEvent(QTimerEvent*)
      
 }
 
-
-
