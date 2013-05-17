@@ -60,7 +60,8 @@ protected:
      bool smooth;
      bool ratio;
      double zoom; //0 - 1
-
+     int drawnX;
+     int drawnY;
      private slots:
 	  
 signals:

@@ -23,7 +23,6 @@
 #include <QXmlStreamReader>
 #include <QFile>
 #include <QTextStream>
-#include <QTextCodec>
 #include <QDirIterator>
 #include <QDesktopWidget>
 #include "mainwindow.h"
@@ -31,10 +30,8 @@
 
 MainWindow::MainWindow(): translator(NULL)
 {
-     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
      setupUi(this);
-     player->controlPanel->hide();
+     //player->controlPanel->hide();
      player->setStatusBar(statusbar);
      //player->showDefaultScreen();
      set = new QSettings("QGifer","QGifer");

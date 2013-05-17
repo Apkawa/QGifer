@@ -74,7 +74,8 @@ void WorkspaceObject::setRange(int startFrame, int stopFrame)
 const QRect& WorkspaceObject::updatePreviewRect(
      int frame, const QSize& previewSize, 
      const QSize& workspaceSize, 
-     const QSize& origFrameSize, double zoom)
+     const QSize& origFrameSize, double zoom,
+     int xv, int yv)
 {
      int x0 = (1-zoom)/2*workspaceSize.width();
      int y0 = (1-zoom)/2*workspaceSize.height();
@@ -90,7 +91,7 @@ const QRect& WorkspaceObject::updatePreviewRect(
 	  ((float)previewSize.width()/(float)origFrameSize.width());
      int sheight = sizeAt(frame).height()*
 	  ((float)previewSize.height()/(float)origFrameSize.height());
-     pwRect = QRect(ox,oy,swidth,sheight);
+     pwRect = QRect(ox+xv,oy+yv,swidth,sheight);
      return pwRect;
 }
 

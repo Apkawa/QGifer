@@ -30,12 +30,6 @@ FramePlayer::FramePlayer(QWidget* parent):QWidget(parent),frames(0),originalSize
      // def.fill(Qt::transparent);
      // defaultImg = def.toImage();
      defaultImg = QImage(":/res/playerdefault.png");
-     connect(playButton, SIGNAL(clicked()), this, SLOT(play()));
-     connect(stopButton, SIGNAL(clicked()), this, SLOT(stop()));
-     connect(pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
-     connect(nextButton, SIGNAL(clicked()), this, SLOT(nextFrame()));
-     connect(prevButton, SIGNAL(clicked()), this, SLOT(prevFrame()));
-     connect(ejectButton, SIGNAL(clicked()), this, SLOT(close()));
      connect(slider, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
 }
 
@@ -132,7 +126,8 @@ void FramePlayer::nextFrame()
      else 
 	  return;
 
-     
+     qDebug() << "frame pos: " << frame->pos();
+     qDebug() << "player pos: " << pos();
      workspace->setImage(currentFrame,frame->size());
      workspace->updateFrameIndex(currentPos);
      emit frameChanged(currentPos);
@@ -251,9 +246,6 @@ void FramePlayer::updateStatus(Status s)
      status = s;
      info = (status == Stopped ? "Stopped" : "Playing");
 
-     playButton->setEnabled(status == Stopped);
-     prevButton->setEnabled(status == Stopped);
-     nextButton->setEnabled(status == Stopped);
      //slider->setEnabled(status == Stopped);
 
      long total = countFrames();
@@ -265,8 +257,7 @@ void FramePlayer::updateStatus(Status s)
      slider->setMaximum(total == 0 ? 0 : total-1);
      if(statusbar)
 	  statusbar->showMessage(info);
-     else
-	  statusLabel->setText(info);
+
      emit statusUpdated(s);
 }
 
@@ -278,14 +269,14 @@ void FramePlayer::resizeEvent(QResizeEvent*)
 	  workspace->setImage(currentFrame,frame->size());
      else
 	  showDefaultScreen();
-     workspace->setFixedSize(size());
+     workspace->setFixedSize(frame->size());
      centerWorkspace();
 }
 
 void FramePlayer::setStatusBar(QStatusBar* sb)
 {
      statusbar = sb;
-     statusLabel->setVisible(sb==NULL);
+     //statusLabel->setVisible(sb==NULL);
 }
 
 QString FramePlayer::codecName()
@@ -299,7 +290,7 @@ QString FramePlayer::codecName()
 
 void FramePlayer::centerWorkspace()
 {
-workspace->move(
-     (frame->width()*workspace->getZoom()-workspace->getImage()->width())/2, 
-     (frame->height()*workspace->getZoom()-workspace->getImage()->height())/2);
+// workspace->move(
+//      (frame->width()*workspace->getZoom()-workspace->getImage()->width())/2, 
+//      (frame->height()*workspace->getZoom()-workspace->getImage()->height())/2);
 }

@@ -16,9 +16,14 @@ Workspace::~Workspace()
 
 void Workspace::paintEvent(QPaintEvent* e)
 {
+     
+     
      PreviewWidget::paintEvent(e);
-     int x = (1-zoom)/2*width();
-     int y = (1-zoom)/2*height();
+     
+     // int x = (width()-image.width())/2;
+     // int y = (height()-image.height())/2;
+     const int& x = drawnX;
+     const int& y = drawnY;
      if(autoObjectDrawing)
 	  drawObjects(this);
      // else if(hoveredObject)
@@ -120,8 +125,9 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       }
 	       else if(o->currentMode() == WO::XRScaling && o == hoveredObject) //skalowanie w prawo
 	       {
-		    float ncx = ((float)cpos.x()-((1-zoom)/2*width()))/(float)image.width();
-		    int newwidth = ncx*origSize.width()-o->posAt(frameIndex).x*origSize.width();
+		    float ncx = (cpos.x()-drawnX)/(float)image.width();
+		    int newwidth = ncx*origSize.width()-
+			 (o->posAt(frameIndex).x*origSize.width());
 		    double scale = (float)newwidth/(float)o->originalSize().width();
 
 		    o->setScaleAt(frameIndex, scale, 
@@ -132,10 +138,14 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       }
 	       else if(o->currentMode() == WO::XLScaling && o == hoveredObject) //skalowanie w lewo
 	       {
-		    float ncx = ((float)cpos.x()-((1-zoom)/2*width()))/(float)image.width();
-		    int newwidth = coSize.width()+(clickPos.x()-origSize.width()*ncx);
+		    float ncx = (cpos.x()-drawnX)/(float)image.width();
+		    //jak zmienila sie skala calego obrazu
+		    float chRatio = (float)origSize.width()/(float)image.width(); 
+		    int newwidth = coSize.width()+(clickPos.x()*chRatio-(cpos.x()-drawnX)*chRatio);
+
 		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(),
 			 o->scaleAt(frameIndex).h);
+
 		    o->setPosAt(frameIndex, ncx, o->posAt(frameIndex).y);
 		    emit objectChanged();
 		    update();
@@ -143,7 +153,7 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       }
 	       else if(o->currentMode() == WO::YBScaling && o == hoveredObject) //skalowanie w dol
 	       {
-		    float ncy = ((float)cpos.y()-((1-zoom)/2*height()))/(float)image.height();
+		    float ncy = (cpos.y()-drawnY)/(float)image.height();
 		    int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w,
 				  (float)newheight/(float)o->originalSize().height());
@@ -153,28 +163,34 @@ void Workspace::mouseMoveEvent(QMouseEvent* e)
 	       }
 	       else if(o->currentMode() == WO::YTScaling && o == hoveredObject) //skalowanie w gore
 	       {
-		    float ncy = ((float)cpos.y()-((1-zoom)/2*height()))/(float)image.height();
-		    int newheight = coSize.height()+(clickPos.y()-origSize.height()*ncy);
+
+		    float ncy = (cpos.y()-drawnY)/(float)image.height();
+		    //jak zmienila sie skala calego obrazu
+		    float chRatio = (float)origSize.height()/(float)image.height(); 
+		    int newheight = coSize.height()+(clickPos.y()*chRatio-(cpos.y()-drawnY)*chRatio);
+
 		    o->setScaleAt(frameIndex, o->scaleAt(frameIndex).w, 
 				  (float)newheight/(float)o->originalSize().height());
+
 		    o->setPosAt(frameIndex, o->posAt(frameIndex).x, ncy);
 		    emit objectChanged();
 		    update();
 		    break;
+
 	       }
 	       else if(o->currentMode() == WO::XYScaling 
 		       && o == hoveredObject) //skalowanie w dół i prawo z proporcjami
 	       {
-		    float ncx = ((float)cpos.x()-((1-zoom)/2*width()))/(float)image.width();
+		    float ncx = (cpos.x()-drawnX)/(float)image.width();
 		    int newwidth = ncx*origSize.width()-o->posAt(frameIndex).x*origSize.width();
-		    float ncy = ((float)cpos.y()-((1-zoom)/2*height()))/(float)image.height();
-		    int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
+		    // float ncy = (cpos.y()-drawnY)/(float)image.height();
+		    // int newheight = ncy*origSize.height()-o->posAt(frameIndex).y*origSize.height();
 		 
 		    float ratio = (float)coSize.width()/(float)coSize.height();
 		    //qDebug() << "ratio: " << ratio;
 		    //float ratio = (float)o->originalSize.width()/(float)o->originalSize.height();
 		    // if(newwidth > newheight)
-			 newheight = newwidth/ratio;
+			 int newheight = newwidth/ratio;
 		    // else
 		    // 	 newwidth = newheight*ratio;
 		    o->setScaleAt(frameIndex, (float)newwidth/(float)o->originalSize().width(), 
@@ -261,10 +277,7 @@ void Workspace::mousePressEvent(QMouseEvent* e)
 	  dy = (float)cpos.y()/(float)image.height() - hoveredObject->posAt(frameIndex).y;
 	  hoveredObject->setMode( (WO::Mode)((int)hoveredObject->currentMode()+1));
 	  coSize = hoveredObject->sizeAt(frameIndex);
-	  clickPos = QPoint(((float)cpos.x()-((1-zoom)/2*width()))/(float)image.width()
-			    *origSize.width(),
-			    ((float)cpos.y()-((1-zoom)/2*height()))/(float)image.height()
-			    *origSize.height());
+	  clickPos = QPoint( cpos.x()-drawnX, cpos.y()-drawnY);
      }
 }
 
@@ -279,6 +292,7 @@ void Workspace::mouseReleaseEvent(QMouseEvent* e)
      {
 	  if(hoveredObject)
 	       hoveredObject->setMode(WO::Movable);
+	  mouseMoveEvent(e);
      }
 }
 
@@ -347,7 +361,9 @@ void Workspace::drawObjects(QPaintDevice* pd)
 		    QRect r;
 		    if(pd == this)
 			 r = o->updatePreviewRect(
-			      frameIndex, image.size(), this->size(), origSize, zoom);
+			      frameIndex, image.size(), this->size(), origSize, 
+			      1, drawnX, drawnY);
+
 		    else
 		    {
 			 QSize pdsize(pd->width(),pd->height());
@@ -362,7 +378,7 @@ void Workspace::drawObjects(QPaintDevice* pd)
 						     Qt::FastTransformation);
 		    // if(hue || sat || val)
 		    // 	 applyCorrection(&simg, hue, sat, val, false);
-
+		    
 		    p.drawImage(r.x(),r.y(),simg);
 		    	    
 	       }

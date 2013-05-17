@@ -57,6 +57,7 @@ void PreviewWidget::setImage(const QImage& img, const QSize& size,
 		    (smooth || forceSmooth) ? Qt::SmoothTransformation : Qt::FastTransformation));
       	  //setFixedSize(imsize);
      // }
+	  qDebug() << "image size: " << image.size() << ", given size: " << imsize;
 	  update();
 	  // repaint();
 }
@@ -70,12 +71,18 @@ void PreviewWidget::clear()
 
 void PreviewWidget::paintEvent(QPaintEvent*)
 {
+     
      if(image.isNull())
 	  return;
      QPainter p(this);
-     int x = (1-zoom)/2*width();
-     int y = (1-zoom)/2*height();
-     p.drawImage(x, y, image);
+     p.fillRect(this->rect(), Qt::white);
+     // int x = (1-zoom)/2*width();
+     // int y = (1-zoom)/2*height();
+     // x += (width()-image.width())/2;
+     // y += (height()-image.height())/2;
+     drawnX = (rect().width()-image.width())/2;
+     drawnY = (rect().height()-image.height())/2;
+     p.drawImage(drawnX, drawnY, image);
      
 }
 

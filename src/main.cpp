@@ -18,11 +18,15 @@
 ************************************************************************/
 
 #include <QApplication>
+#include <QTextCodec>
 #include "mainwindow.h"
 
 int main(int argc, char* argv[])
 {
      QApplication* app = new QApplication(argc,argv);
+     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+
      app->setWindowIcon(QIcon(":/res/icon.png"));
      MainWindow* mw = new MainWindow();
      mw->show();

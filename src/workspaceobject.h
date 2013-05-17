@@ -64,7 +64,8 @@ public:
      void setPreviewRect(const QRect& r) {pwRect = r;}
      const QRect& updatePreviewRect(int frame, const QSize& previewSize, 
 				    const QSize& workspaceSize, 
-				    const QSize& origFrameSize, double zoom);
+				    const QSize& origFrameSize, double zoom, 
+				    int xv = 0, int yv = 0);
      const QRect& previewRect() const {return pwRect;}
      void setMode(WO::Mode m) {mode = m;}
      WO::Mode currentMode() const {return mode;}

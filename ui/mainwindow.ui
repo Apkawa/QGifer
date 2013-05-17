@@ -15,6 +15,9 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <property name="margin">
+     <number>0</number>
+    </property>
     <item row="2" column="1">
      <widget class="QMultiSlider" name="multiSlider" native="true">
       <property name="minimumSize">
