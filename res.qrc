@@ -13,7 +13,6 @@
     <file>res/restore.png</file>
     <file>res/eject.png</file>
     <file>res/openvideo.png</file>
-    <file>res/playerdefault.png</file>
     <file>res/about.png</file>
     <file>res/exit.png</file>
     <file>res/extract.png</file>
@@ -39,5 +38,6 @@
     <file>res/insert-object.png</file>
     <file>res/ok.png</file>
     <file>res/cancel.png</file>
+    <file>res/bgmask.png</file>
   </qresource>
 </RCC>

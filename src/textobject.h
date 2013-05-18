@@ -9,8 +9,8 @@ class TextObject : public WorkspaceObject
 {
      Q_OBJECT;
 public:
-     TextObject();
-     virtual ~TextObject();
+     TextObject(){};
+     virtual ~TextObject(){};
      virtual QString getTypeName() const {return "TextObject";}
      void setFont(const QFont& f){font = f;}
      QFont getFont() const {return font;}

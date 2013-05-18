@@ -66,6 +66,7 @@ private:
      bool changed;
      QHash<QAction*, QString> langs;
      QTranslator* translator;
+
      private slots:
 	  void loadSettings();
 	  void saveSettings();
@@ -115,6 +116,9 @@ private:
 	  void setChanged(bool c = true);
 	  void dockLevelChanged(bool top);
 	  void languageChanged(QAction*);
+	  void workspaceWheelRotated(int);
+	  void drawBkgToggled(bool c)
+	  {player->getWorkspace()->enableBackground(c);player->getWorkspace()->update();}
 
 	  //view
 	  void showOutputProp(){toolBox->setCurrentIndex(3);}

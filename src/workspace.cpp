@@ -36,6 +36,8 @@ void Workspace::paintEvent(QPaintEvent* e)
      QPainter p(this);
 
      //marginesy
+     if(!displayMargins)
+	  return;
      QPen pen;
      pen.setColor(QColor(255,255,255));
      pen.setWidth(2);
@@ -300,23 +302,26 @@ void Workspace::updateMargins()
 {
      if(drag == mrNone)
 	  return;
+     float ncx = (cpos.x()-drawnX)/(float)image.width();
+     float ncy = (cpos.y()-drawnY)/(float)image.height();
      if(drag == mrLeft){
-	  int t = origSize.width()*fit01(normalizedX());
+	  
+	  int t = origSize.width()*fit01(ncx);
 	  mr.setLeft(mr.right()+t <= origSize.width() ? t:
 		     origSize.width()-mr.right());
      }
      else if(drag == mrRight){
-	  int t = origSize.width()*(1-fit01(normalizedX()));
+	  int t = origSize.width()*(1-fit01(ncx));
 	  mr.setRight(mr.left()+t <= origSize.width() ? t:
 		     origSize.width()-mr.left());
      }
      else if(drag == mrTop){
-	  int t = origSize.height()*fit01(normalizedY());
+	  int t = origSize.height()*fit01(ncy);
 	  mr.setTop(mr.bottom()+t <= origSize.height() ? t:
 		     origSize.height()-mr.bottom());
      }
      else if(drag == mrBottom){
-	  int t = origSize.height()*(1-fit01(normalizedY()));
+	  int t = origSize.height()*(1-fit01(ncy));
 	  mr.setBottom(mr.top()+t <= origSize.height() ? t:
 		     origSize.height()-mr.top());
      }

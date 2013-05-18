@@ -26,10 +26,7 @@ FramePlayer::FramePlayer(QWidget* parent):QWidget(parent),frames(0),originalSize
 {
      setupUi(this);
      workspace = new Workspace(frame);
-     // QPixmap def(1,1);
-     // def.fill(Qt::transparent);
-     // defaultImg = def.toImage();
-     defaultImg = QImage(":/res/playerdefault.png");
+     workspace->enableBackground(true);
      connect(slider, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
 }
 
@@ -82,7 +79,6 @@ bool FramePlayer::openSource(const QString& src)
      //updateSlider(0);
      slider->setValue(0);
      nextFrame();
-     centerWorkspace();
      return true;
 }
 
@@ -126,8 +122,6 @@ void FramePlayer::nextFrame()
      else 
 	  return;
 
-     qDebug() << "frame pos: " << frame->pos();
-     qDebug() << "player pos: " << pos();
      workspace->setImage(currentFrame,frame->size());
      workspace->updateFrameIndex(currentPos);
      emit frameChanged(currentPos);
@@ -265,12 +259,12 @@ void FramePlayer::updateStatus(Status s)
 void FramePlayer::resizeEvent(QResizeEvent*)
 {
      //qDebug() << "player resize event";
+     workspace->updateBackground();
      if(countFrames())
 	  workspace->setImage(currentFrame,frame->size());
      else
 	  showDefaultScreen();
      workspace->setFixedSize(frame->size());
-     centerWorkspace();
 }
 
 void FramePlayer::setStatusBar(QStatusBar* sb)
@@ -288,9 +282,20 @@ QString FramePlayer::codecName()
      return QString(EXT);
 }
 
-void FramePlayer::centerWorkspace()
+
+void FramePlayer::renderDefaultTextImage(const QString& text)
 {
-// workspace->move(
-//      (frame->width()*workspace->getZoom()-workspace->getImage()->width())/2, 
-//      (frame->height()*workspace->getZoom()-workspace->getImage()->height())/2);
+     QPixmap def(800,450);
+     def.fill(Qt::transparent);
+     defaultImg = def.toImage();
+     QFont f;
+     f.setPointSize(26);
+     f.setBold(true);
+     QImage txt = TextRenderer::renderText(text, f, QColor(30,30,30), QColor(255,255,255), 1);
+     QPainter p(&defaultImg);
+     p.drawImage( (defaultImg.width()-txt.width())/2, 
+     		  (defaultImg.height()-txt.height())/2, txt);
+     // QPixmap def(1,1);
+     // def.fill(Qt::transparent);
+     // defaultImg = def.toImage();
 }

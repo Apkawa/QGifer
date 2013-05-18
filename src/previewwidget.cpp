@@ -20,7 +20,8 @@
 #include "previewwidget.h"
 
 PreviewWidget::PreviewWidget(QWidget* parent, Qt::WindowFlags f):
-     QWidget(parent,f),smooth(false),imsize(-1,-1),ratio(false),zoom(1)
+     QWidget(parent,f),smooth(false),imsize(-1,-1),ratio(false),zoom(1),
+     drawBkg(false),updateBkg(true)
 {
      setFixedSize(480,360);
      show();
@@ -57,7 +58,6 @@ void PreviewWidget::setImage(const QImage& img, const QSize& size,
 		    (smooth || forceSmooth) ? Qt::SmoothTransformation : Qt::FastTransformation));
       	  //setFixedSize(imsize);
      // }
-	  qDebug() << "image size: " << image.size() << ", given size: " << imsize;
 	  update();
 	  // repaint();
 }
@@ -69,13 +69,52 @@ void PreviewWidget::clear()
      setImage(p.toImage());
 }
 
+void PreviewWidget::drawBackground(QPaintDevice* pd)
+{
+    
+     if(updateBkg)
+     {
+	  //qDebug() << "drawing background...";
+	  QPixmap pix(pd->width(),pd->height());
+	  pix.fill(Qt::transparent);
+	  bkgCache = pix.toImage();
+	  QPainter p(&bkgCache);
+	  p.setOpacity(0.6);
+	  //const int cols = 64, rows = 40;
+	  int xstep = 12; //pd->width()/cols;
+	  int ystep = 12; //pd->height()/rows;
+	  QImage mask = QImage(":/res/bgmask.png").scaled(pd->width(), pd->height());
+	  for(int x = 0; x < pd->width(); x+=xstep)
+	  {
+	       for(int y = 0; y < pd->height(); y+=ystep)
+	       {
+		    QColor c(mask.pixel(x,y));
+		    p.fillRect(x, y, xstep, ystep, c);
+	       }
+	       p.drawLine(x,0,x,pd->height());
+	  }
+	  
+	  for(int y = 0; y < pd->height(); y+=ystep)
+	       p.drawLine(0,y,pd->width(),y);
+	  p.end();
+	  
+     }
+
+     QPainter b(this);
+     b.drawImage(0,0,bkgCache);
+     //b.setOpacity(0.6);
+     updateBkg = false;
+}
+
 void PreviewWidget::paintEvent(QPaintEvent*)
 {
      
      if(image.isNull())
 	  return;
+     if(drawBkg)
+	  drawBackground(this);
+
      QPainter p(this);
-     p.fillRect(this->rect(), Qt::white);
      // int x = (1-zoom)/2*width();
      // int y = (1-zoom)/2*height();
      // x += (width()-image.width())/2;
@@ -85,6 +124,8 @@ void PreviewWidget::paintEvent(QPaintEvent*)
      p.drawImage(drawnX, drawnY, image);
      
 }
+
+
 
 void PreviewWidget::applyCorrection(QImage* img, int h, int s, int v, bool toRGB888, QRect rect)
 {

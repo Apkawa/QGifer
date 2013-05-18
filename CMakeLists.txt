@@ -81,6 +81,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR} src ui )
 
 SET (HEADERS 
 src/gifcreator.h
+src/textrenderer.h
 )
 
 SET (QT_HEADERS 
@@ -98,8 +99,8 @@ src/workspace.h
 src/workspaceobject.h
 src/objectwidget.h
 src/textwidget.h
-src/textobject.h
 src/interpolationdialog.h
+src/textobject.h
 )
 
 SET (SOURCES 
@@ -119,7 +120,7 @@ src/workspace.cpp
 src/workspaceobject.cpp
 src/objectwidget.cpp
 src/textwidget.cpp
-src/textobject.cpp
+src/textrenderer.cpp
 src/interpolationdialog.cpp
 )
 

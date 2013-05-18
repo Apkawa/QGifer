@@ -28,6 +28,7 @@
 #include <QStatusBar>
 #include <QPixmap>
 #include <QMessageBox>
+#include "textrenderer.h"
 #include "workspace.h"
 #include "ui_frameplayer.h"
 
@@ -90,11 +91,10 @@ public:
      {workspace->enableAntialiasing(enable);workspace->setImage(currentFrame,frame->size());}
      QString codecName();
      void showDefaultScreen()
-     {currentFrame = defaultImg; workspace->setImage(defaultImg, frame->size(), true, true);
-	  centerWorkspace();}
+     {currentFrame = defaultImg; workspace->setImage(defaultImg, frame->size(), true, true);}
      Workspace* getWorkspace() {return workspace;}
      void setMedianBlur(int m){medianblur = m;}
-
+     void renderDefaultTextImage(const QString& text);
 private:
      VideoCapture vcap;
      int medianblur;
@@ -114,6 +114,8 @@ private:
      void updateSlider(int pos);
      void updateStatus(Status s);
      void resizeEvent(QResizeEvent*); 
+     
+
 public slots:
      void nextFrame();
      void prevFrame() {seek(currentPos-1);}
@@ -124,7 +126,6 @@ public slots:
      void close();
      void setInterval(int i){interval=i;if(status==Playing){pause();play();}}
      void setFps(double f){ setInterval(1000/f);}
-     void centerWorkspace();
 signals:
      void frameChanged(long);
      void statusUpdated(FramePlayer::Status status);

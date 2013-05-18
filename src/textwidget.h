@@ -5,7 +5,9 @@
 #include "frameplayer.h"
 #include "textobject.h"
 #include "retranslatable.h"
+#include "textrenderer.h"
 #include "ui_textwidget.h"
+
 
 class TextWidget : public QWidget, public Ui::TextWidget, public Retranslatable
 {
@@ -14,12 +16,6 @@ public:
      TextWidget(TextObject* to, FramePlayer* fp, QWidget* parent=0, Qt::WindowFlags f=0);
      TextWidget(FramePlayer* fp, QWidget* parent=0, Qt::WindowFlags f=0);
      virtual ~TextWidget();
-     static QImage renderText(const QString& text,
-			      const QFont& font,
-			      const QColor& textColor,
-			      const QColor& outlineColor,
-			      int outlineWidth);
-     static void renderText(TextObject* o);
      void setRange(int from, int to){fromBox->setValue(from);toBox->setValue(to);}
      void retranslate(){retranslateUi(this);setCaptions();}
 private:

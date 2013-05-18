@@ -1,11 +1,11 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
+#include <QList>
+#include <QWheelEvent>
 #include "previewwidget.h"
 #include "workspaceobject.h"
 #include "interpolationdialog.h"
-#include <QList>
-#include <QPaintDevice>
 
 #define WOSCALE_PX 3
 
@@ -32,22 +32,26 @@ public:
      void enableFiltering(int h, int s, int v){hue=h;sat=s;val=v;}
      void disableFiltering() {hue=sat=val=0;}
      void enableAutoObjectDrawing(bool enable){autoObjectDrawing = enable;}
+     void setMarginsVisible(bool v){displayMargins=v;}
 signals:
      void propertiesRequested(WorkspaceObject*);
      void objectChanged();
      void objectHovered(WorkspaceObject* obj);
+     void wheelRotated(int);
 private:
      void paintEvent(QPaintEvent*);
      void mouseMoveEvent(QMouseEvent*);
      void mouseReleaseEvent(QMouseEvent*);
      void mousePressEvent(QMouseEvent*);
+     void leaveEvent(QEvent*){hoverObject(-1, Qt::ArrowCursor);}
+     void wheelEvent(QWheelEvent* e){emit wheelRotated(e->delta());}
      void updateMargins(); //uruchamiane podczas przeciagania
      void hoverObject(int i, const QCursor& c);
      void execObjectMenu(const QPoint& p);
      QList<WorkspaceObject*> objects;
      WorkspaceObject* hoveredObject;
      int hoIndex;
-
+     bool displayMargins;
      int frameIndex;
      QMargins mr;
      bool useMr;

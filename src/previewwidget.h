@@ -25,6 +25,7 @@
 #include <QPainter>
 #include <QImage>
 #include <QRect>
+#include <QPaintDevice>
 #include <QDebug>
 
 #define MR_DRAG_PX 3
@@ -50,8 +51,11 @@ public:
      double getZoom() const {return zoom;}
      static void applyCorrection(QImage* img, int h, int s, int v, 
 				 bool toRGB888 = true, QRect rect = QRect());
+     void enableBackground(bool e){drawBkg=e;}
+     void updateBackground(){updateBkg=true;}
 protected:
      virtual void paintEvent(QPaintEvent*);
+     virtual void drawBackground(QPaintDevice*);
      double fit01(double v){if(v<0)return 0;else if(v>1) return 1; else return v;}
      QSize imsize;
      QSize origSize;
@@ -62,8 +66,12 @@ protected:
      double zoom; //0 - 1
      int drawnX;
      int drawnY;
+     bool updateBkg;
+     bool drawBkg;
+     QImage bkgCache;
+
      private slots:
-	  
+      
 signals:
      void clicked(double x, double y);
      void marginsChanged();

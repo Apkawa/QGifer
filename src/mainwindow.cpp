@@ -33,6 +33,7 @@ MainWindow::MainWindow(): translator(NULL)
      setupUi(this);
      //player->controlPanel->hide();
      player->setStatusBar(statusbar);
+     player->renderDefaultTextImage(tr("Press ")+actionOpenVideo->shortcut().toString()+tr(" to open a video"));
      //player->showDefaultScreen();
      set = new QSettings("QGifer","QGifer");
      set->setIniCodec("UTF-8");
@@ -98,7 +99,6 @@ MainWindow::MainWindow(): translator(NULL)
      connect(player, SIGNAL(frameChanged(long)), this, SLOT(frameChanged(long)));
 
      connect(zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(zoomChanged(int)));
-     connect(zoomSlider, SIGNAL(sliderReleased()), player, SLOT(centerWorkspace()));
      connect(ratioBox, SIGNAL(stateChanged(int)), this, SLOT(ratioChanged(int)));
      connect(smoothBox, SIGNAL(stateChanged(int)), this, SLOT(smoothChanged(int)));
      connect(marginBox, SIGNAL(stateChanged(int)), this, SLOT(marginBoxChanged(int)));
@@ -133,8 +133,12 @@ MainWindow::MainWindow(): translator(NULL)
      connect(actionMargins, SIGNAL(triggered()), this, SLOT(showMargins()));
      connect(actionPreviewProp, SIGNAL(triggered()), this, SLOT(showPreviewProp()));
      connect(actionUndock, SIGNAL(triggered()), this, SLOT(toggleDock()));
+     connect(actionDrawBkg, SIGNAL(toggled(bool)), 
+	     this, SLOT(drawBkgToggled(bool)));
 
      connect(menuLanguage, SIGNAL(triggered(QAction*)), this, SLOT(languageChanged(QAction*)));
+     connect(player->getWorkspace(), SIGNAL(wheelRotated(int)),
+	     this, SLOT(workspaceWheelRotated(int)));
 
      toolBox->setMinimumWidth(270);
      loadSettings();
@@ -346,7 +350,6 @@ void MainWindow::zoomChanged(int v)
 {
      zoomLabel->setText(tr("Zoom")+" ("+QString::number(v)+"%):");
      player->getWorkspace()->setZoom((double)v/100.0);
-     //player->centerWorkspace();
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
 }
@@ -356,7 +359,6 @@ void MainWindow::ratioChanged(int s)
      player->getWorkspace()->keepAspectRatio(s == Qt::Checked);
      if(player->getStatus() != FramePlayer::Playing)
 	  player->seek(player->getCurrentPos());
-     player->centerWorkspace();
      setChanged();
 }
 
@@ -469,6 +471,7 @@ void MainWindow::resetCorrection()
 void MainWindow::lock(bool l)
 {
      l=!l;
+//     player->setEnabled(l);
      toolBox->setEnabled(l);
      multiSlider->setEnabled(l);
      actionSaveProject->setEnabled(l);
@@ -488,11 +491,16 @@ void MainWindow::lock(bool l)
      actionPreviewProp->setEnabled(l);
      actionMargins->setEnabled(l);
      actionFilters->setEnabled(l);
+     actionDrawBkg->setEnabled(l);
 
      actionOpenPalette->setEnabled(l);
      actionSavePalette->setEnabled(l);
      actionUpdatePalette->setEnabled(l);
+     player->getWorkspace()->setMarginsVisible(l);
 
+     player->getWorkspace()->enableBackground(
+	  l ? actionDrawBkg->isChecked() : true);
+ 
      varPaletteBoxChanged(varPaletteBox->checkState());
      autoPaletteBoxChanged(autoPaletteBox->checkState());
 }
@@ -581,7 +589,7 @@ QImage MainWindow::finalFrame(long f)
 
 void MainWindow::loadSettings()
 {
-     zoomSlider->setValue(set->value("zoom",100).toInt());
+     //zoomSlider->setValue(set->value("zoom",100).toInt());
      smoothBox->setChecked(set->value("smooth_preview",true).toBool());
      ratioBox->setChecked(set->value("keep_ratio",true).toBool());
      switch(set->value("loop",0).toInt())
@@ -602,6 +610,7 @@ void MainWindow::loadSettings()
      whRatioBox->setChecked(set->value("wh_ratio",false).toBool());
      varPaletteBox->setChecked(set->value("var_palette",false).toBool());
      minDiffBox->setValue(set->value("vp_mindiff",40).toFloat());
+     actionDrawBkg->setChecked(set->value("draw_bkg",true).toBool());
      resetCorrection();
      restoreState(set->value("windowstate").toByteArray());
      restoreGeometry(set->value("geometry").toByteArray());
@@ -613,7 +622,7 @@ void MainWindow::loadSettings()
 
 void MainWindow::saveSettings()
 {
-     set->setValue("zoom",zoomSlider->value());
+     //set->setValue("zoom",zoomSlider->value());
      set->setValue("smooth_preview",smoothBox->isChecked());
      set->setValue("keep_ratio",ratioBox->isChecked());
      set->setValue("loop",(laRadio->isChecked() ? 1 : ssRadio->isChecked() ? 2 : 0));
@@ -631,6 +640,7 @@ void MainWindow::saveSettings()
      set->setValue("vp_mindiff", minDiffBox->value());
      set->setValue("windowstate", saveState());
      set->setValue("geometry", saveGeometry());
+     set->setValue("draw_bkg", actionDrawBkg->isChecked());
 }
 
 void MainWindow::estimateOutputSize()
@@ -849,7 +859,7 @@ bool MainWindow::projectFromXml(const QString& xstr)
 			      QColor(stream.attributes().value("outlinecolor").toString()) );
 			 to->setOutlineWidth( 
 			      stream.attributes().value("outline_width").toString().toInt() );
-			 TextWidget::renderText(to);
+			 TextRenderer::renderText(to);
 		    }
 		    else{
 			 qDebug() << "new image object...";
@@ -1093,6 +1103,7 @@ void MainWindow::newProject()
      projectFile.clear();
      lock(true);
      setChanged(false);
+     zoomSlider->setValue(100);
      player->showDefaultScreen();
 }
 
@@ -1278,4 +1289,11 @@ void MainWindow::languageChanged(QAction* a)
      QString langfile = langs.value(a);
      qDebug() << "new language file: " << langfile;
      loadLanguage(langfile, dataDir()+"/locale");
+}
+
+void MainWindow::workspaceWheelRotated(int delta)
+{
+     delta = delta/(delta>0?delta:delta*-1);
+     if(zoomSlider->isEnabled())
+	  zoomSlider->setValue(zoomSlider->value()+8*delta);
 }
