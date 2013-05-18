@@ -106,6 +106,7 @@ void WorkspaceObject::setScaleAt(int i, float xs, float ys)
 
 void WorkspaceObject::clonePosAt(int i, WO::Direction d)
 {
+     qDebug() << "cloning pos at " << i << "(" << i-start << ")";
      i = i-start;
      if(d == WO::Further)
 	  for(int j=i+1;j<pos.size();j++)
@@ -117,6 +118,7 @@ void WorkspaceObject::clonePosAt(int i, WO::Direction d)
 
 void WorkspaceObject::cloneScaleAt(int i, WO::Direction d)
 {
+     qDebug() << "cloning scale at " << i << "(" << i-start << ")";
      i = i-start;
      if(d == WO::Further)
 	  for(int j=i+1;j<scale.size();j++)

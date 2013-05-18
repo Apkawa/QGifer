@@ -291,10 +291,11 @@ void FramePlayer::renderDefaultTextImage(const QString& text)
      QFont f;
      f.setPointSize(26);
      f.setBold(true);
-     QImage txt = TextRenderer::renderText(text, f, QColor(30,30,30), QColor(255,255,255), 1);
+     QImage txt = TextRenderer::renderText(text, f, QColor(30,30,30), QColor(255,255,255), 1).
+	  scaledToWidth(defaultImg.width(),Qt::SmoothTransformation);
      QPainter p(&defaultImg);
      p.drawImage( (defaultImg.width()-txt.width())/2, 
-     		  (defaultImg.height()-txt.height())/2, txt);
+     		  (defaultImg.height()-txt.height())/2, txt );
      // QPixmap def(1,1);
      // def.fill(Qt::transparent);
      // defaultImg = def.toImage();

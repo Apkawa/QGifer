@@ -28,12 +28,12 @@
 #include "mainwindow.h"
 #include "objectwidget.h"
 
-MainWindow::MainWindow(): translator(NULL)
+MainWindow::MainWindow(): translator(NULL), locked(false)
 {
      setupUi(this);
      //player->controlPanel->hide();
      player->setStatusBar(statusbar);
-     player->renderDefaultTextImage(tr("Press ")+actionOpenVideo->shortcut().toString()+tr(" to open a video"));
+     renderDefaultText();
      //player->showDefaultScreen();
      set = new QSettings("QGifer","QGifer");
      set->setIniCodec("UTF-8");
@@ -470,6 +470,7 @@ void MainWindow::resetCorrection()
 
 void MainWindow::lock(bool l)
 {
+     locked = l;
      l=!l;
 //     player->setEnabled(l);
      toolBox->setEnabled(l);
@@ -1296,4 +1297,12 @@ void MainWindow::workspaceWheelRotated(int delta)
      delta = delta/(delta>0?delta:delta*-1);
      if(zoomSlider->isEnabled())
 	  zoomSlider->setValue(zoomSlider->value()+8*delta);
+}
+
+void MainWindow::renderDefaultText()
+{
+     player->renderDefaultTextImage(
+     tr("Press ")+actionOpenVideo->shortcut().toString()+tr(" to open a video"));
+     if(locked)
+	  player->showDefaultScreen();
 }

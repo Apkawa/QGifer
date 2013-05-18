@@ -4,7 +4,7 @@
 <context>
     <name>APPLICATION</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1254"/>
+        <location filename="../src/mainwindow.cpp" line="1262"/>
         <source>LANGUAGE_NAME</source>
         <translation>Polski</translation>
     </message>
@@ -859,22 +859,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>FramePlayer</name>
     <message>
-        <location filename="../src/frameplayer.cpp" line="78"/>
+        <location filename="../src/frameplayer.cpp" line="69"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../src/frameplayer.cpp" line="78"/>
+        <location filename="../src/frameplayer.cpp" line="69"/>
         <source>This file is coded with &quot;</source>
         <translation>Ten plik zakodowany został za pomocą kodeka &quot;</translation>
     </message>
     <message>
-        <location filename="../src/frameplayer.cpp" line="78"/>
+        <location filename="../src/frameplayer.cpp" line="69"/>
         <source>&quot; codec and contains more than </source>
         <translation>&quot; i zawiera więcej niż </translation>
     </message>
     <message>
-        <location filename="../src/frameplayer.cpp" line="78"/>
+        <location filename="../src/frameplayer.cpp" line="69"/>
         <source> frames. This codec is not supported for full-length videos yet, please cut your video or use other codec like motion JPEG or YUV4.</source>
         <translation> klatek. Ten kodek nie jest aktualnie wspierany dla długich filmów. Skróć plik wideo lub użyj innego kodowania, jak Motion JPEG lub YUV4.</translation>
     </message>
@@ -886,40 +886,9 @@ p, li { white-space: pre-wrap; }
         <source>Player</source>
         <translation></translation>
     </message>
-    <message utf8="true">
-        <location filename="../ui/frameplayer.ui" line="29"/>
-        <source>❙❙</source>
-        <translation></translation>
-    </message>
-    <message utf8="true">
-        <location filename="../ui/frameplayer.ui" line="36"/>
-        <source>◼</source>
-        <translation></translation>
-    </message>
-    <message utf8="true">
-        <location filename="../ui/frameplayer.ui" line="43"/>
-        <source>▶</source>
-        <translation></translation>
-    </message>
-    <message utf8="true">
-        <location filename="../ui/frameplayer.ui" line="50"/>
-        <source>|◁◁</source>
-        <translation></translation>
-    </message>
-    <message utf8="true">
-        <location filename="../ui/frameplayer.ui" line="57"/>
-        <source>▷▷|</source>
-        <translation></translation>
-    </message>
-    <message utf8="true">
-        <location filename="../ui/frameplayer.ui" line="64"/>
-        <source>⏏</source>
-        <translation></translation>
-    </message>
     <message>
-        <location filename="../ui/frameplayer.ui" line="107"/>
         <source>stopped</source>
-        <translation>zatrzymany</translation>
+        <translation type="obsolete">zatrzymany</translation>
     </message>
 </context>
 <context>
@@ -1060,7 +1029,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="64"/>
+        <location filename="../ui/mainwindow.ui" line="67"/>
         <source>&amp;Player</source>
         <translation>&amp;Odtwarzacz</translation>
     </message>
@@ -1069,138 +1038,138 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">O progr&amp;amie</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="81"/>
+        <location filename="../ui/mainwindow.ui" line="84"/>
         <source>&amp;Edit</source>
         <translation>&amp;Edycja</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="97"/>
+        <location filename="../ui/mainwindow.ui" line="100"/>
         <source>&amp;Program</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="115"/>
+        <location filename="../ui/mainwindow.ui" line="118"/>
         <source>&amp;View</source>
         <translation>&amp;Widok</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="119"/>
+        <location filename="../ui/mainwindow.ui" line="122"/>
         <source>Language</source>
         <translation>Język</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="140"/>
+        <location filename="../ui/mainwindow.ui" line="144"/>
         <source>Project toolbar</source>
         <translation>Pasek narzędzi projektu</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="160"/>
+        <location filename="../ui/mainwindow.ui" line="164"/>
         <source>Gif toolbar</source>
         <translation>Pasek narzędzi GIF</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="187"/>
+        <location filename="../ui/mainwindow.ui" line="191"/>
         <source>Player toolbar</source>
         <translation>Pasek narzędzi odtwarzacza</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="215"/>
+        <location filename="../ui/mainwindow.ui" line="219"/>
         <source>Toolbox</source>
         <translation>Panel narzędziowy</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="249"/>
+        <location filename="../ui/mainwindow.ui" line="253"/>
         <source>Preview properties</source>
         <translation>Ustawienia podglądu</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="278"/>
+        <location filename="../ui/mainwindow.ui" line="282"/>
         <source>FPS:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="298"/>
+        <location filename="../ui/mainwindow.ui" line="302"/>
         <source>Zoom:</source>
         <translation>Powiększenie:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="308"/>
+        <location filename="../ui/mainwindow.ui" line="312"/>
         <source>Loop</source>
         <translation>Pętla</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="314"/>
+        <location filename="../ui/mainwindow.ui" line="318"/>
         <source>Do not loop</source>
         <translation>Nie powtarzaj</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="324"/>
+        <location filename="../ui/mainwindow.ui" line="328"/>
         <source>Loop all</source>
         <translation>Powtórz wszystko</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="331"/>
+        <location filename="../ui/mainwindow.ui" line="335"/>
         <source>Loop from start to stop frame</source>
         <translation>Powtórz od klatki początkowej do końcowej</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="341"/>
+        <location filename="../ui/mainwindow.ui" line="345"/>
         <source>Keep aspect ratio</source>
         <translation>Zachowaj proporcje</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="348"/>
+        <location filename="../ui/mainwindow.ui" line="352"/>
         <source>Smooth preview</source>
         <translation>Wygładź podgląd</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="364"/>
-        <location filename="../ui/mainwindow.ui" line="377"/>
+        <location filename="../ui/mainwindow.ui" line="368"/>
+        <location filename="../ui/mainwindow.ui" line="381"/>
         <source>Margins</source>
         <translation>Marginesy</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="370"/>
+        <location filename="../ui/mainwindow.ui" line="374"/>
         <source>Use margins</source>
         <translation>Użyj marginesów</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="383"/>
+        <location filename="../ui/mainwindow.ui" line="387"/>
         <source>Right:</source>
         <translation>Prawy:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="416"/>
+        <location filename="../ui/mainwindow.ui" line="420"/>
         <source>Left:</source>
         <translation>Lewy:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="423"/>
+        <location filename="../ui/mainwindow.ui" line="427"/>
         <source>Bottom:</source>
         <translation>Dolny:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="891"/>
+        <location filename="../ui/mainwindow.ui" line="895"/>
         <source>Right</source>
         <translation>Prawy</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="390"/>
-        <location filename="../ui/mainwindow.ui" line="403"/>
-        <location filename="../ui/mainwindow.ui" line="430"/>
-        <location filename="../ui/mainwindow.ui" line="450"/>
-        <location filename="../ui/mainwindow.ui" line="735"/>
-        <location filename="../ui/mainwindow.ui" line="751"/>
+        <location filename="../ui/mainwindow.ui" line="394"/>
+        <location filename="../ui/mainwindow.ui" line="407"/>
+        <location filename="../ui/mainwindow.ui" line="434"/>
+        <location filename="../ui/mainwindow.ui" line="454"/>
+        <location filename="../ui/mainwindow.ui" line="739"/>
+        <location filename="../ui/mainwindow.ui" line="755"/>
         <source> px</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="75"/>
+        <location filename="../ui/mainwindow.ui" line="78"/>
         <source>&amp;Help</source>
         <translation>Po&amp;moc</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="903"/>
+        <location filename="../ui/mainwindow.ui" line="907"/>
         <source>Left</source>
         <translation>Lewy</translation>
     </message>
@@ -1209,603 +1178,618 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Dolny</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="443"/>
+        <location filename="../ui/mainwindow.ui" line="447"/>
         <source>Top:</source>
         <translation>Górny:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="488"/>
+        <location filename="../ui/mainwindow.ui" line="492"/>
         <source>Filters</source>
         <translation>Filtry</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="507"/>
+        <location filename="../ui/mainwindow.ui" line="511"/>
         <source>Show on the preview (slow)</source>
         <translation>Zastosuj do podglądu (wolne)</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="514"/>
+        <location filename="../ui/mainwindow.ui" line="518"/>
         <source>Color correction</source>
         <translation>Korekcja barw</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="520"/>
+        <location filename="../ui/mainwindow.ui" line="524"/>
         <source>Hue (0):</source>
         <translation>Odcień (0):</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="540"/>
+        <location filename="../ui/mainwindow.ui" line="544"/>
         <source>Saturation (0):</source>
         <translation>Nasycenie (0):</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="560"/>
+        <location filename="../ui/mainwindow.ui" line="564"/>
         <source>Reset</source>
         <translation>Wyzeruj</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="567"/>
+        <location filename="../ui/mainwindow.ui" line="571"/>
         <source>Brightness (0):</source>
         <translation>Jasność (0):</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="590"/>
+        <location filename="../ui/mainwindow.ui" line="594"/>
         <source>Non-linear</source>
         <translation>Filtry nieliniowe</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="596"/>
+        <location filename="../ui/mainwindow.ui" line="600"/>
         <source>Median blur (0):</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="616"/>
+        <location filename="../ui/mainwindow.ui" line="620"/>
         <source>Compose objects</source>
         <translation>Wkomponuj obiekty</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="632"/>
+        <location filename="../ui/mainwindow.ui" line="636"/>
         <source>Output properties</source>
         <translation>Ustawienia wyjściowe</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="645"/>
+        <location filename="../ui/mainwindow.ui" line="649"/>
         <source>Stop frame:</source>
         <translation>Klatka końcowa:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="652"/>
+        <location filename="../ui/mainwindow.ui" line="656"/>
         <source>Height:</source>
         <translation>Wysokość:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="693"/>
+        <location filename="../ui/mainwindow.ui" line="697"/>
         <source>Auto-update form start frame</source>
         <translation>Aktualizuj z klatki początkowej</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="700"/>
+        <location filename="../ui/mainwindow.ui" line="704"/>
         <source>Palette size:</source>
         <translation>Rozmiar palety:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="707"/>
+        <location filename="../ui/mainwindow.ui" line="711"/>
         <source>Start frame:</source>
         <translation>Klatka początkowa:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="721"/>
+        <location filename="../ui/mainwindow.ui" line="725"/>
         <source>Width:</source>
         <translation>Szerokość:</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="767"/>
+        <location filename="../ui/mainwindow.ui" line="771"/>
         <source>Keep ratio</source>
         <translation>Zachowaj proporcje</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="774"/>
+        <location filename="../ui/mainwindow.ui" line="778"/>
         <source> bit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="797"/>
+        <location filename="../ui/mainwindow.ui" line="801"/>
         <source>From current frame</source>
         <translation>Z aktualnej klatki</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="804"/>
+        <location filename="../ui/mainwindow.ui" line="808"/>
         <source>Variable palette</source>
         <translation>Dynamiczna paleta</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="811"/>
+        <location filename="../ui/mainwindow.ui" line="815"/>
         <source>The minimum difference between frames required to generate the new palette</source>
         <translation>Minimalna różnica między klatkami wymagana do wygenerowania nowej palety</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="814"/>
+        <location filename="../ui/mainwindow.ui" line="818"/>
         <source>%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="840"/>
+        <location filename="../ui/mainwindow.ui" line="844"/>
         <source>&amp;Open video...</source>
         <translation>&amp;Otwórz wideo...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="843"/>
+        <location filename="../ui/mainwindow.ui" line="847"/>
         <source>Ctrl+Shift+V</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="852"/>
+        <location filename="../ui/mainwindow.ui" line="856"/>
         <source>&amp;Play</source>
         <translation>&amp;Odtwórz</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="855"/>
+        <location filename="../ui/mainwindow.ui" line="859"/>
         <source>Space</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="864"/>
+        <location filename="../ui/mainwindow.ui" line="868"/>
         <source>Pa&amp;use</source>
         <translation>Pa&amp;uza</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="867"/>
+        <location filename="../ui/mainwindow.ui" line="871"/>
         <source>Esc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="876"/>
+        <location filename="../ui/mainwindow.ui" line="880"/>
         <source>&amp;Stop</source>
         <translation>&amp;Stop</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="879"/>
+        <location filename="../ui/mainwindow.ui" line="883"/>
         <source>Backspace</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="888"/>
+        <location filename="../ui/mainwindow.ui" line="892"/>
         <source>&amp;Next frame</source>
         <translation>&amp;Następna klatka</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="900"/>
+        <location filename="../ui/mainwindow.ui" line="904"/>
         <source>Pre&amp;vious frame</source>
         <translation>Pop&amp;rzednia klatka</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="912"/>
+        <location filename="../ui/mainwindow.ui" line="916"/>
         <source>&amp;Close video</source>
         <translation>&amp;Zamknij wideo</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="921"/>
+        <location filename="../ui/mainwindow.ui" line="925"/>
         <source>&amp;Exit</source>
         <translation>&amp;Zamknij</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="924"/>
+        <location filename="../ui/mainwindow.ui" line="928"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="933"/>
+        <location filename="../ui/mainwindow.ui" line="937"/>
         <source>&amp;About QGifer...</source>
         <translation>O progra&amp;mie...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="938"/>
+        <location filename="../ui/mainwindow.ui" line="942"/>
         <source>*.&amp;PNG files...</source>
         <translation>pliki *.&amp;PNG...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="943"/>
+        <location filename="../ui/mainwindow.ui" line="947"/>
         <source>&amp;YouTube video...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="952"/>
+        <location filename="../ui/mainwindow.ui" line="956"/>
         <source>E&amp;xtract GIF...</source>
         <translation>&amp;Generuj GIF...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="955"/>
+        <location filename="../ui/mainwindow.ui" line="959"/>
         <source>Ctrl+G</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="964"/>
+        <location filename="../ui/mainwindow.ui" line="968"/>
         <source>Update &amp;palette</source>
         <translation>Aktualizuj &amp;paletę</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="967"/>
+        <location filename="../ui/mainwindow.ui" line="971"/>
         <source>Update palette (from the current frame)</source>
         <translation>Aktualizuj paletę (z aktualnej klatki)</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="970"/>
+        <location filename="../ui/mainwindow.ui" line="974"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="979"/>
+        <location filename="../ui/mainwindow.ui" line="983"/>
         <source>&amp;Start from current frame</source>
         <translation>&amp;Rozpocznij od aktualnej klatki</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="982"/>
+        <location filename="../ui/mainwindow.ui" line="986"/>
         <source>Ctrl+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="991"/>
+        <location filename="../ui/mainwindow.ui" line="995"/>
         <source>S&amp;top at current frame</source>
         <translation>Za&amp;kończ na aktualnej klatce</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="994"/>
+        <location filename="../ui/mainwindow.ui" line="998"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="999"/>
+        <location filename="../ui/mainwindow.ui" line="1003"/>
         <source>&amp;Export palette...</source>
         <translation>&amp;Eksportuj paletę...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1004"/>
+        <location filename="../ui/mainwindow.ui" line="1008"/>
         <source>I&amp;mport palette...</source>
         <translation>I&amp;mportuj paletę...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1013"/>
+        <location filename="../ui/mainwindow.ui" line="1017"/>
         <source>GIF opti&amp;mizer...</source>
         <translation>Opty&amp;malizator GIF...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1022"/>
+        <location filename="../ui/mainwindow.ui" line="1026"/>
         <source>MJPEG &amp;converter...</source>
         <translation>&amp;Konwerter MJPEG...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1031"/>
+        <location filename="../ui/mainwindow.ui" line="1035"/>
         <source>Restore &amp;default settings</source>
         <translation>Przywróć ustawienia &amp;domyślne</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1040"/>
+        <location filename="../ui/mainwindow.ui" line="1044"/>
         <source>&amp;Open palette...</source>
         <translation>&amp;Otwórz paletę...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1049"/>
+        <location filename="../ui/mainwindow.ui" line="1053"/>
         <source>Sa&amp;ve palette...</source>
         <translation>&amp;Zapisz paletę...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1058"/>
+        <location filename="../ui/mainwindow.ui" line="1062"/>
         <source>Insert &amp;object...</source>
         <translation>Wstaw &amp;obiekt...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1061"/>
+        <location filename="../ui/mainwindow.ui" line="1065"/>
         <source>Ctrl+I</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1070"/>
+        <location filename="../ui/mainwindow.ui" line="1074"/>
         <source>Insert &amp;text...</source>
         <translation>Wstaw &amp;tekst...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1073"/>
+        <location filename="../ui/mainwindow.ui" line="1077"/>
         <source>Ctrl+T</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1082"/>
+        <location filename="../ui/mainwindow.ui" line="1086"/>
         <source>Open &amp;project...</source>
         <translation>Otwórz &amp;projekt...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1085"/>
+        <location filename="../ui/mainwindow.ui" line="1089"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1094"/>
+        <location filename="../ui/mainwindow.ui" line="1098"/>
         <source>&amp;Save project</source>
         <translation>Z&amp;apisz projekt</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1097"/>
+        <location filename="../ui/mainwindow.ui" line="1101"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1106"/>
+        <location filename="../ui/mainwindow.ui" line="1110"/>
         <source>Save project &amp;as...</source>
         <translation>Zapisz projekt &amp;jako...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1109"/>
+        <location filename="../ui/mainwindow.ui" line="1113"/>
         <source>Ctrl+Shift+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1118"/>
+        <location filename="../ui/mainwindow.ui" line="1122"/>
         <source>&amp;New project</source>
         <translation>&amp;Nowy projekt</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1121"/>
+        <location filename="../ui/mainwindow.ui" line="1125"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1130"/>
+        <location filename="../ui/mainwindow.ui" line="1134"/>
         <source>&amp;Output properties</source>
         <translation>Ustawienia &amp;wyjściowe</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1133"/>
+        <location filename="../ui/mainwindow.ui" line="1137"/>
         <source>Ctrl+Shift+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1142"/>
+        <location filename="../ui/mainwindow.ui" line="1146"/>
         <source>&amp;Filters</source>
         <translation>&amp;Filtry</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1145"/>
+        <location filename="../ui/mainwindow.ui" line="1149"/>
         <source>Ctrl+Shift+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1154"/>
+        <location filename="../ui/mainwindow.ui" line="1158"/>
         <source>&amp;Margins</source>
         <translation>&amp;Marginesy</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1157"/>
+        <location filename="../ui/mainwindow.ui" line="1161"/>
         <source>Ctrl+Shift+M</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1166"/>
+        <location filename="../ui/mainwindow.ui" line="1170"/>
         <source>&amp;Preview properties</source>
         <translation>Ustawienia &amp;podglądu</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1169"/>
+        <location filename="../ui/mainwindow.ui" line="1173"/>
         <source>Ctrl+Shift+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1178"/>
+        <location filename="../ui/mainwindow.ui" line="1182"/>
         <source>&amp;Undock toolbox</source>
         <translation>Odłącz panel &amp;narzędziowy</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1181"/>
+        <location filename="../ui/mainwindow.ui" line="1185"/>
         <source>Ctrl+Shift+T</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1186"/>
-        <location filename="../src/mainwindow.cpp" line="1243"/>
+        <location filename="../ui/mainwindow.ui" line="1190"/>
+        <location filename="../src/mainwindow.cpp" line="1251"/>
         <source>English</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="158"/>
+        <location filename="../ui/mainwindow.ui" line="1198"/>
+        <source>Draw &amp;background</source>
+        <translation>Rysuj &amp;tło</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="36"/>
+        <source>Press </source>
+        <translation>Naciśnij </translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="36"/>
+        <source> to open a video</source>
+        <translation> aby otworzyć wideo</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="159"/>
         <source>Open video file</source>
         <translation>Otwórz plik wideo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="163"/>
-        <location filename="../src/mainwindow.cpp" line="213"/>
-        <location filename="../src/mainwindow.cpp" line="225"/>
-        <location filename="../src/mainwindow.cpp" line="887"/>
-        <location filename="../src/mainwindow.cpp" line="1013"/>
-        <location filename="../src/mainwindow.cpp" line="1033"/>
-        <location filename="../src/mainwindow.cpp" line="1119"/>
-        <location filename="../src/mainwindow.cpp" line="1137"/>
-        <location filename="../src/mainwindow.cpp" line="1158"/>
+        <location filename="../src/mainwindow.cpp" line="164"/>
+        <location filename="../src/mainwindow.cpp" line="214"/>
+        <location filename="../src/mainwindow.cpp" line="226"/>
+        <location filename="../src/mainwindow.cpp" line="894"/>
+        <location filename="../src/mainwindow.cpp" line="1020"/>
+        <location filename="../src/mainwindow.cpp" line="1040"/>
+        <location filename="../src/mainwindow.cpp" line="1127"/>
+        <location filename="../src/mainwindow.cpp" line="1145"/>
+        <location filename="../src/mainwindow.cpp" line="1166"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="163"/>
+        <location filename="../src/mainwindow.cpp" line="164"/>
         <source>The player failed to load the video file!</source>
         <translation>Odtwarzacz nie mógł otworzyć wskazanego pliku!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="171"/>
-        <location filename="../src/mainwindow.cpp" line="1080"/>
-        <location filename="../src/mainwindow.cpp" line="1107"/>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="172"/>
+        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1115"/>
+        <location filename="../src/mainwindow.cpp" line="1203"/>
         <source>Question</source>
         <translation>Pytanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="172"/>
+        <location filename="../src/mainwindow.cpp" line="173"/>
         <source>The object &quot;</source>
         <translation>Obiekt &quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="172"/>
+        <location filename="../src/mainwindow.cpp" line="173"/>
         <source>&quot; will not be visible. What do you want to do?</source>
         <translation>&quot; nie będzie widoczny. Co chcesz zrobić?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="173"/>
+        <location filename="../src/mainwindow.cpp" line="174"/>
         <source>Delete this object</source>
         <translation>Usuń ten obiekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="173"/>
+        <location filename="../src/mainwindow.cpp" line="174"/>
         <source>Change frame range...</source>
         <translation>Zmień zakres klatek...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="213"/>
+        <location filename="../src/mainwindow.cpp" line="214"/>
         <source>The range is invalid!</source>
         <translation>Podany zakres jest nieprawidłowy!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="225"/>
+        <location filename="../src/mainwindow.cpp" line="226"/>
         <source>Invalid color map!</source>
         <translation>Błędna paleta barw!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="325"/>
-        <location filename="../src/mainwindow.cpp" line="778"/>
+        <location filename="../src/mainwindow.cpp" line="326"/>
+        <location filename="../src/mainwindow.cpp" line="785"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="325"/>
+        <location filename="../src/mainwindow.cpp" line="326"/>
         <source>The range seems to be invalid!</source>
         <translation>Podany zakres jest nieprawidłowy!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="350"/>
+        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>Zoom</source>
         <translation>Powiększenie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="424"/>
+        <location filename="../src/mainwindow.cpp" line="423"/>
         <source>Hue (</source>
         <translation>Odcień (</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="425"/>
+        <location filename="../src/mainwindow.cpp" line="424"/>
         <source>Saturation (</source>
         <translation>Nasycenie (</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="426"/>
+        <location filename="../src/mainwindow.cpp" line="425"/>
         <source>Brightness (</source>
         <translation>Jasność (</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="778"/>
+        <location filename="../src/mainwindow.cpp" line="785"/>
         <source>Source video file: </source>
         <translation>Źródłowy plik wideo: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="887"/>
+        <location filename="../src/mainwindow.cpp" line="894"/>
         <source>The project cannot be loaded: </source>
         <translation>Projekt nie mógł zostać załadowany: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="969"/>
+        <location filename="../src/mainwindow.cpp" line="976"/>
         <source>Median blur (</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1007"/>
+        <location filename="../src/mainwindow.cpp" line="1014"/>
         <source>Open QGifer palette file</source>
         <translation>Otwórz paletę</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1013"/>
+        <location filename="../src/mainwindow.cpp" line="1020"/>
         <source>The palette file can not be loaded!</source>
         <translation>Wybrana paleta nie mogła zostać wczytana!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1025"/>
+        <location filename="../src/mainwindow.cpp" line="1032"/>
         <source>Save QGifer palette file</source>
         <translation>Zapisz paletę</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1033"/>
+        <location filename="../src/mainwindow.cpp" line="1040"/>
         <source>The palette file can not be saved!</source>
         <translation>Paleta nie mogła zostać poprawnie zapisana!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1080"/>
-        <location filename="../src/mainwindow.cpp" line="1107"/>
+        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1115"/>
         <source>The project has changed - do you want to save the changes?</source>
         <translation>Projekt uległ zmianie - czy chcesz zachować te zmiany?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1080"/>
-        <location filename="../src/mainwindow.cpp" line="1107"/>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1115"/>
+        <location filename="../src/mainwindow.cpp" line="1203"/>
         <source>Yes</source>
         <translation>Tak</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1080"/>
-        <location filename="../src/mainwindow.cpp" line="1107"/>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1115"/>
+        <location filename="../src/mainwindow.cpp" line="1203"/>
         <source>No</source>
         <translation>Nie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1080"/>
-        <location filename="../src/mainwindow.cpp" line="1107"/>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1115"/>
+        <location filename="../src/mainwindow.cpp" line="1203"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1115"/>
+        <location filename="../src/mainwindow.cpp" line="1123"/>
         <source>Open project file</source>
         <translation>Otwórz plik projektu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1119"/>
+        <location filename="../src/mainwindow.cpp" line="1127"/>
         <source>Project was not entirely loaded.</source>
         <translation>Projekt nie został całkowicie wczytany.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1137"/>
+        <location filename="../src/mainwindow.cpp" line="1145"/>
         <source>Error reading file: </source>
         <translation>Błąd odczytu pliku:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1158"/>
+        <location filename="../src/mainwindow.cpp" line="1166"/>
         <source>Error writing file: </source>
         <translation>Błąd zapisu pliku: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1164"/>
-        <location filename="../src/mainwindow.cpp" line="1173"/>
+        <location filename="../src/mainwindow.cpp" line="1172"/>
+        <location filename="../src/mainwindow.cpp" line="1181"/>
         <source>Save project file</source>
         <translation>Zapisz plik projektu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1187"/>
+        <location filename="../src/mainwindow.cpp" line="1195"/>
         <source>QGifer - video-based GIF creator</source>
         <translation>QGifer - edytor animowanych plików GIF</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1187"/>
+        <location filename="../src/mainwindow.cpp" line="1195"/>
         <source> [modified] </source>
         <translation> [zmodyfikowany] </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1203"/>
         <source>The project has changed - do you want to save the changes before exiting?</source>
         <translation>Projekt uległ zmianie - czy chcesz zachować te zmiany przed wyjściem?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1211"/>
+        <location filename="../src/mainwindow.cpp" line="1219"/>
         <source>Dock &amp;toolbox</source>
         <translation>Przyłącz panel &amp;narzędziowy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1211"/>
+        <location filename="../src/mainwindow.cpp" line="1219"/>
         <source>Undock &amp;toolbox</source>
         <translation>Odłącz panel &amp;narzędziowy</translation>
     </message>
@@ -2094,12 +2078,12 @@ p, li { white-space: pre-wrap; }
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../src/textwidget.cpp" line="164"/>
+        <location filename="../src/textwidget.cpp" line="124"/>
         <source>Set text color</source>
         <translation>Wybierz kolor tekstu</translation>
     </message>
     <message>
-        <location filename="../src/textwidget.cpp" line="171"/>
+        <location filename="../src/textwidget.cpp" line="131"/>
         <source>Set outline color</source>
         <translation>Wybierz kolor obwoluty</translation>
     </message>
@@ -2107,104 +2091,104 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../src/workspace.cpp" line="395"/>
+        <location filename="../src/workspace.cpp" line="416"/>
         <source>Bring to &amp;front</source>
         <translation>Przemieść na &amp;wierzch</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="398"/>
+        <location filename="../src/workspace.cpp" line="419"/>
         <source>Send to &amp;back</source>
         <translation>Przemieść na &amp;spód</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="404"/>
+        <location filename="../src/workspace.cpp" line="425"/>
         <source>&amp;Position</source>
         <translation>&amp;Pozycja</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="405"/>
-        <location filename="../src/workspace.cpp" line="418"/>
-        <location filename="../src/workspace.cpp" line="433"/>
+        <location filename="../src/workspace.cpp" line="426"/>
+        <location filename="../src/workspace.cpp" line="439"/>
+        <location filename="../src/workspace.cpp" line="454"/>
         <source>Apply to &amp;all frames</source>
         <translation>Zastosuj do &amp;wszystkich klatek</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="407"/>
-        <location filename="../src/workspace.cpp" line="420"/>
-        <location filename="../src/workspace.cpp" line="435"/>
+        <location filename="../src/workspace.cpp" line="428"/>
+        <location filename="../src/workspace.cpp" line="441"/>
+        <location filename="../src/workspace.cpp" line="456"/>
         <source>Apply to &amp;further frames</source>
         <translation>Zastosuj do &amp;dalszych klatek</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="409"/>
-        <location filename="../src/workspace.cpp" line="422"/>
-        <location filename="../src/workspace.cpp" line="437"/>
+        <location filename="../src/workspace.cpp" line="430"/>
+        <location filename="../src/workspace.cpp" line="443"/>
+        <location filename="../src/workspace.cpp" line="458"/>
         <source>Apply to &amp;earlier frames</source>
         <translation>Zastosuj do w&amp;cześniejszych klatek</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="412"/>
-        <location filename="../src/workspace.cpp" line="427"/>
-        <location filename="../src/workspace.cpp" line="440"/>
+        <location filename="../src/workspace.cpp" line="433"/>
+        <location filename="../src/workspace.cpp" line="448"/>
+        <location filename="../src/workspace.cpp" line="461"/>
         <source>&amp;Interpolate...</source>
         <translation>&amp;Interpoluj...</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="417"/>
+        <location filename="../src/workspace.cpp" line="438"/>
         <source>&amp;Size</source>
         <translation>&amp;Rozmiar</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="424"/>
+        <location filename="../src/workspace.cpp" line="445"/>
         <source>&amp;Restore original size</source>
         <translation>Przywróć &amp;oryginalny rozmiar</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="432"/>
+        <location filename="../src/workspace.cpp" line="453"/>
         <source>Position &amp;and size</source>
         <translation>Po&amp;zycja i rozmiar</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="446"/>
+        <location filename="../src/workspace.cpp" line="467"/>
         <source>P&amp;roperties...</source>
         <translation>&amp;Właściwości...</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="449"/>
+        <location filename="../src/workspace.cpp" line="470"/>
         <source>&amp;Delete</source>
         <translation>&amp;Usuń</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="468"/>
-        <location filename="../src/workspace.cpp" line="490"/>
-        <location filename="../src/workspace.cpp" line="516"/>
+        <location filename="../src/workspace.cpp" line="489"/>
+        <location filename="../src/workspace.cpp" line="511"/>
+        <location filename="../src/workspace.cpp" line="537"/>
         <source>Information</source>
         <translation>Informacja</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="469"/>
-        <location filename="../src/workspace.cpp" line="491"/>
-        <location filename="../src/workspace.cpp" line="517"/>
+        <location filename="../src/workspace.cpp" line="490"/>
+        <location filename="../src/workspace.cpp" line="512"/>
+        <location filename="../src/workspace.cpp" line="538"/>
         <source>There is no enough frames with this object to perform the interpolation</source>
         <translation>Nie ma wystarczającej liczby klatek z tym obiektem aby wykonać interpolację</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="528"/>
+        <location filename="../src/workspace.cpp" line="549"/>
         <source>Question</source>
         <translation>Pytanie</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="529"/>
+        <location filename="../src/workspace.cpp" line="550"/>
         <source>Do you really want to delete this object?</source>
         <translation>Na pewno chcesz usunąć ten obiekt?</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="530"/>
+        <location filename="../src/workspace.cpp" line="551"/>
         <source>Yes</source>
         <translation>Tak</translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="530"/>
+        <location filename="../src/workspace.cpp" line="551"/>
         <source>No</source>
         <translation>Nie</translation>
     </message>

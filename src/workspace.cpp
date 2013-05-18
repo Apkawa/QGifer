@@ -4,7 +4,8 @@
 
 Workspace::Workspace(QWidget* parent, Qt::WindowFlags f):
      PreviewWidget(parent,f),useMr(false),frameIndex(-1),hoveredObject(NULL),
-     hoIndex(-1), lmbPressed(false), hue(0), sat(0), val(0), autoObjectDrawing(true)
+     hoIndex(-1), lmbPressed(false), hue(0), sat(0), val(0),
+     autoObjectDrawing(true), menuExecuted(false)
 {
      canDrag = drag = mrNone;
 }
@@ -412,6 +413,9 @@ void Workspace::drawSelection(QPaintDevice* pd)
 
 void Workspace::execObjectMenu(const QPoint& p)
 {
+     if(!hoveredObject)
+	  return;
+
      	  QMenu* m = new QMenu(this);
 	  QAction* btf = new QAction(tr("Bring to &front"),m);
 	  m->addAction(btf);
@@ -470,7 +474,10 @@ void Workspace::execObjectMenu(const QPoint& p)
 	  QAction* del = new QAction(tr("&Delete"),m);
 	  m->addAction(del);
 
+	  menuExecuted = true;
 	  QAction* a = m->exec(p);
+	  menuExecuted = false;
+
 	  if(a == btf)
 	       objects.prepend(objects.takeAt(hoIndex));
 	  else if(a == stb)

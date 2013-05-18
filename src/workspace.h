@@ -43,7 +43,7 @@ private:
      void mouseMoveEvent(QMouseEvent*);
      void mouseReleaseEvent(QMouseEvent*);
      void mousePressEvent(QMouseEvent*);
-     void leaveEvent(QEvent*){hoverObject(-1, Qt::ArrowCursor);}
+     void leaveEvent(QEvent*){if(menuExecuted)return;hoverObject(-1, Qt::ArrowCursor);}
      void wheelEvent(QWheelEvent* e){emit wheelRotated(e->delta());}
      void updateMargins(); //uruchamiane podczas przeciagania
      void hoverObject(int i, const QCursor& c);
@@ -71,6 +71,7 @@ private:
      Margin canDrag;
      Margin drag;
      bool lmbPressed;
+     bool menuExecuted;
      private slots:
 
 };

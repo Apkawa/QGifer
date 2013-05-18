@@ -38,7 +38,8 @@ public:
      MainWindow();
      virtual ~MainWindow();
      void retranslate()
-     {QString t = windowTitle();retranslateUi(this);setWindowTitle(t);}
+     {QString t = windowTitle();retranslateUi(this);
+	  renderDefaultText();setWindowTitle(t);}
 private:
      bool openVideo(const QString& path);
      void connectMargins();
@@ -57,12 +58,14 @@ private:
      QString dataDir();
      void loadLanguages(); //uzupelnia hash 'langs' i tworzy menu wyboru jezyka
      void loadLanguage(const QString& basename, const QString& qmpath);
+     void renderDefaultText();
      QSettings* set;
      QString vidfile;
      float whRatio;
      int ow;
      int oh;
      QString projectFile;
+     bool locked;
      bool changed;
      QHash<QAction*, QString> langs;
      QTranslator* translator;
