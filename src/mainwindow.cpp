@@ -865,7 +865,8 @@ bool MainWindow::projectFromXml(const QString& xstr)
 		    else{
 			 qDebug() << "new image object...";
 			 currentObject = new WorkspaceObject();
-			 currentObject->setImage(stream.attributes().value("image").toString());
+			 currentObject->setImage(stream.attributes().value("image").toString().
+						 replace("%project_path%",projectDir()));
 		    }
 
 		    posstart = scalestart = stream.attributes().value("start").toString().toInt();
