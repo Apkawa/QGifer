@@ -5,6 +5,7 @@ QGifer ChangeLog:
  * poprawiono kodowanie znaków
  * wprowadzono tłumaczenia interfejsu
  * drobne poprawki w interfejsie
+ * poprawiono bardziej i mniej znazące błędy
 
 2013-05-11 v0.2.0:
  * dodano warstwę przestrzeni roboczej na odtwarzaczu

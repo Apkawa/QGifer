@@ -51,3 +51,8 @@ Compilation and installation
     make
     sudo make install
 
+note: use 
+
+cmake .. -G "MinGW Makefiles" -DQUIET_MODE=ON
+
+for Windows with MinGW.

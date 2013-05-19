@@ -4,7 +4,7 @@
 <context>
     <name>APPLICATION</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1262"/>
+        <location filename="../src/mainwindow.cpp" line="1263"/>
         <source>LANGUAGE_NAME</source>
         <translation>Português</translation>
     </message>
@@ -1540,7 +1540,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1190"/>
-        <location filename="../src/mainwindow.cpp" line="1251"/>
+        <location filename="../src/mainwindow.cpp" line="1252"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1550,12 +1550,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="36"/>
+        <location filename="../src/mainwindow.cpp" line="1305"/>
         <source>Press </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="36"/>
+        <location filename="../src/mainwindow.cpp" line="1305"/>
         <source> to open a video</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1568,12 +1568,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="164"/>
         <location filename="../src/mainwindow.cpp" line="214"/>
         <location filename="../src/mainwindow.cpp" line="226"/>
-        <location filename="../src/mainwindow.cpp" line="894"/>
-        <location filename="../src/mainwindow.cpp" line="1020"/>
-        <location filename="../src/mainwindow.cpp" line="1040"/>
-        <location filename="../src/mainwindow.cpp" line="1127"/>
-        <location filename="../src/mainwindow.cpp" line="1145"/>
-        <location filename="../src/mainwindow.cpp" line="1166"/>
+        <location filename="../src/mainwindow.cpp" line="895"/>
+        <location filename="../src/mainwindow.cpp" line="1021"/>
+        <location filename="../src/mainwindow.cpp" line="1041"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
+        <location filename="../src/mainwindow.cpp" line="1146"/>
+        <location filename="../src/mainwindow.cpp" line="1167"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1584,9 +1584,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="172"/>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
-        <location filename="../src/mainwindow.cpp" line="1115"/>
-        <location filename="../src/mainwindow.cpp" line="1203"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
+        <location filename="../src/mainwindow.cpp" line="1116"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1622,7 +1622,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="326"/>
-        <location filename="../src/mainwindow.cpp" line="785"/>
+        <location filename="../src/mainwindow.cpp" line="786"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1652,115 +1652,115 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="785"/>
+        <location filename="../src/mainwindow.cpp" line="786"/>
         <source>Source video file: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="894"/>
+        <location filename="../src/mainwindow.cpp" line="895"/>
         <source>The project cannot be loaded: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="976"/>
+        <location filename="../src/mainwindow.cpp" line="977"/>
         <source>Median blur (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1014"/>
+        <location filename="../src/mainwindow.cpp" line="1015"/>
         <source>Open QGifer palette file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1020"/>
+        <location filename="../src/mainwindow.cpp" line="1021"/>
         <source>The palette file can not be loaded!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1032"/>
+        <location filename="../src/mainwindow.cpp" line="1033"/>
         <source>Save QGifer palette file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1040"/>
+        <location filename="../src/mainwindow.cpp" line="1041"/>
         <source>The palette file can not be saved!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
-        <location filename="../src/mainwindow.cpp" line="1115"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
+        <location filename="../src/mainwindow.cpp" line="1116"/>
         <source>The project has changed - do you want to save the changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
-        <location filename="../src/mainwindow.cpp" line="1115"/>
-        <location filename="../src/mainwindow.cpp" line="1203"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
+        <location filename="../src/mainwindow.cpp" line="1116"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
-        <location filename="../src/mainwindow.cpp" line="1115"/>
-        <location filename="../src/mainwindow.cpp" line="1203"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
+        <location filename="../src/mainwindow.cpp" line="1116"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
-        <location filename="../src/mainwindow.cpp" line="1115"/>
-        <location filename="../src/mainwindow.cpp" line="1203"/>
+        <location filename="../src/mainwindow.cpp" line="1088"/>
+        <location filename="../src/mainwindow.cpp" line="1116"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1123"/>
+        <location filename="../src/mainwindow.cpp" line="1124"/>
         <source>Open project file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1127"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Project was not entirely loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1145"/>
+        <location filename="../src/mainwindow.cpp" line="1146"/>
         <source>Error reading file: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1166"/>
+        <location filename="../src/mainwindow.cpp" line="1167"/>
         <source>Error writing file: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1172"/>
-        <location filename="../src/mainwindow.cpp" line="1181"/>
+        <location filename="../src/mainwindow.cpp" line="1173"/>
+        <location filename="../src/mainwindow.cpp" line="1182"/>
         <source>Save project file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1196"/>
         <source>QGifer - video-based GIF creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1196"/>
         <source> [modified] </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1203"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>The project has changed - do you want to save the changes before exiting?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1219"/>
+        <location filename="../src/mainwindow.cpp" line="1220"/>
         <source>Dock &amp;toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1219"/>
+        <location filename="../src/mainwindow.cpp" line="1220"/>
         <source>Undock &amp;toolbox</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2062,104 +2062,104 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../src/workspace.cpp" line="416"/>
+        <location filename="../src/workspace.cpp" line="420"/>
         <source>Bring to &amp;front</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="419"/>
+        <location filename="../src/workspace.cpp" line="423"/>
         <source>Send to &amp;back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="425"/>
+        <location filename="../src/workspace.cpp" line="429"/>
         <source>&amp;Position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/workspace.cpp" line="426"/>
-        <location filename="../src/workspace.cpp" line="439"/>
-        <location filename="../src/workspace.cpp" line="454"/>
-        <source>Apply to &amp;all frames</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/workspace.cpp" line="428"/>
-        <location filename="../src/workspace.cpp" line="441"/>
-        <location filename="../src/workspace.cpp" line="456"/>
-        <source>Apply to &amp;further frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="430"/>
         <location filename="../src/workspace.cpp" line="443"/>
         <location filename="../src/workspace.cpp" line="458"/>
+        <source>Apply to &amp;all frames</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/workspace.cpp" line="432"/>
+        <location filename="../src/workspace.cpp" line="445"/>
+        <location filename="../src/workspace.cpp" line="460"/>
+        <source>Apply to &amp;further frames</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/workspace.cpp" line="434"/>
+        <location filename="../src/workspace.cpp" line="447"/>
+        <location filename="../src/workspace.cpp" line="462"/>
         <source>Apply to &amp;earlier frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="433"/>
-        <location filename="../src/workspace.cpp" line="448"/>
-        <location filename="../src/workspace.cpp" line="461"/>
+        <location filename="../src/workspace.cpp" line="437"/>
+        <location filename="../src/workspace.cpp" line="452"/>
+        <location filename="../src/workspace.cpp" line="465"/>
         <source>&amp;Interpolate...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="438"/>
+        <location filename="../src/workspace.cpp" line="442"/>
         <source>&amp;Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="445"/>
+        <location filename="../src/workspace.cpp" line="449"/>
         <source>&amp;Restore original size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="453"/>
+        <location filename="../src/workspace.cpp" line="457"/>
         <source>Position &amp;and size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="467"/>
+        <location filename="../src/workspace.cpp" line="471"/>
         <source>P&amp;roperties...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="470"/>
+        <location filename="../src/workspace.cpp" line="474"/>
         <source>&amp;Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="489"/>
-        <location filename="../src/workspace.cpp" line="511"/>
-        <location filename="../src/workspace.cpp" line="537"/>
+        <location filename="../src/workspace.cpp" line="496"/>
+        <location filename="../src/workspace.cpp" line="518"/>
+        <location filename="../src/workspace.cpp" line="544"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="490"/>
-        <location filename="../src/workspace.cpp" line="512"/>
-        <location filename="../src/workspace.cpp" line="538"/>
+        <location filename="../src/workspace.cpp" line="497"/>
+        <location filename="../src/workspace.cpp" line="519"/>
+        <location filename="../src/workspace.cpp" line="545"/>
         <source>There is no enough frames with this object to perform the interpolation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="549"/>
+        <location filename="../src/workspace.cpp" line="556"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="550"/>
+        <location filename="../src/workspace.cpp" line="557"/>
         <source>Do you really want to delete this object?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="551"/>
+        <location filename="../src/workspace.cpp" line="558"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/workspace.cpp" line="551"/>
+        <location filename="../src/workspace.cpp" line="558"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1,0 +1,9 @@
+The Qt Linguist download link:
+
+http://qt-apps.org/content/show.php/Qt+Linguist+Download?content=89360
+
+All the translation files are placed in "translations" directory. 
+
+Use the "template.ts" file for new translations. The "LANGUAGE_NAME" field should be translated to the native name of destination language (ex. "Polski" for polish). 
+
+Exported .qm files should be placed in "locale" directory or "/usr/share/qgifer/locale" if the app is already installed on linux.
