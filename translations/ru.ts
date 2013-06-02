@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="1263"/>
         <source>LANGUAGE_NAME</source>
-        <translation type="unfinished">Pусский</translation>
+        <translation>Pусский</translation>
     </message>
 </context>
 <context>
@@ -15,22 +15,22 @@
         <location filename="../ui/aboutdialog.ui" line="14"/>
         <location filename="../ui/aboutdialog.ui" line="44"/>
         <source>About QGifer</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе QGifer</translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="26"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="50"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;QGifer - A video-based GIF creator&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;This software is licensed under GPL version 3. See &amp;quot;License&amp;quot; tab for details.&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Author: Lukasz Chodyla &amp;lt;chodak166@op.pl&amp;gt;&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Copyright (c) 2013 Lukasz Chodyla&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;QGifer - A video-based GIF creator&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Программа распространяется на условиях GPL v3. Для подробной информации откройте вкладку &amp;quot;Лицензии&amp;quot;.&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Автор: Lukasz Chodyla &amp;lt;chodak166@op.pl&amp;gt;&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Copyright (c) 2013 Lukasz Chodyla&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="61"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Лицензия</translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="76"/>
@@ -712,12 +712,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;;&quot;&gt;the library.  If this is what you want to do, use the GNU Lesser General&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;;&quot;&gt;Public License instead of this License.  But first, please read&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;;&quot;&gt;&amp;lt;http://www.gnu.org/philosophy/why-not-lgpl.html&amp;gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="761"/>
         <source>Project support</source>
-        <translation type="unfinished"></translation>
+        <translation>Поддержите проект</translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="807"/>
@@ -735,12 +735,25 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Thanks!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Если вам понравилась эта программа и вы хотите выразить свою благодарность авторам, которые сделали её в своё личное время, вы можете поблагодарить их на дальнейшее создание хороших программ, послав открытку с фотографией своего города по адресу ниже, либо  &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=YKYEGBLZMUVW4&amp;amp;lc=US&amp;amp;item_name=QGifer&amp;amp;item_number=qgifer&amp;amp;currency_code=USD&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;помочь пожертвованием&lt;/span&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lukasz Chodyla&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Glinik, ul. Lipowa 22&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;66-446 Deszczno&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;POLAND&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Спасибо!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="850"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>
@@ -748,99 +761,99 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/converterdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="23"/>
         <source>Source file</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходный файл</translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="32"/>
         <source>From:</source>
-        <translation type="unfinished"></translation>
+        <translation>С:</translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="39"/>
         <source>to:</source>
-        <translation type="unfinished"></translation>
+        <translation>до:</translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="55"/>
         <location filename="../ui/converterdialog.ui" line="88"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="65"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;Message&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="75"/>
         <source>Convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертировать</translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="82"/>
         <source>Destination MJPEG file</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной файл</translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="98"/>
         <source>Auto-naming</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматическое название</translation>
     </message>
     <message>
         <location filename="../ui/converterdialog.ui" line="108"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="58"/>
         <location filename="../src/converterdialog.cpp" line="64"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="59"/>
         <source>The length is invalid!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверная длина!</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="65"/>
         <source>The chosen source file does not exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбранного исходного файла не существует!</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="74"/>
         <source>Converting, please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Идёт обработка, пожалуйста подождите...</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="85"/>
         <source>Open video file</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть видео</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="101"/>
         <source>Save AVI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить AVI файл</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="113"/>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Готово!</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="118"/>
         <source>Can not write to destination file! (access denied?)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при сохранении выходного файла! (отсутствует доступ?)</translation>
     </message>
     <message>
         <location filename="../src/converterdialog.cpp" line="123"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка:</translation>
     </message>
 </context>
 <context>
@@ -848,22 +861,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/frameplayer.cpp" line="69"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/frameplayer.cpp" line="69"/>
         <source>This file is coded with &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот файл использует кодек &quot;</translation>
     </message>
     <message>
         <location filename="../src/frameplayer.cpp" line="69"/>
         <source>&quot; codec and contains more than </source>
-        <translation type="unfinished"></translation>
+        <translation>&quot; и содержит количество кадров, больше  </translation>
     </message>
     <message>
         <location filename="../src/frameplayer.cpp" line="69"/>
         <source> frames. This codec is not supported for full-length videos yet, please cut your video or use other codec like motion JPEG or YUV4.</source>
-        <translation type="unfinished"></translation>
+        <translation>. Этот кодек пока не поддерживается для больших файлов, пожалуйста уменьшите видеофайл или используйти другой кодек, например MJPEG или YUV4.</translation>
     </message>
 </context>
 <context>
@@ -871,7 +884,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/frameplayer.ui" line="14"/>
         <source>Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Проигрыватель</translation>
     </message>
 </context>
 <context>
@@ -879,65 +892,65 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/gifwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../ui/gifwidget.ui" line="29"/>
         <location filename="../src/gifwidget.cpp" line="52"/>
         <source>Save gif...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить gif...</translation>
     </message>
     <message>
         <location filename="../ui/gifwidget.ui" line="42"/>
         <location filename="../src/gifwidget.cpp" line="57"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Играть</translation>
     </message>
     <message>
         <location filename="../ui/gifwidget.ui" line="55"/>
         <location filename="../src/gifwidget.cpp" line="62"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Пауза</translation>
     </message>
     <message>
         <location filename="../ui/gifwidget.ui" line="84"/>
         <source>Interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Интервал:</translation>
     </message>
     <message>
         <location filename="../ui/gifwidget.ui" line="94"/>
         <source> ms</source>
-        <translation type="unfinished"></translation>
+        <translation> мс</translation>
     </message>
     <message>
         <location filename="../ui/gifwidget.ui" line="110"/>
         <source>Save only every </source>
-        <translation type="unfinished"></translation>
+        <translation>Сохрать каждый </translation>
     </message>
     <message>
         <location filename="../ui/gifwidget.ui" line="117"/>
         <source> frame</source>
-        <translation type="unfinished"></translation>
+        <translation> кадр</translation>
     </message>
     <message>
         <location filename="../ui/gifwidget.ui" line="168"/>
         <source>Append reversed copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевёрнутая копия</translation>
     </message>
     <message>
         <location filename="../src/gifwidget.cpp" line="98"/>
         <source>Save GIF file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить GIF файл</translation>
     </message>
     <message>
         <location filename="../src/gifwidget.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/gifwidget.cpp" line="120"/>
         <source>Unexpected error while saving GIF file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Непредвиденная ошибка во время сохранения!</translation>
     </message>
 </context>
 <context>
@@ -946,58 +959,58 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/interpolationdialog.ui" line="14"/>
         <location filename="../ui/interpolationdialog.ui" line="20"/>
         <source>Interpolate</source>
-        <translation type="unfinished"></translation>
+        <translation>Интерполировать</translation>
     </message>
     <message>
         <location filename="../ui/interpolationdialog.ui" line="31"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../ui/interpolationdialog.ui" line="42"/>
         <source>Interpolation key points</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите ключевые кадры</translation>
     </message>
     <message>
         <location filename="../ui/interpolationdialog.ui" line="48"/>
         <source>Start frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Начало:</translation>
     </message>
     <message>
         <location filename="../ui/interpolationdialog.ui" line="61"/>
         <location filename="../ui/interpolationdialog.ui" line="81"/>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Текущий</translation>
     </message>
     <message>
         <location filename="../ui/interpolationdialog.ui" line="68"/>
         <source>Stop frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Конец:</translation>
     </message>
     <message>
         <location filename="../src/interpolationdialog.cpp" line="34"/>
         <source>Interpolate object position and size</source>
-        <translation type="unfinished"></translation>
+        <translation>Интерполировать позицию и размер</translation>
     </message>
     <message>
         <location filename="../src/interpolationdialog.cpp" line="35"/>
         <source>Interpolate object size</source>
-        <translation type="unfinished"></translation>
+        <translation>Интерполировать размер</translation>
     </message>
     <message>
         <location filename="../src/interpolationdialog.cpp" line="36"/>
         <source>Interpolate object position</source>
-        <translation type="unfinished"></translation>
+        <translation>Интерполировать позицию</translation>
     </message>
     <message>
         <location filename="../src/interpolationdialog.cpp" line="44"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Внимание</translation>
     </message>
     <message>
         <location filename="../src/interpolationdialog.cpp" line="45"/>
         <source>The given range seems to be invalid, make sure that the stop frame is at least higher by two than the start frame!</source>
-        <translation type="unfinished"></translation>
+        <translation>Временной промежуток задан неверно, убедитесь, что конечный кадр хотя бы на два больше, чем начальный!</translation>
     </message>
 </context>
 <context>
@@ -1005,128 +1018,128 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
         <source>QGifer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="67"/>
         <source>&amp;Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Проигрыватель</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="84"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="100"/>
         <source>&amp;Program</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="118"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>Вид</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="122"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="144"/>
         <source>Project toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="164"/>
         <source>Gif toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="191"/>
         <source>Player toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="219"/>
         <source>Toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Инструменты</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="253"/>
         <source>Preview properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Предпросмотр</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="282"/>
         <source>FPS:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадров в секунду:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="302"/>
         <source>Zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="312"/>
         <source>Loop</source>
-        <translation type="unfinished"></translation>
+        <translation>Зацикливание</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="318"/>
         <source>Do not loop</source>
-        <translation type="unfinished"></translation>
+        <translation>Не зацикливать</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="328"/>
         <source>Loop all</source>
-        <translation type="unfinished"></translation>
+        <translation>Полностью</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="335"/>
         <source>Loop from start to stop frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбранный промежуток</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="345"/>
         <source>Keep aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранять соотношение сторон</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="352"/>
         <source>Smooth preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Плавный предпросмотр</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="368"/>
         <location filename="../ui/mainwindow.ui" line="381"/>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Границы</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="374"/>
         <source>Use margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать границы</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="387"/>
         <source>Right:</source>
-        <translation type="unfinished"></translation>
+        <translation>Справа:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="420"/>
         <source>Left:</source>
-        <translation type="unfinished"></translation>
+        <translation>Слева:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="427"/>
         <source>Bottom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Снизу:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="895"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Слева</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="394"/>
@@ -1136,433 +1149,433 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/mainwindow.ui" line="739"/>
         <location filename="../ui/mainwindow.ui" line="755"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="907"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Слева</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="447"/>
         <source>Top:</source>
-        <translation type="unfinished"></translation>
+        <translation>Сверху:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="78"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Помощь</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="492"/>
         <source>Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтры</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="511"/>
         <source>Show on the preview (slow)</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать на предпросмотре</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="518"/>
         <source>Color correction</source>
-        <translation type="unfinished"></translation>
+        <translation>Коррекция цвета</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="524"/>
         <source>Hue (0):</source>
-        <translation type="unfinished"></translation>
+        <translation>Оттенок (0):</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="544"/>
         <source>Saturation (0):</source>
-        <translation type="unfinished"></translation>
+        <translation>Насыщенность (0):</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="564"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Сброс</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="571"/>
         <source>Brightness (0):</source>
-        <translation type="unfinished"></translation>
+        <translation>Яркость (0):</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="594"/>
         <source>Non-linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Нелинейные преобразования</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="600"/>
         <source>Median blur (0):</source>
-        <translation type="unfinished"></translation>
+        <translation>Медианное размытие (0):</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="620"/>
         <source>Compose objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Объединить объекты</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="636"/>
         <source>Output properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной файл</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="649"/>
         <source>Stop frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Конец:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="656"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Высота:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="697"/>
         <source>Auto-update form start frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Авто-обновление с начала</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="704"/>
         <source>Palette size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Палитра:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="711"/>
         <source>Start frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Начало:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="725"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="771"/>
         <source>Keep ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранять пропорции</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="778"/>
         <source> bit</source>
-        <translation type="unfinished"></translation>
+        <translation> бит</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="801"/>
         <source>From current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Из текущего кадра</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="808"/>
         <source>Variable palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Переменная палитра:</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="815"/>
         <source>The minimum difference between frames required to generate the new palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Необходимо сгенерировать новую палитру</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="818"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="844"/>
         <source>&amp;Open video...</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть видео...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="847"/>
         <source>Ctrl+Shift+V</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="856"/>
         <source>&amp;Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Играть</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="859"/>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Пробел</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="868"/>
         <source>Pa&amp;use</source>
-        <translation type="unfinished"></translation>
+        <translation>Пауза</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="871"/>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="880"/>
         <source>&amp;Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="883"/>
         <source>Backspace</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="892"/>
         <source>&amp;Next frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Следующий кадр</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="904"/>
         <source>Pre&amp;vious frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Предыдущий кадр</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="916"/>
         <source>&amp;Close video</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть видео</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="925"/>
         <source>&amp;Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="928"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="937"/>
         <source>&amp;About QGifer...</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе QGifer...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="942"/>
         <source>*.&amp;PNG files...</source>
-        <translation type="unfinished"></translation>
+        <translation>*.&amp;PNG файлы...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="947"/>
         <source>&amp;YouTube video...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;YouTube видео...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="956"/>
         <source>E&amp;xtract GIF...</source>
-        <translation type="unfinished"></translation>
+        <translation>Извлечь GIF...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="959"/>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="968"/>
         <source>Update &amp;palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить палитру</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="971"/>
         <source>Update palette (from the current frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить палитру (из текущего кадра)</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="974"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="983"/>
         <source>&amp;Start from current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Начать с текущего кадра</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="986"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="995"/>
         <source>S&amp;top at current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Закончить текущим кадром</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="998"/>
         <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1003"/>
         <source>&amp;Export palette...</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать палитру...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1008"/>
         <source>I&amp;mport palette...</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать палитру...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1017"/>
         <source>GIF opti&amp;mizer...</source>
-        <translation type="unfinished"></translation>
+        <translation>GIF оптимизатор...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1026"/>
         <source>MJPEG &amp;converter...</source>
-        <translation type="unfinished"></translation>
+        <translation>MPEG конвертер...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1035"/>
         <source>Restore &amp;default settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Восстановить настройки по умолчанию</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1044"/>
         <source>&amp;Open palette...</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть палитру...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1053"/>
         <source>Sa&amp;ve palette...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить палитру...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1062"/>
         <source>Insert &amp;object...</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить объект...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1065"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1074"/>
         <source>Insert &amp;text...</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить текст...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1077"/>
         <source>Ctrl+T</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1086"/>
         <source>Open &amp;project...</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть проект...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1089"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1098"/>
         <source>&amp;Save project</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить проект</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1101"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1110"/>
         <source>Save project &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить проект как...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1113"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1122"/>
         <source>&amp;New project</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый проект</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1125"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1134"/>
         <source>&amp;Output properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной файл</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1137"/>
         <source>Ctrl+Shift+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1146"/>
         <source>&amp;Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтры</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1149"/>
         <source>Ctrl+Shift+F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1158"/>
         <source>&amp;Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Границы</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1161"/>
         <source>Ctrl+Shift+M</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1170"/>
         <source>&amp;Preview properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Предпросмотр</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1173"/>
         <source>Ctrl+Shift+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1182"/>
         <source>&amp;Undock toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Открепить инструменты</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1185"/>
         <source>Ctrl+Shift+T</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1190"/>
         <location filename="../src/mainwindow.cpp" line="1252"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Английский</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1198"/>
         <source>Draw &amp;background</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарисовать фон</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1305"/>
         <source>Press </source>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1305"/>
         <source> to open a video</source>
-        <translation type="unfinished"></translation>
+        <translation>чтобы открыть видео</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="159"/>
         <source>Open video file</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть видео файл</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="164"/>
@@ -1575,12 +1588,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="1146"/>
         <location filename="../src/mainwindow.cpp" line="1167"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="164"/>
         <source>The player failed to load the video file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Проигрыватель не смог загрузить видеофайл!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="172"/>
@@ -1588,181 +1601,181 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mainwindow.cpp" line="1116"/>
         <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="173"/>
         <source>The object &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Объект &quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="173"/>
         <source>&quot; will not be visible. What do you want to do?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot; не будет виден. Что вы хотите сделать?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="174"/>
         <source>Delete this object</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить этот объект</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="174"/>
         <source>Change frame range...</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить временной интервал...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="214"/>
         <source>The range is invalid!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный интервал!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="226"/>
         <source>Invalid color map!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверная цветовая карта!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="326"/>
         <location filename="../src/mainwindow.cpp" line="786"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Внимание</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="326"/>
         <source>The range seems to be invalid!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный интервал!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="351"/>
         <source>Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="423"/>
         <source>Hue (</source>
-        <translation type="unfinished"></translation>
+        <translation>Оттенок (</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="424"/>
         <source>Saturation (</source>
-        <translation type="unfinished"></translation>
+        <translation>Насыщенность (</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="425"/>
         <source>Brightness (</source>
-        <translation type="unfinished"></translation>
+        <translation>Яркость (</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="786"/>
         <source>Source video file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Исходный файл:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="895"/>
         <source>The project cannot be loaded: </source>
-        <translation type="unfinished"></translation>
+        <translation>Проект не может быть загружен: </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="977"/>
         <source>Median blur (</source>
-        <translation type="unfinished"></translation>
+        <translation>Медианное размытие (</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1015"/>
         <source>Open QGifer palette file</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть палитру</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1021"/>
         <source>The palette file can not be loaded!</source>
-        <translation type="unfinished"></translation>
+        <translation>Палитра не найдена!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1033"/>
         <source>Save QGifer palette file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить палитру</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1041"/>
         <source>The palette file can not be saved!</source>
-        <translation type="unfinished"></translation>
+        <translation>Палитра не может быть сохранена!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1088"/>
         <location filename="../src/mainwindow.cpp" line="1116"/>
         <source>The project has changed - do you want to save the changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Проект был изменён - сохранить изменения?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1088"/>
         <location filename="../src/mainwindow.cpp" line="1116"/>
         <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1088"/>
         <location filename="../src/mainwindow.cpp" line="1116"/>
         <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1088"/>
         <location filename="../src/mainwindow.cpp" line="1116"/>
         <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1124"/>
         <source>Open project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть проект</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Project was not entirely loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Проект не был полностью загружен.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1146"/>
         <source>Error reading file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка чтения файла: </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1167"/>
         <source>Error writing file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка записи файла: </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1173"/>
         <location filename="../src/mainwindow.cpp" line="1182"/>
         <source>Save project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить проект</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1196"/>
         <source>QGifer - video-based GIF creator</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1196"/>
         <source> [modified] </source>
-        <translation type="unfinished"></translation>
+        <translation> [изменён] </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>The project has changed - do you want to save the changes before exiting?</source>
-        <translation type="unfinished"></translation>
+        <translation>Проект был изменён - сохранить изменения перед выходом?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1220"/>
         <source>Dock &amp;toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Прикрепить инструменты</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1220"/>
         <source>Undock &amp;toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Открепить инструменты</translation>
     </message>
 </context>
 <context>
@@ -1771,70 +1784,70 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/objectwidget.ui" line="14"/>
         <location filename="../src/objectwidget.h" line="21"/>
         <source>Insert object</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить объект</translation>
     </message>
     <message>
         <location filename="../ui/objectwidget.ui" line="20"/>
         <source>Frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадры</translation>
     </message>
     <message>
         <location filename="../ui/objectwidget.ui" line="26"/>
         <source>From:</source>
-        <translation type="unfinished"></translation>
+        <translation>От:</translation>
     </message>
     <message>
         <location filename="../ui/objectwidget.ui" line="36"/>
         <source>To:</source>
-        <translation type="unfinished"></translation>
+        <translation>До:</translation>
     </message>
     <message>
         <location filename="../ui/objectwidget.ui" line="49"/>
         <location filename="../ui/objectwidget.ui" line="56"/>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Текущий</translation>
     </message>
     <message>
         <location filename="../ui/objectwidget.ui" line="66"/>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Изображение</translation>
     </message>
     <message>
         <location filename="../ui/objectwidget.ui" line="75"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/objectwidget.ui" line="85"/>
         <location filename="../src/objectwidget.cpp" line="11"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../ui/objectwidget.ui" line="96"/>
         <location filename="../src/objectwidget.cpp" line="10"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить</translation>
     </message>
     <message>
         <location filename="../src/objectwidget.cpp" line="25"/>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить</translation>
     </message>
     <message>
         <location filename="../src/objectwidget.cpp" line="26"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../src/objectwidget.cpp" line="76"/>
         <source>Open image</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть изображение</translation>
     </message>
     <message>
         <location filename="../src/objectwidget.h" line="21"/>
         <source>Object properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Свойства объекта</translation>
     </message>
 </context>
 <context>
@@ -1842,119 +1855,119 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/optimizerdialog.ui" line="14"/>
         <source>Gif Optimizer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="46"/>
         <source>Fuzz factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Распыление:</translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="53"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="69"/>
         <source>Optimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Оптимизировать</translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="76"/>
         <source>Choose the ImageMagick directory with &quot;convert&quot; executable</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="79"/>
         <source>Set IM directory...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="89"/>
         <source>Source file</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходный файл</translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="98"/>
         <location filename="../ui/optimizerdialog.ui" line="117"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="108"/>
         <source>Destination file</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной файл</translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="127"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="134"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; color:#ff0000;&quot;&gt;Message&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/optimizerdialog.ui" line="144"/>
         <source>Show this dialog whenever you save a GIF</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать это сообщение при каждом сохранении</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="58"/>
         <location filename="../src/optimizerdialog.cpp" line="92"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="59"/>
         <source>The chosen source file does not exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбранного файла не существует!</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="68"/>
         <source>Optimizing, please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Оптимизация, пожалуйста подождите...</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="80"/>
         <source>Select ImageMagick binary directory</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="93"/>
         <source>The chosen directory does not contain &quot;convert&quot; executable!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбранный каталог не содержит исполняемых файлов конвертации!</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="104"/>
         <source>Open GIF file</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть GIF</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="117"/>
         <source>Save GIF file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить GIF</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="136"/>
         <source>Error: this operation requires the ImageMagick installed on your system. Please install ImageMagick or choose the directory with &quot;convert&quot; executable file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка: для данной операции необходима программа ImageMagick. Пожалуйста установите ImageMagick или выберите каталог с исполняемыми файлами конвертации.</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="149"/>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Готово!</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="154"/>
         <source>Can not write to destination file! (access denied?)</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно сохранить файл! (отсутствует доступ?)</translation>
     </message>
     <message>
         <location filename="../src/optimizerdialog.cpp" line="159"/>
         <source>Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка: </translation>
     </message>
 </context>
 <context>
@@ -1962,101 +1975,101 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/textwidget.ui" line="14"/>
         <source>Render text</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="20"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="26"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>Жирный</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="36"/>
         <source>Outline color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет линии:</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="46"/>
         <location filename="../ui/textwidget.ui" line="76"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="69"/>
         <source>Text color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет текста:</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="86"/>
         <source>Font size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер:</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="93"/>
         <source>Outline width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Толщина линии:</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="103"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>Курсив</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="158"/>
         <source>Frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадры</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="164"/>
         <source>From:</source>
-        <translation type="unfinished"></translation>
+        <translation>От:</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="174"/>
         <source>To:</source>
-        <translation type="unfinished"></translation>
+        <translation>До:</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="187"/>
         <location filename="../ui/textwidget.ui" line="194"/>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Текущий</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="217"/>
         <location filename="../src/textwidget.cpp" line="41"/>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить</translation>
     </message>
     <message>
         <location filename="../ui/textwidget.ui" line="228"/>
         <location filename="../src/textwidget.cpp" line="42"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../src/textwidget.cpp" line="41"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить</translation>
     </message>
     <message>
         <location filename="../src/textwidget.cpp" line="42"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../src/textwidget.cpp" line="124"/>
         <source>Set text color</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить цвет текста</translation>
     </message>
     <message>
         <location filename="../src/textwidget.cpp" line="131"/>
         <source>Set outline color</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить цвет линии</translation>
     </message>
 </context>
 <context>
@@ -2064,104 +2077,104 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/workspace.cpp" line="420"/>
         <source>Bring to &amp;front</source>
-        <translation type="unfinished"></translation>
+        <translation>На передний план</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="423"/>
         <source>Send to &amp;back</source>
-        <translation type="unfinished"></translation>
+        <translation>На задний план</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="429"/>
         <source>&amp;Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Позиция</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="430"/>
         <location filename="../src/workspace.cpp" line="443"/>
         <location filename="../src/workspace.cpp" line="458"/>
         <source>Apply to &amp;all frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить ко всем кадрам</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="432"/>
         <location filename="../src/workspace.cpp" line="445"/>
         <location filename="../src/workspace.cpp" line="460"/>
         <source>Apply to &amp;further frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить к последующим кадрам</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="434"/>
         <location filename="../src/workspace.cpp" line="447"/>
         <location filename="../src/workspace.cpp" line="462"/>
         <source>Apply to &amp;earlier frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить к предыдущим кадрам</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="437"/>
         <location filename="../src/workspace.cpp" line="452"/>
         <location filename="../src/workspace.cpp" line="465"/>
         <source>&amp;Interpolate...</source>
-        <translation type="unfinished"></translation>
+        <translation>Интерполировать...</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="442"/>
         <source>&amp;Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="449"/>
         <source>&amp;Restore original size</source>
-        <translation type="unfinished"></translation>
+        <translation>Восстановить оригинальный размер</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="457"/>
         <source>Position &amp;and size</source>
-        <translation type="unfinished"></translation>
+        <translation>Позиция и размер</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="471"/>
         <source>P&amp;roperties...</source>
-        <translation type="unfinished"></translation>
+        <translation>Свойства...</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="474"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="496"/>
         <location filename="../src/workspace.cpp" line="518"/>
         <location filename="../src/workspace.cpp" line="544"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="497"/>
         <location filename="../src/workspace.cpp" line="519"/>
         <location filename="../src/workspace.cpp" line="545"/>
         <source>There is no enough frames with this object to perform the interpolation</source>
-        <translation type="unfinished"></translation>
+        <translation>Недостаточно кадров для интерполяции</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="556"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="557"/>
         <source>Do you really want to delete this object?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите удалить этот объект?</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="558"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../src/workspace.cpp" line="558"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет</translation>
     </message>
 </context>
 </TS>
