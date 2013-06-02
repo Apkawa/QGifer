@@ -171,7 +171,6 @@ IF(UNIX)
 	INSTALL(FILES "doc/qgifer.xpm" DESTINATION ${ICON_INSTALL_DIR})
 	INSTALL(FILES 
 	locale/pl.qm
-	locale/pt.qm
 	locale/ru.qm
 	DESTINATION ${DATA_INSTALL_DIR}/locale/)
 	INSTALL(FILES "doc/README" "doc/LICENSE" "doc/COPYRIGHT" "doc/ChangeLog" 
