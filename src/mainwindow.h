@@ -40,6 +40,7 @@ public:
      void retranslate()
      {QString t = windowTitle();retranslateUi(this);
 	  renderDefaultText();setWindowTitle(t);}
+     bool loadProject(const QString& file);
 private:
      bool openVideo(const QString& path);
      void connectMargins();
@@ -53,7 +54,6 @@ private:
      void correctRange();
      QString projectToXml();
      bool projectFromXml(const QString& xstr);
-     bool loadProject(const QString& file);
      bool isChanged() {return changed;}
      QString dataDir();
      void loadLanguages(); //uzupelnia hash 'langs' i tworzy menu wyboru jezyka
