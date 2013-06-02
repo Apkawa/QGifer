@@ -33,7 +33,7 @@ class GifWidget : public QDialog, public Ui::GifWidget, public Retranslatable
 public:
      GifWidget(QSettings* s);
      virtual ~GifWidget();
-     void addFrame(const QImage& f, ColorMapObject* map = NULL);
+     void addFrame(const QImage& f, ColorMapObject* map, bool dither);
      void setColorRes(int res){gif->setColorRes(res);}
      void suggestName(const QString& name){suggestedName = name;}
      void saveGif(const QString& gif);

@@ -104,6 +104,7 @@ MainWindow::MainWindow(): translator(NULL), locked(false)
      connect(marginBox, SIGNAL(stateChanged(int)), this, SLOT(marginBoxChanged(int)));
      connect(varPaletteBox, SIGNAL(stateChanged(int)), this, SLOT(varPaletteBoxChanged(int)));
      connect(autoPaletteBox, SIGNAL(stateChanged(int)), this, SLOT(autoPaletteBoxChanged(int)));
+     connect(ditherBox, SIGNAL(stateChanged(int)), this, SLOT(setChanged()));
      
      connect(hueSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
      connect(satSlider, SIGNAL(valueChanged(int)), this, SLOT(correctionChanged()));
@@ -262,10 +263,12 @@ void MainWindow::extractGif()
 	       paletteWidget->fromImage(finalFrame(player->getCurrentPos()), 
 					pow(2,paletteBox->value()), diff);
 	       map = paletteWidget->mapCopy();
-	       gw->addFrame(finalFrame(i),map);
+	       gw->addFrame(finalFrame(i),map, ditherBox->isChecked());
 	  }
 	  else
-	       gw->addFrame(finalFrame(i), i== startBox->value() ? map : NULL);
+	       gw->addFrame(finalFrame(i), 
+			    i== startBox->value() ? map : NULL,
+			    ditherBox->isChecked());
 	  
      }
      pd.setValue(stopBox->value());
@@ -612,6 +615,7 @@ void MainWindow::loadSettings()
      varPaletteBox->setChecked(set->value("var_palette",false).toBool());
      minDiffBox->setValue(set->value("vp_mindiff",40).toFloat());
      actionDrawBkg->setChecked(set->value("draw_bkg",true).toBool());
+     ditherBox->setChecked(set->value("dither",true).toBool());
      resetCorrection();
      restoreState(set->value("windowstate").toByteArray());
      restoreGeometry(set->value("geometry").toByteArray());
@@ -642,6 +646,7 @@ void MainWindow::saveSettings()
      set->setValue("windowstate", saveState());
      set->setValue("geometry", saveGeometry());
      set->setValue("draw_bkg", actionDrawBkg->isChecked());
+     set->setValue("dither", ditherBox->isChecked());
 }
 
 void MainWindow::estimateOutputSize()
@@ -686,6 +691,7 @@ QString MainWindow::projectToXml()
      stream.writeAttribute("out_ratio", whRatioBox->isChecked()?"true":"false");
      stream.writeAttribute("var_palette", varPaletteBox->isChecked()?"true":"false");
      stream.writeAttribute("auto_palette", autoPaletteBox->isChecked()?"true":"false");
+     stream.writeAttribute("dither", ditherBox->isChecked()?"true":"false");
      stream.writeAttribute("palette_size", QString::number(paletteBox->value()));
      stream.writeAttribute("mindiff", QString::number(minDiffBox->value()));
      
@@ -765,6 +771,7 @@ bool MainWindow::projectFromXml(const QString& xstr)
 {
      player->getWorkspace()->getObjectsList()->clear();
      player->close();
+     paletteWidget->clear();
      //clearCache();
      QXmlStreamReader stream(xstr);
      
@@ -806,11 +813,12 @@ bool MainWindow::projectFromXml(const QString& xstr)
 			 stream.attributes().value("mindiff").toString().toInt());
 		    whRatioBox->setChecked(
 			 stream.attributes().value("out_ratio").toString() == "true");
-		    varPaletteBox->setChecked(
-			 stream.attributes().value("var_palette").toString() == "true");
 		    autoPaletteBox->setChecked(
 			 stream.attributes().value("auto_palette").toString() == "true");
-		    
+		    varPaletteBox->setChecked(
+			 stream.attributes().value("var_palette").toString() == "true");  
+		    ditherBox->setChecked(
+			 stream.attributes().value("dither").toString() == "true"); 
 	       }
 	       else if(stream.name() == "palette")
 	       {
@@ -897,7 +905,6 @@ bool MainWindow::projectFromXml(const QString& xstr)
 	  return false;
      }
      
-     player->seek(startBox->value());
      return true;
 }
 
@@ -1003,7 +1010,7 @@ void MainWindow::autoPaletteBoxChanged(int s)
      actionOpenPalette->setEnabled(!e);
      actionSavePalette->setEnabled(!e);
      varPaletteBox->setEnabled(!e);
-     minDiffBox->setEnabled(!e);
+     minDiffBox->setEnabled(!e && varPaletteBox->isEnabled() && varPaletteBox->isChecked());
      paletteWidget->setEnabled(!e);
      setChanged();
 }

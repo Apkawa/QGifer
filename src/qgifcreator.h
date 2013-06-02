@@ -34,7 +34,7 @@ public:
      virtual ~QGifCreator();
      
      Byte* imageData(const QImage& img);
-     void prepareFrame(QImage* img, ColorMapObject* map);
+     void prepareFrame(QImage* img, ColorMapObject* map, bool dither = true);
 private:
      QList<QImage*> cache;
      private slots:

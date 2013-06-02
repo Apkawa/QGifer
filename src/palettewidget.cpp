@@ -124,18 +124,39 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
 
      size = palette_size;
      QImage fimg = img.mirrored().convertToFormat(QImage::Format_RGB888);
-     Byte* data = fimg.bits();
+     
 
-     int npix = img.width()*img.height();
+
+     //int npix = img.width()*img.height();
+     int npix = img.bytesPerLine()/3*img.height();
      Frame r(npix),g(npix),b(npix);
      Frame output(npix);
-     for (int i=0, j=0; i<npix; i++)
+
+     //Byte* data = fimg.bits();
+     // for (int i=0, j=0; i<npix; i++)
+     // {
+     // 	  r[i]=data[j++];
+     // 	  g[i]=data[j++];
+     // 	  b[i]=data[j++];
+     // }
+     qDebug() << "fimg size: " << fimg.size();
+     qDebug() << "npix = " << npix;
+     qDebug() << "fimg.height() = " << fimg.height();
+     qDebug() << "bytes per line: " << fimg.bytesPerLine();
+     int cpix = 0;
+     for(int rw=0;rw<fimg.height();rw++)
      {
-	  r[i]=data[j++];
-	  g[i]=data[j++];
-	  b[i]=data[j++];
+	  uchar* line = fimg.scanLine(rw);
+	  for(int i=0;i<fimg.width();i+=3)
+	  {
+	       //qDebug() << "cpix: " << cpix;
+	       r[cpix]=line[i];
+	       g[cpix]=line[i+1];
+	       b[cpix]=line[i+2];
+	       cpix++;
+	  }
      }
-     
+
      ColorMapObject* previous = palette;
      palette = MakeMapObject(size, NULL);
      if (!palette) 
@@ -145,7 +166,7 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      }
      
 
-     if (QuantizeBuffer(img.width(), img.height(), &size, 
+     if (QuantizeBuffer(fimg.width(), fimg.height(), &size, 
      			&(r[0]),&(g[0]),&(b[0]), &(output[0]), 
      			palette->Colors) == GIF_ERROR) 
      {

@@ -36,13 +36,13 @@ GifWidget::~GifWidget()
      delete gif;
 }
 
-void GifWidget::addFrame(const QImage& f, ColorMapObject* map)
+void GifWidget::addFrame(const QImage& f, ColorMapObject* map, bool dither)
 {
      QImage i(f);
      i = i.mirrored().convertToFormat(QImage::Format_RGB888);
      gif->resize(i.width(),i.height());
      if(map) gif->addPalette(map);
-     gif->prepareFrame(&i, map);
+     gif->prepareFrame(&i, map, dither);
      prevFrames.append(i.mirrored());
      currentFrame = 0;
 }
