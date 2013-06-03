@@ -92,7 +92,8 @@ bool GifCreator::save(const char* filename, int every)
 
 
      for (int ni=0; ni<frames.size(); ni+=every) {      
-
+       savingProgress((float)(ni/every)/frames.size()*100);
+    
 	  unsigned char ExtStr[4] = { 0x04, 0x00, 0x00, 0xff };
  
     
@@ -112,6 +113,7 @@ bool GifCreator::save(const char* filename, int every)
 		   0, 0, w, h, FALSE, cmaps.size() > ni ? cmaps.at(ni) : cmaps.at(cmaps.size()-1)
 		   ) == GIF_ERROR) {
 	       PrintGifError();
+	       endProgress();
 	       return false;
 	  }
        
@@ -119,11 +121,13 @@ bool GifCreator::save(const char* filename, int every)
 	  for (int y = 0, j=(h-1)*w; y < h; y++, j-=w) {
 	       if (EGifPutLine(GifFile, &(frames[ni][j]), w) == GIF_ERROR){
 		    PrintGifError();
+		    endProgress();
 		    return false;
 	       }
 	  }
      }
-  
+     endProgress();
+
      //comment
      if(EGifPutComment(GifFile,"This GIF file was created using QGifer") == GIF_ERROR){
 	  PrintGifError();

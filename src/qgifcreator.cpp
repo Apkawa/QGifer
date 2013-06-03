@@ -17,10 +17,11 @@
 **
 ************************************************************************/
 
-#include "qgifcreator.h"
 #include <QColor>
+#include <QApplication>
+#include "qgifcreator.h"
 
-QGifCreator::QGifCreator()
+QGifCreator::QGifCreator():progressDialog(NULL)
 {
 }
 
@@ -181,4 +182,15 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map, bool dither)
 
      frames.push_back(frame);
      //delay.push_back(duration);
+}
+
+void QGifCreator::savingProgress(int p)
+{
+     if(!progressDialog){
+	  progressDialog = new QProgressDialog(
+	       tr("Saving GIF file..."), tr("Abort"), 0, 100, NULL);
+	  progressDialog->setWindowModality(Qt::WindowModal);
+     }
+     progressDialog->setValue(p);
+     qApp->processEvents();
 }

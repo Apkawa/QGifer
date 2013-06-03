@@ -23,6 +23,7 @@
 #include <QObject>
 #include <QImage>
 #include <QList>
+#include <QProgressDialog>
 #include <QDebug>
 #include "gifcreator.h"
 
@@ -36,6 +37,10 @@ public:
      Byte* imageData(const QImage& img);
      void prepareFrame(QImage* img, ColorMapObject* map, bool dither = true);
 private:
+     void savingProgress(int p);
+     void endProgress()
+     {if(progressDialog){progressDialog->close();delete progressDialog;progressDialog = NULL;}}
+     QProgressDialog* progressDialog;
      QList<QImage*> cache;
      private slots:
 
