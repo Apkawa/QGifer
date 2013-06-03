@@ -139,11 +139,6 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      // 	  g[i]=data[j++];
      // 	  b[i]=data[j++];
      // }
-     qDebug() << "==== update palette from image data ===";
-     qDebug() << "fimg size: " << fimg.size();
-     qDebug() << "npix = " << npix;
-     qDebug() << "bytes per line: " << fimg.bytesPerLine();
-     qDebug() << "=======================================";
 
      int cpix = 0;
      
@@ -182,7 +177,7 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      }
 
      float df = difference(palette,previous);
-     qDebug() << "difference: " << df;
+     //qDebug() << "difference: " << df;
      if(previous && df < mindiff)
      {
 	  FreeMapObject(palette);
