@@ -4,7 +4,7 @@
 <context>
     <name>APPLICATION</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1274"/>
+        <location filename="../src/mainwindow.cpp" line="1275"/>
         <source>LANGUAGE_NAME</source>
         <translation>Polski</translation>
     </message>
@@ -1588,7 +1588,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1203"/>
-        <location filename="../src/mainwindow.cpp" line="1263"/>
+        <location filename="../src/mainwindow.cpp" line="1264"/>
         <source>English</source>
         <translation></translation>
     </message>
@@ -1598,12 +1598,12 @@ p, li { white-space: pre-wrap; }
         <translation>Rysuj &amp;tło</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1316"/>
+        <location filename="../src/mainwindow.cpp" line="1317"/>
         <source>Press </source>
         <translation>Naciśnij </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1316"/>
+        <location filename="../src/mainwindow.cpp" line="1317"/>
         <source> to open a video</source>
         <translation> aby otworzyć wideo</translation>
     </message>
@@ -1614,14 +1614,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="165"/>
-        <location filename="../src/mainwindow.cpp" line="215"/>
-        <location filename="../src/mainwindow.cpp" line="227"/>
-        <location filename="../src/mainwindow.cpp" line="904"/>
-        <location filename="../src/mainwindow.cpp" line="1032"/>
-        <location filename="../src/mainwindow.cpp" line="1052"/>
-        <location filename="../src/mainwindow.cpp" line="1139"/>
-        <location filename="../src/mainwindow.cpp" line="1157"/>
-        <location filename="../src/mainwindow.cpp" line="1178"/>
+        <location filename="../src/mainwindow.cpp" line="216"/>
+        <location filename="../src/mainwindow.cpp" line="228"/>
+        <location filename="../src/mainwindow.cpp" line="905"/>
+        <location filename="../src/mainwindow.cpp" line="1033"/>
+        <location filename="../src/mainwindow.cpp" line="1053"/>
+        <location filename="../src/mainwindow.cpp" line="1140"/>
+        <location filename="../src/mainwindow.cpp" line="1158"/>
+        <location filename="../src/mainwindow.cpp" line="1179"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
@@ -1632,9 +1632,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="173"/>
-        <location filename="../src/mainwindow.cpp" line="1099"/>
-        <location filename="../src/mainwindow.cpp" line="1127"/>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
+        <location filename="../src/mainwindow.cpp" line="1216"/>
         <source>Question</source>
         <translation>Pytanie</translation>
     </message>
@@ -1659,156 +1659,156 @@ p, li { white-space: pre-wrap; }
         <translation>Zmień zakres klatek...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="215"/>
+        <location filename="../src/mainwindow.cpp" line="216"/>
         <source>The range is invalid!</source>
         <translation>Podany zakres jest nieprawidłowy!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="227"/>
+        <location filename="../src/mainwindow.cpp" line="228"/>
         <source>Invalid color map!</source>
         <translation>Błędna paleta barw!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="329"/>
-        <location filename="../src/mainwindow.cpp" line="793"/>
+        <location filename="../src/mainwindow.cpp" line="330"/>
+        <location filename="../src/mainwindow.cpp" line="794"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="329"/>
+        <location filename="../src/mainwindow.cpp" line="330"/>
         <source>The range seems to be invalid!</source>
         <translation>Podany zakres jest nieprawidłowy!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="354"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Zoom</source>
         <translation>Powiększenie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="426"/>
+        <location filename="../src/mainwindow.cpp" line="427"/>
         <source>Hue (</source>
         <translation>Odcień (</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="427"/>
+        <location filename="../src/mainwindow.cpp" line="428"/>
         <source>Saturation (</source>
         <translation>Nasycenie (</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="428"/>
+        <location filename="../src/mainwindow.cpp" line="429"/>
         <source>Brightness (</source>
         <translation>Jasność (</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="793"/>
+        <location filename="../src/mainwindow.cpp" line="794"/>
         <source>Source video file: </source>
         <translation>Źródłowy plik wideo: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="904"/>
+        <location filename="../src/mainwindow.cpp" line="905"/>
         <source>The project cannot be loaded: </source>
         <translation>Projekt nie mógł zostać załadowany: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="988"/>
+        <location filename="../src/mainwindow.cpp" line="989"/>
         <source>Median blur (</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1026"/>
+        <location filename="../src/mainwindow.cpp" line="1027"/>
         <source>Open QGifer palette file</source>
         <translation>Otwórz paletę</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1032"/>
+        <location filename="../src/mainwindow.cpp" line="1033"/>
         <source>The palette file can not be loaded!</source>
         <translation>Wybrana paleta nie mogła zostać wczytana!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1044"/>
+        <location filename="../src/mainwindow.cpp" line="1045"/>
         <source>Save QGifer palette file</source>
         <translation>Zapisz paletę</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1052"/>
+        <location filename="../src/mainwindow.cpp" line="1053"/>
         <source>The palette file can not be saved!</source>
         <translation>Paleta nie mogła zostać poprawnie zapisana!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1099"/>
-        <location filename="../src/mainwindow.cpp" line="1127"/>
+        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>The project has changed - do you want to save the changes?</source>
         <translation>Projekt uległ zmianie - czy chcesz zachować te zmiany?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1099"/>
-        <location filename="../src/mainwindow.cpp" line="1127"/>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
+        <location filename="../src/mainwindow.cpp" line="1216"/>
         <source>Yes</source>
         <translation>Tak</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1099"/>
-        <location filename="../src/mainwindow.cpp" line="1127"/>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
+        <location filename="../src/mainwindow.cpp" line="1216"/>
         <source>No</source>
         <translation>Nie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1099"/>
-        <location filename="../src/mainwindow.cpp" line="1127"/>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
+        <location filename="../src/mainwindow.cpp" line="1216"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1135"/>
+        <location filename="../src/mainwindow.cpp" line="1136"/>
         <source>Open project file</source>
         <translation>Otwórz plik projektu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1139"/>
+        <location filename="../src/mainwindow.cpp" line="1140"/>
         <source>Project was not entirely loaded.</source>
         <translation>Projekt nie został całkowicie wczytany.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1157"/>
+        <location filename="../src/mainwindow.cpp" line="1158"/>
         <source>Error reading file: </source>
         <translation>Błąd odczytu pliku:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1178"/>
+        <location filename="../src/mainwindow.cpp" line="1179"/>
         <source>Error writing file: </source>
         <translation>Błąd zapisu pliku: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1184"/>
-        <location filename="../src/mainwindow.cpp" line="1193"/>
+        <location filename="../src/mainwindow.cpp" line="1185"/>
+        <location filename="../src/mainwindow.cpp" line="1194"/>
         <source>Save project file</source>
         <translation>Zapisz plik projektu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1207"/>
+        <location filename="../src/mainwindow.cpp" line="1208"/>
         <source>QGifer - video-based GIF creator</source>
         <translation>QGifer - edytor animowanych plików GIF</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1207"/>
+        <location filename="../src/mainwindow.cpp" line="1208"/>
         <source> [modified] </source>
         <translation> [zmodyfikowany] </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1216"/>
         <source>The project has changed - do you want to save the changes before exiting?</source>
         <translation>Projekt uległ zmianie - czy chcesz zachować te zmiany przed wyjściem?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1231"/>
+        <location filename="../src/mainwindow.cpp" line="1232"/>
         <source>Dock &amp;toolbox</source>
         <translation>Przyłącz panel &amp;narzędziowy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1231"/>
+        <location filename="../src/mainwindow.cpp" line="1232"/>
         <source>Undock &amp;toolbox</source>
         <translation>Odłącz panel &amp;narzędziowy</translation>
     </message>
@@ -2003,6 +2003,19 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/optimizerdialog.cpp" line="159"/>
         <source>Error: </source>
         <translation>Błąd: </translation>
+    </message>
+</context>
+<context>
+    <name>QGifCreator</name>
+    <message>
+        <location filename="../src/qgifcreator.cpp" line="191"/>
+        <source>Saving GIF file...</source>
+        <translation>Zapisywanie pliku GIF...</translation>
+    </message>
+    <message>
+        <location filename="../src/qgifcreator.cpp" line="191"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
