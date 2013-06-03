@@ -184,13 +184,16 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map, bool dither)
      //delay.push_back(duration);
 }
 
-void QGifCreator::savingProgress(int p)
+bool QGifCreator::savingProgress(int p)
 {
      if(!progressDialog){
 	  progressDialog = new QProgressDialog(
-	       tr("Saving GIF file..."), tr("Abort"), 0, 100, NULL);
+	       tr("Saving GIF file..."), tr("Cancel"), 0, 100, NULL);
 	  progressDialog->setWindowModality(Qt::WindowModal);
+	  progressDialog->setAutoClose(false);
+	  progressDialog->setAutoReset(false);
      }
      progressDialog->setValue(p);
      qApp->processEvents();
+     return !progressDialog->wasCanceled();
 }

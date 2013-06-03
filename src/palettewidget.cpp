@@ -156,8 +156,6 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
 	  }
      }
 
-     qDebug() << "ostatni uzyty cpix: " << cpix-1;
-
      ColorMapObject* previous = palette;
      palette = MakeMapObject(size, NULL);
      if (!palette) 

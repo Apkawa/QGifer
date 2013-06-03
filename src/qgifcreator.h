@@ -37,7 +37,7 @@ public:
      Byte* imageData(const QImage& img);
      void prepareFrame(QImage* img, ColorMapObject* map, bool dither = true);
 private:
-     void savingProgress(int p);
+     bool savingProgress(int p);
      void endProgress()
      {if(progressDialog){progressDialog->close();delete progressDialog;progressDialog = NULL;}}
      QProgressDialog* progressDialog;

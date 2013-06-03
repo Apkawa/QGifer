@@ -53,7 +53,7 @@ public:
   void appendReversedCopy();
   void removeReversedCopy();
 protected:
-  virtual void savingProgress(int){}; //procentowy postep w zapisie
+  virtual bool savingProgress(int){return true;} //procentowy postep w zapisie, false jesli przerwac prace
   virtual void endProgress(){}; //zakonczenie pracy
   vector<Frame> frames;
   //vector<int> delay; //na razie rezygnujemy z roznych opoznien

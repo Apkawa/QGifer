@@ -92,7 +92,8 @@ bool GifCreator::save(const char* filename, int every)
 
 
      for (int ni=0; ni<frames.size(); ni+=every) {      
-       savingProgress((float)(ni/every)/frames.size()*100);
+       if(!savingProgress((float)ni/(frames.size()/every)*100))
+	 return true; //przerwanie przez usera
     
 	  unsigned char ExtStr[4] = { 0x04, 0x00, 0x00, 0xff };
  
@@ -126,19 +127,21 @@ bool GifCreator::save(const char* filename, int every)
 	       }
 	  }
      }
-     endProgress();
 
      //comment
      if(EGifPutComment(GifFile,"This GIF file was created using QGifer") == GIF_ERROR){
 	  PrintGifError();
+	  endProgress();
 	  return false;
      }
    
      if (EGifCloseFile(GifFile) == GIF_ERROR) {
 	  PrintGifError();
+	  endProgress();
 	  return false;
      }
 
+     endProgress();
      return true;       
 }
 
