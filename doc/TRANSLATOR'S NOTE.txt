@@ -1,9 +1,11 @@
-The Qt Linguist download link:
+Download the latest QGifer source code archives from http://sourceforge.net/projects/qgifer/files/
+
+The Qt Linguist download link for Windows:
 
 http://qt-apps.org/content/show.php/Qt+Linguist+Download?content=89360
 
 All the translation files are placed in "translations" directory. 
 
-Use the "template.ts" file for new translations. The "LANGUAGE_NAME" field should be translated to the native name of destination language (ex. "Polski" for polish). 
+Use the "template.ts" file for new translations. The "LANGUAGE_NAME" field should be translated as the native name of destination language (ex. "Polski" for polish). 
 
-Exported .qm files should be placed in "locale" directory or "/usr/share/qgifer/locale" if the app is already installed on linux.
+Exported .qm files should be placed in "locale" directory (or "/usr/share/qgifer/locale" if the app is already installed on linux).
