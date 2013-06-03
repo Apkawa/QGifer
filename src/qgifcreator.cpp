@@ -69,7 +69,7 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map, bool dither)
 	  return;
 	  
      //Frame frame(img->bytesPerLine()*img->height());
-     Frame frame(img->bytesPerLine()/3*img->height());
+     
 
      // qDebug() << "preparing frame...";
      // qDebug() << "bpl*h = " << img->bytesPerLine()*img->height();
@@ -78,12 +78,23 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map, bool dither)
      // qDebug() << "difference: " << img->byteCount() - (img->height()*img->width()*3);
 
      const int step = img->format() == QImage::Format_RGB888 ? 3 : 4;
+     const int npix = img->width()*img->height();
+     const int bytesPerLine = img->width()*step; //wynik INNY niz img->bytesPerLine()
+     Frame frame(npix);
+
+     qDebug() << "=======================================";
+     qDebug() << "prepareFrame, img size: " << img->size();
+     qDebug() << "prepareFrame, img bytes per line: " << img->bytesPerLine();
+     qDebug() << "prepareFrame, step: " << step;
+     qDebug() << "prepareFrame, npix: " << npix;
+     qDebug() << "=======================================";
+
      int f = 0;
      for(int rw=0;rw<img->height();rw++)
      {
 	  uchar* line = img->scanLine(rw);
 	  //for(int i=0;i<img->bytesPerLine();i+=step)
-	  for(int i=0;i<img->width();i+=step)
+	  for(int i=0;i+2<bytesPerLine;i+=step)
 	  {
 	       int mi = 0, md = 3 * 256 * 256;
 	       for(int j=0;j<map->ColorCount;j++)

@@ -127,8 +127,8 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      
 
 
-     //int npix = img.width()*img.height();
-     int npix = img.bytesPerLine()/3*img.height();
+     const int npix = fimg.width()*fimg.height();
+     const int bytesPerLine = fimg.width()*3; //wynik INNY niz fimg.bytesPerLine()
      Frame r(npix),g(npix),b(npix);
      Frame output(npix);
 
@@ -139,15 +139,19 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      // 	  g[i]=data[j++];
      // 	  b[i]=data[j++];
      // }
+     qDebug() << "==== update palette from image data ===";
      qDebug() << "fimg size: " << fimg.size();
      qDebug() << "npix = " << npix;
-     qDebug() << "fimg.height() = " << fimg.height();
      qDebug() << "bytes per line: " << fimg.bytesPerLine();
+     qDebug() << "=======================================";
+
      int cpix = 0;
+     
      for(int rw=0;rw<fimg.height();rw++)
      {
 	  uchar* line = fimg.scanLine(rw);
-	  for(int i=0;i<fimg.width();i+=3)
+	  //for(int i=0;i+2<fimg.bytesPerLine();i+=3)
+	  for(int i=0;i+2<bytesPerLine;i+=3)
 	  {
 	       //qDebug() << "cpix: " << cpix;
 	       r[cpix]=line[i];
@@ -156,6 +160,8 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
 	       cpix++;
 	  }
      }
+
+     qDebug() << "ostatni uzyty cpix: " << cpix-1;
 
      ColorMapObject* previous = palette;
      palette = MakeMapObject(size, NULL);

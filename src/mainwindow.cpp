@@ -905,6 +905,9 @@ bool MainWindow::projectFromXml(const QString& xstr)
 	  return false;
      }
      
+     if(startBox->value() < player->countFrames())
+	  player->seek(startBox->value());
+
      return true;
 }
 
