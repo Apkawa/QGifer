@@ -181,6 +181,7 @@ void MainWindow::openVideo()
 		    showProperties(ol->at(i));
 		    
 	  }
+     player->getWorkspace()->update();
 }
 
 bool MainWindow::openVideo(const QString& path)

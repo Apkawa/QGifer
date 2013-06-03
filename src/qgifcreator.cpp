@@ -82,13 +82,6 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map, bool dither)
      const int bytesPerLine = img->width()*step; //wynik INNY niz img->bytesPerLine()
      Frame frame(npix);
 
-     qDebug() << "=======================================";
-     qDebug() << "prepareFrame, img size: " << img->size();
-     qDebug() << "prepareFrame, img bytes per line: " << img->bytesPerLine();
-     qDebug() << "prepareFrame, step: " << step;
-     qDebug() << "prepareFrame, npix: " << npix;
-     qDebug() << "=======================================";
-
      int f = 0;
      for(int rw=0;rw<img->height();rw++)
      {
@@ -126,7 +119,7 @@ void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map, bool dither)
 		    //qDebug() << "7/16*qerror: " << (float)7/16*qerror[0] << (float)7/16*qerror[1] << 7/16*qerror[2];
 
 		    //prawy
-		    if(i+step < img->bytesPerLine())
+		    if(i+2+step < img->bytesPerLine())
 		    {
 			 line[i+step] = 
 			      qBound(0,(int)(line[i+step]+(float)7/16*qerror[0]),255);
