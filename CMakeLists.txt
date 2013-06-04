@@ -207,7 +207,7 @@ SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${QGIFER_VERSION_MAJOR}.${QGIFER_VE
 #SET(CPACK_SOURCE_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${QGIFER_VERSION_MAJOR}.${QGIFER_VERSION_MINOR}.${QGIFER_VERSION_PATCH}")
  
 #set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON) #za pierwszym razem, pozniej dodano | dla nowszych opencv
-SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.1.3), libc6 (>= 2.3.6-6~), libgcc1 (>= 1:4.1.1), libgif4 (>= 4.1.4), libopencv-core2.3 | libopencv-core2.4, libopencv-highgui2.3 | libopencv-highgui2.4, libqtcore4 (>= 4:4.7.0~beta1), libqtgui4 (>= 4:4.6.1), libstdc++6 (>= 4.1.1)")
+SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.1.3), libc6 (>= 2.3.6-6~), libgcc1 (>= 1:4.1.1), libgif4 (>= 4.1.4), libopencv-core2.3 | libopencv-core2.4, libopencv-highgui2.3 | libopencv-highgui2.4, libopencv-imgproc2.3 | libopencv-imgproc2.4, libqtcore4 (>= 4:4.7.0~beta1), libqtgui4 (>= 4:4.6.1), libstdc++6 (>= 4.1.1)")
  
 SET(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "video")
