@@ -1,2 +1,2 @@
 #!/bin/bash
-lupdate ui/ src/ -ts translations/en.ts translations/pl.ts translations/pt.ts translations/ru.ts translations/sv.ts translations/template.ts 
+lupdate ui/ src/ -ts translations/en.ts translations/pl.ts translations/pt.ts translations/ru.ts translations/sv.ts translations/jp.ts translations/template.ts 

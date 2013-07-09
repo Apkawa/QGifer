@@ -176,6 +176,7 @@ IF(UNIX)
 	locale/pl.qm
 	locale/ru.qm
 	locale/sv.qm
+	locale/jp.qm
 	DESTINATION ${DATA_INSTALL_DIR}/locale/)
 	INSTALL(FILES "doc/README" "doc/LICENSE" "doc/COPYRIGHT" "doc/ChangeLog" 
 	DESTINATION ${DOC_INSTALL_DIR})
