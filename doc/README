@@ -53,6 +53,6 @@ Compilation and installation
 
 note: use 
 
-cmake .. -G "MinGW Makefiles" -DQUIET_MODE=ON
+    cmake .. -G "MinGW Makefiles" -DQUIET_MODE=ON
 
 for Windows with MinGW.

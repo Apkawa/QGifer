@@ -49,6 +49,7 @@ Requirements
 
 Compilation and installation
 ============
+
     cd qgifer_source_dir
     mkdir build && cd build
     cmake .. -DCMAKE_INSTALL_PREFIX="/usr/" -DQUIET_MODE=ON

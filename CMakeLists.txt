@@ -35,9 +35,11 @@ IF(WIN32)
 	SET(GIF_INCLUDE_DIR "C:\\Program Files\\GnuWin32\\include")
 ENDIF(WIN32)
 
-FIND_PACKAGE( OpenCV REQUIRED core highgui imgproc )
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+FIND_PACKAGE(OpenCV REQUIRED core highgui imgproc )
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(GIF REQUIRED)
+FIND_PACKAGE(FFMPEG REQUIRED)
 
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
@@ -143,6 +145,8 @@ ui/textwidget.ui
 ui/interpolationdialog.ui
 )
 
+
+
 QT4_WRAP_CPP(HEADERS_MOC ${QT_HEADERS})
 QT4_WRAP_UI(FORMS_HEADERS ${FORMS})
 QT4_ADD_RESOURCES(RESOURCES_RCC ${RESOURCES})
@@ -165,6 +169,8 @@ if(MINGW)
 endif(MINGW)
 
 ADD_EXECUTABLE(${TARGET_NAME} ${WINDOWS_EXEC} ${SOURCES} ${HEADERS_MOC} ${FORMS_HEADERS} ${RESOURCES_RCC} ${RES_FILES})
+ADD_EXECUTABLE(ffdecoder src/libs/FFMpegDecoder/main.cpp src/libs/FFMpegDecoder/ffmpegDecode.cpp src/libs/FFMpegDecoder/ffmpegDecode.h)
+TARGET_LINK_LIBRARIES(ffdecoder ${FFMPEG_LIBRARIES})
 TARGET_LINK_LIBRARIES(${TARGET_NAME} ${QT_LIBRARIES} ${OPENCV_LIBS} ${GIF_LIBS})
 
 IF(UNIX)
@@ -212,7 +218,7 @@ SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${QGIFER_VERSION_MAJOR}.${QGIFER_VE
 #SET(CPACK_SOURCE_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${QGIFER_VERSION_MAJOR}.${QGIFER_VERSION_MINOR}.${QGIFER_VERSION_PATCH}")
  
 #set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON) #za pierwszym razem, pozniej dodano | dla nowszych opencv
-SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.1.3), libc6 (>= 2.3.6-6~), libgcc1 (>= 1:4.1.1), libgif4 (>= 4.1.4), libopencv-core2.3, libopencv-highgui2.3, libopencv-imgproc2.3, libqtcore4 (>= 4:4.7.0~beta1), libqtgui4 (>= 4:4.6.1), libstdc++6 (>= 4.1.1)")
+SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.1.3), libc6 (>= 2.3.6-6~), libgcc1 (>= 1:4.1.1), libgif4 (>= 4.1.4), libopencv-core2.4, libopencv-highgui2.4, libopencv-imgproc2.4, libqtcore4 (>= 4:4.7.0~beta1), libqtgui4 (>= 4:4.6.1), libstdc++6 (>= 4.1.1)")
  
 SET(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "video")
