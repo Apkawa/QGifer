@@ -56,3 +56,5 @@ note: use
 cmake .. -G "MinGW Makefiles" -DQUIET_MODE=ON
 
 for Windows with MinGW.
+
+

@@ -51,7 +51,7 @@ Compilation and installation
 ============
     cd qgifer_source_dir
     mkdir build && cd build
-    cmake .. -DCMAKE_INSTALL_PREFIX="/usr/" -DQUIET_MODE=ON
+    cmake .. -DCMAKE_INSTALL_PREFIX="/usr/local/" -DQUIET_MODE=ON
     make
     sudo make install
 
@@ -60,3 +60,11 @@ note: use
     cmake .. -G "MinGW Makefiles" -DQUIET_MODE=ON
 
 for Windows with MinGW.
+
+
+Build debian package
+=============
+
+    cmake .. -DCMAKE_INSTALL_PREFIX="/usr/local/" -DQUIET_MODE=ON
+    make package
+    
