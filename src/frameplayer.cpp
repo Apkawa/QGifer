@@ -20,24 +20,21 @@
 
 #include "frameplayer.h"
 
-FramePlayer::FramePlayer(QWidget* parent):QWidget(parent),frames(0),originalSize(Size(0,0)),
-    currentPos(-1),timerId(-1), status(Stopped),statusbar(NULL),
-    raw(false),interval(40),medianblur(0)
-{
+FramePlayer::FramePlayer(QWidget *parent) : QWidget(parent), totalFrames(0), originalSize(Size(0, 0)),
+                                            currentPos(-1), timerId(-1), status(Stopped), statusbar(NULL),
+                                            raw(false), interval(40), medianblur(0) {
     setupUi(this);
     workspace = new Workspace(frame);
     workspace->enableBackground(true);
     connect(slider, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
 }
 
-FramePlayer::~FramePlayer()
-{
+FramePlayer::~FramePlayer() {
     //delete workspace;
 }
 
-bool FramePlayer::openSource(const QString& src)
-{
-    if(vcap.isOpened())
+bool FramePlayer::openSource(const QString &src) {
+    if (vcap.isOpened())
         vcap.release();
     vcap.open(src.toStdString());
     originalSize.width = vcap.get(CV_CAP_PROP_FRAME_WIDTH);
@@ -45,14 +42,14 @@ bool FramePlayer::openSource(const QString& src)
     killTimer(timerId);
     timerId = -1;
     currentPos = -1;
-    if(!vcap.isOpened())
-    {
+    if (!vcap.isOpened()) {
         qDebug() << "FramePlayer::openSource cannot load video: " << src;
         close();
         return false;
     }
 
     qDebug() << "FramePlayer::openSource new video loaded: " << src;
+
 #if defined(Q_WS_X11)
     QString codec = codecName();
     raw = (codec == "MJPG" || codec == "I420" || codec == "YUV4");
@@ -60,41 +57,38 @@ bool FramePlayer::openSource(const QString& src)
 #endif
 
     filepath = src;
-    frames = vcap.get(CV_CAP_PROP_FRAME_COUNT);
-    qDebug() << "total frames: " << frames;
+    totalFrames = vcap.get(CV_CAP_PROP_FRAME_COUNT);
+    qDebug() << "total frames: " << totalFrames;
 
     interval = estimateInterval();
-    if(!interval)
+    if (!interval)
         interval = 40;
 
-    slider->setMaximum(countFrames()-1);
+    slider->setMaximum(countFrames() - 1);
 
     slider->setValue(0);
     nextFrame();
     return true;
 }
 
-void FramePlayer::close()
-{
+void FramePlayer::close() {
     stop();
     vcap.release();
     //fakeFrames += frames;
-    frames = 0;
+    totalFrames = 0;
     filepath.clear();
-    originalSize = Size(0,0);
+    originalSize = Size(0, 0);
     slider->setValue(0);
     showDefaultScreen();
     updateStatus(status);
 }
 
-void FramePlayer::nextFrame()
-{
+void FramePlayer::nextFrame() {
     //qDebug() << "FramePlayer::nextFrame(): frames: " << frames << ", fakeFrames: " << fakeFrames << ", currentPos: " << currentPos;
-    if(!vcap.isOpened())
+    if (!vcap.isOpened())
         return;
 
-    if(vcap.isOpened() && currentPos+1 <= frames-1)
-    {
+    if (vcap.isOpened() && currentPos + 1 <= totalFrames - 1) {
         //qDebug() << "next REAL frame...";
         Mat m;
         //vcap.grab();
@@ -104,22 +98,22 @@ void FramePlayer::nextFrame()
 
         //currentPos = vcap.get(CV_CAP_PROP_POS_FRAMES); //videocapture zlicza roznie przy roznych kodekach
         currentPos++;
-        if(currentPos>=frames) {
-            currentPos = frames-1;
+        if (currentPos >= totalFrames) {
+            currentPos = totalFrames - 1;
         }
         //qDebug() << "current pos: " << currentPos << "/" << frames;
         //cvtColor(m,m,CV_BGR2RGB);
-        if(medianblur) {
-            medianBlur(m,m, medianblur%2 ? medianblur : medianblur+1);
+        if (medianblur) {
+            medianBlur(m, m, medianblur % 2 ? medianblur : medianblur + 1);
         }
-        currentFrame = QImage((uchar*)m.data, m.cols, m.rows, m.step,
+        currentFrame = QImage((uchar *) m.data, m.cols, m.rows, m.step,
                               QImage::Format_RGB888).rgbSwapped();
     }
     else {
         return;
     }
 
-    workspace->setImage(currentFrame,frame->size());
+    workspace->setImage(currentFrame, frame->size());
     workspace->updateFrameIndex(currentPos);
     emit frameChanged(currentPos);
     updateSlider(currentPos);
@@ -127,49 +121,38 @@ void FramePlayer::nextFrame()
     updateStatus(timerId == -1 ? Stopped : Playing);
 }
 
-void FramePlayer::play()
-{
-    if(!countFrames())
+void FramePlayer::play() {
+    if (!countFrames())
         return;
 
-    if(currentPos == countFrames()-1)
+    if (currentPos == countFrames() - 1)
         seek(0);
 
-    if(timerId==-1)
+    if (timerId == -1)
         timerId = startTimer(interval);
     updateStatus(Playing);
 }
 
-void FramePlayer::stop()
-{
+void FramePlayer::stop() {
     pause();
     seek(0);
-    //nextFrame(); //tymczasowo podwójnie aby zaktualizować podgląd
-    //seek(0);
 }
 
-void FramePlayer::pause()
-{
+void FramePlayer::pause() {
     killTimer(timerId);
     timerId = -1;
     updateStatus(Stopped);
 }
 
-void FramePlayer::setPos(long pos)
-{
-    if(!vcap.isOpened())
+void FramePlayer::setPos(long pos) {
+    if (!vcap.isOpened())
         return;
 
-    //------ tymczasowy sposob ze wzgledu na bug gubienia klatek w opencv
-    // vcap.release();
-    // vcap.open(filepath.toStdString());
-    //--------------------------------------
-
-    if(pos < 0) {
+    if (pos < 0) {
         pos = 0;
     }
-    if(pos >= frames) {
-        pos = frames-1;
+    if (pos >= totalFrames) {
+        pos = totalFrames - 1;
     }
     currentPos = pos;
     vcap.set(CV_CAP_PROP_POS_FRAMES, currentPos);
@@ -177,61 +160,56 @@ void FramePlayer::setPos(long pos)
     nextFrame();
 }
 
-#if defined(Q_WS_X11)
-void FramePlayer::setPosMPEG(long pos)
-{
-    if(!vcap.isOpened())
+void FramePlayer::slowSetPos(long pos) {
+    if (!vcap.isOpened()) {
         return;
+    }
 
-    //------ tymczasowy sposob ze wzgledu na bug gubienia klatek w opencv
-    //vcap.release();
-    //vcap.open(filepath.toStdString());
-    //--------------------------------------
-
-    if(pos < 0) pos = 0;
-    if(pos >= frames) pos = frames-1;
+    if (pos < 0) {
+        pos = 0;
+    }
+    if (pos >= totalFrames) {
+        pos = totalFrames - 1;
+    }
     currentPos = pos;
-    //vcap.set(CV_CAP_PROP_POS_FRAMES, 0);
-    while(pos-- > 0)
+
+    long startPos = currentPos - 55;
+
+    vcap.set(CV_CAP_PROP_POS_FRAMES, startPos);
+    for (; startPos < currentPos; startPos++) {
         vcap.grab();
-    currentPos--; //aktualizujemy klatkę ale nie pozycję
+    }
+    currentPos--;
     nextFrame();
 }
-#endif
 
-void FramePlayer::seek(int pos)
-{
+void FramePlayer::seek(int pos) {
     qDebug() << "seeking pos: " << pos;
-    if(pos < frames)
-    {
+    if (abs(currentPos - pos) < 55) {
+        slowSetPos(pos);
+    } else {
         setPos(pos);
     }
-    else if(pos >= frames && pos < countFrames())
-    {
-        currentPos = pos-1;
-        nextFrame();
+}
+
+void FramePlayer::timerEvent(QTimerEvent *) {
+    //qDebug() << "tick";
+    nextFrame();
+    if (currentPos >= countFrames() - 1){
+
+        stop();
     }
 }
 
-void FramePlayer::timerEvent(QTimerEvent*)
-{
-    //qDebug() << "tick";
-    nextFrame();
-    if(currentPos >= countFrames()-1)
-        stop();
-}
 
-
-void FramePlayer::updateSlider(int pos)
-{
-    if(pos < 0) pos = 0;
+void FramePlayer::updateSlider(int pos) {
+    if (pos < 0) pos = 0;
     disconnect(slider, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
     slider->setValue(pos);
     connect(slider, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
 }
 
-void FramePlayer::updateStatus(Status s)
-{
+void FramePlayer::updateStatus(Status s) {
     QString info = "";
     status = s;
     info = (status == Stopped ? "Stopped" : "Playing");
@@ -239,60 +217,54 @@ void FramePlayer::updateStatus(Status s)
     //slider->setEnabled(status == Stopped);
 
     long total = countFrames();
-    if(total)
-        info += ", frame: " + QString::number(currentPos)+"/"+QString::number(total-1) +
-                " ("+QString::number(total)+" in total)";
+    if (total)
+        info += ", frame: " + QString::number(currentPos) + "/" + QString::number(total - 1) +
+                " (" + QString::number(total) + " in total)";
     else
         info += ", no frames";
-    slider->setMaximum(total == 0 ? 0 : total-1);
-    if(statusbar)
+    slider->setMaximum(total == 0 ? 0 : total - 1);
+    if (statusbar)
         statusbar->showMessage(info);
 
     emit statusUpdated(s);
 }
 
 
-void FramePlayer::resizeEvent(QResizeEvent*)
-{
+void FramePlayer::resizeEvent(QResizeEvent *) {
     //qDebug() << "player resize event";
     workspace->updateBackground();
-    if(countFrames())
-        workspace->setImage(currentFrame,frame->size());
+    if (countFrames())
+        workspace->setImage(currentFrame, frame->size());
     else
         showDefaultScreen();
     workspace->setFixedSize(frame->size());
 }
 
-void FramePlayer::setStatusBar(QStatusBar* sb)
-{
+void FramePlayer::setStatusBar(QStatusBar *sb) {
     statusbar = sb;
     //statusLabel->setVisible(sb==NULL);
 }
 
-QString FramePlayer::codecName()
-{
-    if(!vcap.isOpened())
+QString FramePlayer::codecName() {
+    if (!vcap.isOpened())
         return "";
     int ex = static_cast<int>(vcap.get(CV_CAP_PROP_FOURCC));
-    char EXT[] = {(char)(ex & 0XFF) , (char)((ex & 0XFF00) >> 8),(char)((ex & 0XFF0000) >> 16),(char)((ex & 0XFF000000) >> 24), 0};
+    char EXT[] = {(char) (ex & 0XFF), (char) ((ex & 0XFF00) >> 8), (char) ((ex & 0XFF0000) >> 16),
+                  (char) ((ex & 0XFF000000) >> 24), 0};
     return QString(EXT);
 }
 
 
-void FramePlayer::renderDefaultTextImage(const QString& text)
-{
-    QPixmap def(800,450);
+void FramePlayer::renderDefaultTextImage(const QString &text) {
+    QPixmap def(800, 450);
     def.fill(Qt::transparent);
     defaultImg = def.toImage();
     QFont f;
     f.setPointSize(26);
     f.setBold(true);
-    QImage txt = TextRenderer::renderText(text, f, QColor(30,30,30), QColor(255,255,255), 1).
-            scaledToWidth(defaultImg.width(),Qt::SmoothTransformation);
+    QImage txt = TextRenderer::renderText(text, f, QColor(30, 30, 30), QColor(255, 255, 255), 1).
+            scaledToWidth(defaultImg.width(), Qt::SmoothTransformation);
     QPainter p(&defaultImg);
-    p.drawImage( (defaultImg.width()-txt.width())/2,
-                 (defaultImg.height()-txt.height())/2, txt );
-    // QPixmap def(1,1);
-    // def.fill(Qt::transparent);
-    // defaultImg = def.toImage();
+    p.drawImage((defaultImg.width() - txt.width()) / 2,
+                (defaultImg.height() - txt.height()) / 2, txt);
 }
