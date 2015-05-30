@@ -11,7 +11,7 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **
@@ -32,7 +32,7 @@
 #include "workspace.h"
 #include "ui_frameplayer.h"
 
-#define FRAME_LIMIT 1800
+
 
 using namespace cv;
 
@@ -42,15 +42,21 @@ class FramePlayer : public QWidget, public Ui::FramePlayerForm
 
 public:
      enum Status{Stopped,Playing};
-     
+
      FramePlayer(QWidget* parent);
      virtual ~FramePlayer();
 
      bool openSource(const QString& src);
 
-     long countFrames() const {return frames;}
-     const long& getCurrentPos() const {return currentPos;}
-     QImage* getCurrentFrame() {return &currentFrame;}
+     long countFrames() const {
+         return frames;
+     }
+     const long& getCurrentPos() const {
+         return currentPos;
+     }
+     QImage* getCurrentFrame() {
+         return &currentFrame;
+     }
      int estimateInterval()
      {return vcap.isOpened() ? round(1000.0/vcap.get(CV_CAP_PROP_FPS)) : 0;}
      double fps()
@@ -65,7 +71,7 @@ public:
       * I420 (raw video)
       * MJPG (motion jpeg)
       * YUV4
-      * 
+      *
       * @param pos Numer nowej bieżącej klatki
       */
      void setPos(long pos);
@@ -77,7 +83,7 @@ public:
       * klatki, przez co wymga cofnięcia wskaźnika. Ze względu
       * na czas potrzebny na ponowne wczytanie klatek, FRAME_LIMIT
       * wyznacza maksymalną liczbę klatek filmu dla tych kodeków.
-      * 
+      *
       * @param pos Numer nowej bieżącej klatki
       */
      void setPosMPEG(long pos);
@@ -85,9 +91,9 @@ public:
 
      Status getStatus() const {return status;}
      const QString& source() const {return filepath;}
-     void setDefaultImage(const QImage& img) 
+     void setDefaultImage(const QImage& img)
      {defaultImg = img.copy();}
-     void enableAntialiasing(bool enable) 
+     void enableAntialiasing(bool enable)
      {workspace->enableAntialiasing(enable);workspace->setImage(currentFrame,frame->size());}
      QString codecName();
      void showDefaultScreen()
@@ -113,8 +119,8 @@ private:
      void timerEvent(QTimerEvent*);
      void updateSlider(int pos);
      void updateStatus(Status s);
-     void resizeEvent(QResizeEvent*); 
-     
+     void resizeEvent(QResizeEvent*);
+
 
 public slots:
      void nextFrame();
