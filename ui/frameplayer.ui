@@ -18,7 +18,7 @@
     <number>5</number>
    </property>
    <item row="1" column="0" colspan="2">
-    <widget class="QSlider" name="slider">
+    <widget class="QJumpSlider" name="slider">
      <property name="maximum">
       <number>0</number>
      </property>

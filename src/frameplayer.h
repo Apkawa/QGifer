@@ -33,6 +33,7 @@
 #include "ui_frameplayer.h"
 
 
+
 using namespace cv;
 
 class FramePlayer : public QWidget, public Ui::FramePlayerForm {

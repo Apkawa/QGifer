@@ -80,7 +80,11 @@ configure_file (
   "${CMAKE_CURRENT_BINARY_DIR}/version.h"
   )
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR} src ui )
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
+	src
+	src/widgets
+	ui
+	)
 
 SET (HEADERS 
 src/gifcreator.h
@@ -88,7 +92,7 @@ src/textrenderer.h
 )
 
 SET (QT_HEADERS 
-src/frameplayer.h 
+src/frameplayer.h
 src/previewwidget.h 
 src/mainwindow.h
 src/gifwidget.h
@@ -104,10 +108,12 @@ src/objectwidget.h
 src/textwidget.h
 src/interpolationdialog.h
 src/textobject.h
+
+src/widgets/qjumpslider.h
 )
 
 SET (SOURCES 
-src/frameplayer.cpp 
+src/frameplayer.cpp
 src/main.cpp 
 src/previewwidget.cpp
 src/mainwindow.cpp 
@@ -125,6 +131,8 @@ src/objectwidget.cpp
 src/textwidget.cpp
 src/textrenderer.cpp
 src/interpolationdialog.cpp
+
+src/widgets/qjumpslider.cpp
 )
 
 SET (RESOURCES 
