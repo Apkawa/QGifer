@@ -109,7 +109,7 @@ src/textwidget.h
 src/interpolationdialog.h
 src/textobject.h
 
-src/widgets/qjumpslider.h
+src/widgets/QJumpSlider.h
 src/widgets/QPressAction.h
 )
 
@@ -133,7 +133,7 @@ src/textwidget.cpp
 src/textrenderer.cpp
 src/interpolationdialog.cpp
 
-src/widgets/qjumpslider.cpp
+src/widgets/QJumpSlider.cpp
 src/widgets/QPressAction.cpp
 )
 

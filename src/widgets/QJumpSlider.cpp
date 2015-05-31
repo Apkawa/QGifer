@@ -2,7 +2,7 @@
 // Created by apkawa on 31.05.15.
 //
 
-#include "qjumpslider.h"
+#include "QJumpSlider.h"
 
 
 void QJumpSlider::mousePressEvent(QMouseEvent *event) {

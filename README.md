@@ -41,6 +41,7 @@ http://sourceforge.net/projects/qgifer/
 
 Requirements
 ============
+
  * Qt version 4.8.0, or higher.
  * OpenCV (core, highgui, imgproc) version 2.3 or higher.
  * giflib version 4.1 or higher.
@@ -49,17 +50,24 @@ Requirements
 
 Compilation and installation
 ============
+
     cd qgifer_source_dir
     mkdir build && cd build
     cmake .. -DCMAKE_INSTALL_PREFIX="/usr/local/" -DQUIET_MODE=ON
     make
     sudo make install
+    
 
 note: use
 
     cmake .. -G "MinGW Makefiles" -DQUIET_MODE=ON
 
 for Windows with MinGW.
+
+For debugging you can add cmake option *RELEASE_MODE=OFF* 
+As example:
+    
+    cmake .. -DRELEASE_MODE=OFF
 
 
 Build debian package
