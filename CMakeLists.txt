@@ -110,6 +110,7 @@ src/interpolationdialog.h
 src/textobject.h
 
 src/widgets/qjumpslider.h
+src/widgets/QPressAction.h
 )
 
 SET (SOURCES 
@@ -133,6 +134,7 @@ src/textrenderer.cpp
 src/interpolationdialog.cpp
 
 src/widgets/qjumpslider.cpp
+src/widgets/QPressAction.cpp
 )
 
 SET (RESOURCES 

@@ -25,6 +25,7 @@
 #include <QTextStream>
 #include <QDirIterator>
 #include <QDesktopWidget>
+#include <widgets/QPressAction.h>
 #include "mainwindow.h"
 #include "objectwidget.h"
 
@@ -41,6 +42,30 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
     // upStopButton->setDefaultAction(actionSetAsStop);
     // upStopButton->setIcon(QIcon(":/res/fromimg.png"));
 
+    actionNextFrame = new QPressAction(this);
+    actionNextFrame->setObjectName(QString::fromUtf8("actionNextFrame"));
+    QIcon icon4;
+    icon4.addFile(QString::fromUtf8(":/res/next.png"), QSize(), QIcon::Normal, QIcon::Off);
+    actionNextFrame->setIcon(icon4);
+    actionPrevFrame = new QPressAction(this);
+    actionPrevFrame->setObjectName(QString::fromUtf8("actionPrevFrame"));
+    QIcon icon5;
+    icon5.addFile(QString::fromUtf8(":/res/prev.png"), QSize(), QIcon::Normal, QIcon::Off);
+    actionPrevFrame->setIcon(icon5);
+
+    playerToolBar->addAction(actionPrevFrame);
+    playerToolBar->addAction(actionNextFrame);
+
+    QWidget *widgetForAction = playerToolBar->widgetForAction(actionNextFrame);
+    widgetForAction->setMouseTracking(true);
+    widgetForAction->installEventFilter(actionNextFrame);
+
+    widgetForAction = playerToolBar->widgetForAction(actionPrevFrame);
+    widgetForAction->setMouseTracking(true);
+    widgetForAction->installEventFilter(actionPrevFrame);
+
+
+
     multiSlider->setSkin(QPixmap(":/res/multislider/bar.png"),
                          QPixmap(":/res/multislider/midbar.png"),
                          QPixmap(":/res/multislider/left.png"),
@@ -53,10 +78,12 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
     multiSlider->setPosA(0);
     multiSlider->setPosB(0);
 
-    if (checkFFMPEG())
+    if (checkFFMPEG()) {
         connect(actionConverter, SIGNAL(triggered()), this, SLOT(runConverter()));
-    else
+    }
+    else {
         actionConverter->setVisible(false);
+    }
 
     connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
     connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -82,8 +109,15 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
     connect(actionPlay, SIGNAL(triggered()), player, SLOT(play()));
     connect(actionStop, SIGNAL(triggered()), player, SLOT(stop()));
     connect(actionPause, SIGNAL(triggered()), player, SLOT(pause()));
+
+    connect(actionNextFrame, SIGNAL(press_start()), player, SLOT(play()));
+    connect(actionNextFrame, SIGNAL(press_end()), player, SLOT(pause()));
     connect(actionNextFrame, SIGNAL(triggered()), player, SLOT(nextFrame()));
+
     connect(actionPrevFrame, SIGNAL(triggered()), player, SLOT(prevFrame()));
+    connect(actionPrevFrame, SIGNAL(press_start()), player, SLOT(reverse_play()));
+    connect(actionPrevFrame, SIGNAL(press_end()), player, SLOT(pause()));
+
     connect(actionRestoreDefault, SIGNAL(triggered()), this, SLOT(restoreDefault()));
 
     connect(stopBox, SIGNAL(editingFinished()), this, SLOT(stopChanged()));
@@ -311,8 +345,9 @@ void MainWindow::frameChanged(long f) {
              (f >= stopBox->value() || f < startBox->value()) &&
              stopBox->value() >= startBox->value()) {
         player->seek(startBox->value());
-        if (stopBox->value() == startBox->value())
+        if (stopBox->value() == startBox->value()) {
             player->pause();
+        }
     }
     else if (ssRadio->isChecked() && f >= stopBox->value() &&
              stopBox->value() < startBox->value()) {
@@ -450,7 +485,6 @@ void MainWindow::resetCorrection() {
 void MainWindow::lock(bool l) {
     locked = l;
     l = !l;
-//     player->setEnabled(l);
     toolBox->setEnabled(l);
     multiSlider->setEnabled(l);
     actionSaveProject->setEnabled(l);
@@ -1267,3 +1301,4 @@ void MainWindow::renderDefaultText() {
     if (locked)
         player->showDefaultScreen();
 }
+

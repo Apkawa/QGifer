@@ -205,8 +205,10 @@
    <addaction name="actionPlay"/>
    <addaction name="actionPause"/>
    <addaction name="actionStop"/>
+<!--
    <addaction name="actionPrevFrame"/>
    <addaction name="actionNextFrame"/>
+   -->
   </widget>
   <widget class="QDockWidget" name="toolDock">
    <property name="minimumSize">

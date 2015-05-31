@@ -6,7 +6,7 @@
 #define QGIFER_QJUMPSLIDER_H
 
 
-#include <QtGui/qslider.h>
+#include <QtGui/QSlider>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWidget>
 

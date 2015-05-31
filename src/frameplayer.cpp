@@ -84,9 +84,9 @@ void FramePlayer::close() {
 }
 
 void FramePlayer::nextFrame() {
-    //qDebug() << "FramePlayer::nextFrame(): frames: " << frames << ", fakeFrames: " << fakeFrames << ", currentPos: " << currentPos;
-    if (!vcap.isOpened())
+    if (!vcap.isOpened()) {
         return;
+    }
 
     if (vcap.isOpened() && currentPos + 1 <= totalFrames - 1) {
         //qDebug() << "next REAL frame...";
@@ -121,15 +121,38 @@ void FramePlayer::nextFrame() {
     updateStatus(timerId == -1 ? Stopped : Playing);
 }
 
-void FramePlayer::play() {
-    if (!countFrames())
+void FramePlayer::reverse_play() {
+    // todo optimize
+    qDebug() << "PLAY reversed:";
+    is_reverse_play = true;
+    if (!countFrames()) {
         return;
-
-    if (currentPos == countFrames() - 1)
+    }
+    if (currentPos == countFrames() - 1) {
+        qDebug() << "currentPos:" << currentPos << " countFrames():" << countFrames();
         seek(0);
-
-    if (timerId == -1)
+    }
+    if (timerId == -1) {
         timerId = startTimer(interval);
+    }
+    updateStatus(Playing);
+}
+
+void FramePlayer::play() {
+    qDebug() << "PLAY";
+    is_reverse_play = false;
+    if (!countFrames()) {
+        return;
+    }
+
+    if (currentPos == countFrames() - 1) {
+        qDebug() << "currentPos:" << currentPos << " countFrames():" << countFrames();
+        seek(0);
+    }
+
+    if (timerId == -1) {
+        timerId = startTimer(interval);
+    }
     updateStatus(Playing);
 }
 
@@ -174,6 +197,9 @@ void FramePlayer::slowSetPos(long pos) {
     currentPos = pos;
 
     long startPos = currentPos - 55;
+    if (startPos < 0) {
+        startPos = 0;
+    }
 
     vcap.set(CV_CAP_PROP_POS_FRAMES, startPos);
     for (; startPos < currentPos; startPos++) {
@@ -185,7 +211,7 @@ void FramePlayer::slowSetPos(long pos) {
 
 void FramePlayer::seek(int pos) {
     qDebug() << "seeking pos: " << pos;
-    if (abs(currentPos - pos) < 55) {
+    if (status != Playing && abs(currentPos - pos) < 55) {
         slowSetPos(pos);
     } else {
         setPos(pos);
@@ -193,10 +219,12 @@ void FramePlayer::seek(int pos) {
 }
 
 void FramePlayer::timerEvent(QTimerEvent *) {
-    //qDebug() << "tick";
-    nextFrame();
-    if (currentPos >= countFrames() - 1){
-
+    if (is_reverse_play) {
+        prevFrame();
+    } else {
+        nextFrame();
+    }
+    if ((currentPos >= countFrames() - 1) || (currentPos <= 0)) {
         stop();
     }
 }
@@ -223,8 +251,9 @@ void FramePlayer::updateStatus(Status s) {
     else
         info += ", no frames";
     slider->setMaximum(total == 0 ? 0 : total - 1);
-    if (statusbar)
+    if (statusbar) {
         statusbar->showMessage(info);
+    }
 
     emit statusUpdated(s);
 }
@@ -268,3 +297,4 @@ void FramePlayer::renderDefaultTextImage(const QString &text) {
     p.drawImage((defaultImg.width() - txt.width()) / 2,
                 (defaultImg.height() - txt.height()) / 2, txt);
 }
+

@@ -33,7 +33,6 @@
 #include "ui_frameplayer.h"
 
 
-
 using namespace cv;
 
 class FramePlayer : public QWidget, public Ui::FramePlayerForm {
@@ -73,6 +72,7 @@ public:
     void setStatusBar(QStatusBar *sb);
 
     void setPos(long pos);
+
     void slowSetPos(long pos);
 
     Status getStatus() const {
@@ -124,6 +124,7 @@ private:
     int timerId;
     QStatusBar *statusbar;
     bool raw;
+    bool is_reverse_play = false;
 
     void timerEvent(QTimerEvent *);
 
@@ -136,12 +137,22 @@ private:
 
 public slots:
 
+    void press_start_event() {
+        qDebug() << this << "press_start event";
+    }
+
+    void press_end_event() {
+        qDebug() << this << "press_end event";
+
+    }
+
     void nextFrame();
 
     void prevFrame() {
         seek(currentPos - 1);
     }
 
+    void reverse_play();
     void play();
 
     void stop();
