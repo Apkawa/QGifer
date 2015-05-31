@@ -69,6 +69,10 @@ public:
         return vcap.isOpened() ? vcap.get(CV_CAP_PROP_FPS) : 0;
     }
 
+    bool isOpened() {
+        return vcap.isOpened();
+    }
+
     void setStatusBar(QStatusBar *sb);
 
     void setPos(long pos);

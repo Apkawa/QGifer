@@ -65,7 +65,6 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
     widgetForAction->installEventFilter(actionPrevFrame);
 
 
-
     multiSlider->setSkin(QPixmap(":/res/multislider/bar.png"),
                          QPixmap(":/res/multislider/midbar.png"),
                          QPixmap(":/res/multislider/left.png"),
@@ -150,9 +149,6 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
     connect(getWHButton, SIGNAL(clicked()), this, SLOT(estimateOutputSize()));
     connect(whRatioBox, SIGNAL(stateChanged(int)), this, SLOT(whRatioChanged(int)));
     connect(player->getWorkspace(), SIGNAL(objectChanged()), this, SLOT(setChanged()));
-    // connect(player->getWorkspace(), SIGNAL(objectHovered(WorkspaceObject*)),
-    // 	     this, SLOT(objectHovered(WorkspaceObject*)));
-    //marginesy
     connectMargins();
 
     connect(player->getWorkspace(), SIGNAL(marginsChanged()), this, SLOT(marginsChanged()));

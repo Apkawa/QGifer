@@ -27,6 +27,7 @@ FramePlayer::FramePlayer(QWidget *parent) : QWidget(parent), totalFrames(0), ori
     workspace = new Workspace(frame);
     workspace->enableBackground(true);
     connect(slider, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
+
 }
 
 FramePlayer::~FramePlayer() {
@@ -67,6 +68,7 @@ bool FramePlayer::openSource(const QString &src) {
     slider->setMaximum(countFrames() - 1);
 
     slider->setValue(0);
+    slider->setVideoFps(fps());
     nextFrame();
     return true;
 }
@@ -79,6 +81,7 @@ void FramePlayer::close() {
     filepath.clear();
     originalSize = Size(0, 0);
     slider->setValue(0);
+    slider->setVideoFps(0.0);
     showDefaultScreen();
     updateStatus(status);
 }

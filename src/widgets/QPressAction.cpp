@@ -4,7 +4,7 @@
 
 #include "QPressAction.h"
 
-bool QPressAction::eventFilter(QObject * obj, QEvent * event) {
+bool QPressAction::eventFilter(QObject *obj, QEvent *event) {
     if (
             event->type() != QEvent::Type::MouseButtonPress &&
             event->type() != QEvent::Type::MouseButtonRelease
@@ -13,20 +13,17 @@ bool QPressAction::eventFilter(QObject * obj, QEvent * event) {
     }
     QString className = QString(obj->metaObject()->className());
     if (className == "QToolButton") {
-        QToolButton *actionToolButton = qobject_cast<QToolButton*>(obj);
+        QToolButton *actionToolButton = qobject_cast<QToolButton *>(obj);
         QList<QAction *> actionList = (*actionToolButton).actions();
         if (!actionList.empty()) {
-            QAction *action = qobject_cast<QAction*>(actionList.first());
+            QAction *action = qobject_cast<QAction *>(actionList.first());
             if (action->isEnabled()) {
-//                qDebug() << obj << action << event;
-//                qDebug() << action->associatedWidgets();
-//                qDebug() << action->isEnabled();
                 if (event->type() == QEvent::Type::MouseButtonPress) {
                     is_long_press = false;
                     pressTimer->start(500);
                 }
 
-                if ( event->type() == QEvent::Type::MouseButtonRelease){
+                if (event->type() == QEvent::Type::MouseButtonRelease) {
                     pressTimer->stop();
                     if (is_long_press) {
                         emit press_end();
