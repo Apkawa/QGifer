@@ -15,7 +15,16 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <item row="2" column="1">
@@ -70,8 +79,11 @@
     <addaction name="actionPause"/>
     <addaction name="actionStop"/>
     <addaction name="separator"/>
-    <addaction name="actionNextFrame"/>
     <addaction name="actionPrevFrame"/>
+    <addaction name="actionNextFrame"/>
+    <addaction name="separator"/>
+    <addaction name="actionJumpToStart"/>
+    <addaction name="actionJumpToStop"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -205,16 +217,12 @@
    <addaction name="actionPlay"/>
    <addaction name="actionPause"/>
    <addaction name="actionStop"/>
-<!--
-   <addaction name="actionPrevFrame"/>
-   <addaction name="actionNextFrame"/>
-   -->
   </widget>
   <widget class="QDockWidget" name="toolDock">
    <property name="minimumSize">
     <size>
      <width>270</width>
-     <height>222</height>
+     <height>223</height>
     </size>
    </property>
    <property name="windowTitle">
@@ -247,8 +255,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>257</width>
-          <height>432</height>
+          <width>261</width>
+          <height>413</height>
          </rect>
         </property>
         <attribute name="label">
@@ -362,8 +370,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>257</width>
-          <height>432</height>
+          <width>250</width>
+          <height>413</height>
          </rect>
         </property>
         <attribute name="label">
@@ -486,8 +494,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>257</width>
-          <height>432</height>
+          <width>250</width>
+          <height>413</height>
          </rect>
         </property>
         <attribute name="label">
@@ -630,8 +638,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>257</width>
-          <height>431</height>
+          <width>283</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -688,8 +696,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>243</width>
-              <height>170</height>
+              <width>261</width>
+              <height>158</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_4">
@@ -1211,6 +1219,16 @@
    </property>
    <property name="text">
     <string>Draw &amp;background</string>
+   </property>
+  </action>
+  <action name="actionJumpToStart">
+   <property name="text">
+    <string>Jump to start fragment</string>
+   </property>
+  </action>
+  <action name="actionJumpToStop">
+   <property name="text">
+    <string>Jump to stop fragment</string>
    </property>
   </action>
  </widget>

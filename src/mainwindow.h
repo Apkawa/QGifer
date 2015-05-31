@@ -118,6 +118,13 @@ private slots:
         stopChanged();
     }
 
+    void jumpToStart() {
+        player->seek(startBox->value());
+    };
+    void jumpToStop() {
+        player->seek(stopBox->value());
+    };
+
     void stopChanged();
 
     void startChanged();

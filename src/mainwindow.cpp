@@ -93,6 +93,10 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
 
     connect(actionSetAsStart, SIGNAL(triggered()), this, SLOT(startFromCurrent()));
     connect(actionSetAsStop, SIGNAL(triggered()), this, SLOT(stopFromCurrent()));
+
+    connect(actionJumpToStart, SIGNAL(triggered()), this, SLOT(jumpToStart()));
+    connect(actionJumpToStop, SIGNAL(triggered()), this, SLOT(jumpToStop()));
+
     connect(actionSavePalette, SIGNAL(triggered()), this, SLOT(savePalette()));
     connect(actionOpenPalette, SIGNAL(triggered()), this, SLOT(openPalette()));
     connect(actionInsertObject, SIGNAL(triggered()), this, SLOT(insertObject()));
@@ -363,21 +367,24 @@ void MainWindow::frameChanged(long f) {
 void MainWindow::gifSaved(const QString &path) {
     set->setValue("last_gif", path);
     set->setValue("last_gif_dir", QFileInfo(path).absoluteDir().absolutePath());
-    if (set->value("show_optimizer", false).toBool())
+    if (set->value("show_optimizer", false).toBool()){
         runOptimizer();
+    }
 }
 
 void MainWindow::zoomChanged(int v) {
     zoomLabel->setText(tr("Zoom") + " (" + QString::number(v) + "%):");
     player->getWorkspace()->setZoom((double) v / 100.0);
-    if (player->getStatus() != FramePlayer::Playing)
+    if (player->getStatus() != FramePlayer::Playing) {
         player->seek(player->getCurrentPos());
+    }
 }
 
 void MainWindow::ratioChanged(int s) {
     player->getWorkspace()->keepAspectRatio(s == Qt::Checked);
-    if (player->getStatus() != FramePlayer::Playing)
+    if (player->getStatus() != FramePlayer::Playing) {
         player->seek(player->getCurrentPos());
+    }
     setChanged();
 }
 
@@ -900,9 +907,9 @@ bool MainWindow::projectFromXml(const QString &xstr) {
         return false;
     }
 
-    if (startBox->value() < player->countFrames())
+    if (startBox->value() < player->countFrames()) {
         player->seek(startBox->value());
-
+    }
     return true;
 }
 
