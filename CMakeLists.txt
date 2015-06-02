@@ -87,14 +87,14 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
 	ui
 	)
 
-SET (HEADERS 
+SET (HEADERS
 src/gifcreator.h
 src/textrenderer.h
 )
 
-SET (QT_HEADERS 
+SET (QT_HEADERS
 src/frameplayer.h
-src/previewwidget.h 
+src/previewwidget.h
 src/mainwindow.h
 src/gifwidget.h
 src/qgifcreator.h
@@ -114,11 +114,11 @@ src/widgets/QJumpSlider.h
 src/widgets/QPressAction.h
 )
 
-SET (SOURCES 
+SET (SOURCES
 src/frameplayer.cpp
-src/main.cpp 
+src/main.cpp
 src/previewwidget.cpp
-src/mainwindow.cpp 
+src/mainwindow.cpp
 src/gifwidget.cpp
 src/gifcreator.cpp
 src/qgifcreator.cpp
@@ -138,12 +138,12 @@ src/widgets/QJumpSlider.cpp
 src/widgets/QPressAction.cpp
 )
 
-SET (RESOURCES 
+SET (RESOURCES
 res.qrc
 )
 
-SET (FORMS 
-ui/frameplayer.ui 
+SET (FORMS
+ui/frameplayer.ui
 ui/mainwindow.ui
 ui/gifwidget.ui
 ui/optimizerdialog.ui
@@ -159,12 +159,13 @@ QT4_WRAP_UI(FORMS_HEADERS ${FORMS})
 QT4_ADD_RESOURCES(RESOURCES_RCC ${RESOURCES})
 
 IF(WIN32)
-	SET(OPENCV_LIBS "-lopencv_core245 -lopencv_highgui245 -lopencv_imgproc245" )
+
+	SET(OPENCV_LIBS "-lopencv_core${CVLIB_SUFFIX} -lopencv_highgui${CVLIB_SUFFIX} -lopencv_imgproc${CVLIB_SUFFIX}" )
 ELSE(WIN32)
 	SET(OPENCV_LIBS "-lopencv_core -lopencv_highgui -lopencv_imgproc" )
 ENDIF(WIN32)
 
-SET( GIF_LIBS "-llibgif" )
+SET(GIF_LIBS "-lgif" )
 
 
 set(RES_FILES "")
@@ -189,7 +190,7 @@ IF(UNIX)
 	INSTALL(FILES "doc/menu/qgifer" DESTINATION ${MENU_INSTALL_DIR})
 	INSTALL(FILES "doc/qgifer.desktop" DESTINATION ${DESKTOP_INSTALL_DIR})
 	INSTALL(FILES "doc/qgifer.xpm" DESTINATION ${ICON_INSTALL_DIR})
-	INSTALL(FILES 
+	INSTALL(FILES
 	locale/pl.qm
 	locale/ru.qm
 	locale/sv.qm
@@ -198,7 +199,7 @@ IF(UNIX)
 	locale/fr.qm
 	locale/zh_TW.qm
 	DESTINATION ${DATA_INSTALL_DIR}/locale/)
-	INSTALL(FILES "doc/README" "doc/LICENSE" "doc/COPYRIGHT" "doc/ChangeLog" 
+	INSTALL(FILES "doc/README" "doc/LICENSE" "doc/COPYRIGHT" "doc/ChangeLog"
 	DESTINATION ${DOC_INSTALL_DIR})
 ENDIF(UNIX)
 
@@ -210,10 +211,10 @@ ENDIF(UNIX)
 
 SET(PACKAGE_VERSION 1)
 SET(PACKAGE_NAME qgifer)
- 
+
 IF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 INCLUDE(InstallRequiredSystemLibraries)
- 
+
 SET(CPACK_SET_DESTDIR "on")
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A video-based gif creator.")
@@ -227,17 +228,17 @@ SET(CPACK_PACKAGE_VERSION_MAJOR "${PACKAGE_VERSION}")
 # SET(CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}")
 SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${QGIFER_VERSION_MAJOR}.${QGIFER_VERSION_MINOR}.${QGIFER_VERSION_PATCH}-${PACKAGE_VERSION}_${CMAKE_SYSTEM_PROCESSOR}")
 #SET(CPACK_SOURCE_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${QGIFER_VERSION_MAJOR}.${QGIFER_VERSION_MINOR}.${QGIFER_VERSION_PATCH}")
- 
+
 #set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON) #za pierwszym razem, pozniej dodano | dla nowszych opencv
 SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.1.3), libc6 (>= 2.3.6-6~), libgcc1 (>= 1:4.1.1), libgif4 (>= 4.1.4), libopencv-core2.4, libopencv-highgui2.4, libopencv-imgproc2.4, libqtcore4 (>= 4:4.7.0~beta1), libqtgui4 (>= 4:4.6.1), libstdc++6 (>= 4.1.1)")
- 
+
 SET(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "video")
 SET(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
- 
+
 SET(CPACK_COMPONENTS_ALL Libraries ApplicationData)
 INCLUDE(CPack)
- 
+
 ENDIF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
 
