@@ -114,6 +114,9 @@ public:
 
     void renderDefaultTextImage(const QString &text);
 
+    Size getOriginalSize() const;
+
+
 private:
     VideoCapture vcap;
     int medianblur;

@@ -46,7 +46,9 @@ public:
      {return image.isNull() ? -1 : (double)(cpos.y()-((1-zoom)/2*height()))/(double)image.height();}
      void enableAntialiasing(bool enable) {smooth = enable;}
      virtual void clear();
-     void keepAspectRatio(bool keep){ratio = keep;}
+     void keepAspectRatio(bool keep){
+         ratio = keep;
+     }
      void setZoom(double z) {zoom = z;}
      double getZoom() const {return zoom;}
      static void applyCorrection(QImage* img, int h, int s, int v, 
@@ -70,7 +72,7 @@ protected:
      bool drawBkg;
      QImage bkgCache;
 
-     private slots:
+private slots:
       
 signals:
      void clicked(double x, double y);

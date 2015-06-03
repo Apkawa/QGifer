@@ -41,8 +41,8 @@ void PreviewWidget::setImage(const QImage& img, const QSize& size,
 
      if(size.isNull())
      {
-	  imsize = img.size();
-	  setFixedSize(imsize);
+        imsize = img.size();
+        setFixedSize(imsize);
      }
      else
 	  imsize = size;
@@ -54,8 +54,10 @@ void PreviewWidget::setImage(const QImage& img, const QSize& size,
      // else
      // {
 	  image = image.scaled(
-	       imsize*zoom, (ratio || forceRatio) ? Qt::KeepAspectRatio : Qt::IgnoreAspectRatio, (
-		    (smooth || forceSmooth) ? Qt::SmoothTransformation : Qt::FastTransformation));
+           imsize * zoom,
+           (ratio || forceRatio) ? Qt::KeepAspectRatio : Qt::IgnoreAspectRatio,
+           ((smooth || forceSmooth) ? Qt::SmoothTransformation : Qt::FastTransformation)
+           );
       	  //setFixedSize(imsize);
      // }
 	  update();

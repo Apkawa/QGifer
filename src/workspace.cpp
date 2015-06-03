@@ -379,7 +379,7 @@ void Workspace::drawObjects(QPaintDevice* pd)
 
 		    QImage simg = o->image()->scaled(r.width(), r.height(),
 						     //	     ratio ? Qt::KeepAspectRatio : 
-						     Qt::IgnoreAspectRatio,
+                             Qt::IgnoreAspectRatio,
 						     smooth ? Qt::SmoothTransformation : 
 						     Qt::FastTransformation);
 		    // if(hue || sat || val)

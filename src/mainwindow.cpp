@@ -159,8 +159,7 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
     connect(player->getWorkspace(), SIGNAL(propertiesRequested(WorkspaceObject * )),
             this, SLOT(showProperties(WorkspaceObject * )));
 
-    connect(toolDock, SIGNAL(topLevelChanged(bool)),
-            this, SLOT(dockLevelChanged(bool)));
+    connect(toolDock, SIGNAL(topLevelChanged(bool)), this, SLOT(dockLevelChanged(bool)));
 
     connect(actionOutputProp, SIGNAL(triggered()), this, SLOT(showOutputProp()));
     connect(actionFilters, SIGNAL(triggered()), this, SLOT(showFilters()));
@@ -671,11 +670,13 @@ void MainWindow::estimateOutputSize() {
 
     disconnect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
     disconnect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
+
     QSize s = player->getCurrentFrame()->size();
     if (marginBox->isChecked()) {
         s.setWidth(s.width() - leftSpin->value() - rightSpin->value());
         s.setHeight(s.height() - topSpin->value() - bottomSpin->value());
     }
+
     float tmp = whRatio;
     whRatio = -1;
     widthBox->setValue(s.width());
@@ -683,6 +684,7 @@ void MainWindow::estimateOutputSize() {
     whRatio = tmp;
     setChanged();
     whRatioChanged(ratioBox->checkState());
+
     connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
     connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
 }
@@ -932,8 +934,9 @@ QString MainWindow::projectRelativePath(const QString &path) {
 }
 
 void MainWindow::outputWidthChanged(int v) {
-    if (!whRatioBox->isChecked() || whRatio <= 0)
+    if (!whRatioBox->isChecked() || whRatio <= 0) {
         return;
+    }
     heightBox->disconnect();
     heightBox->setValue(ceil(v / whRatio));
     setChanged();
@@ -941,8 +944,9 @@ void MainWindow::outputWidthChanged(int v) {
 }
 
 void MainWindow::outputHeightChanged(int v) {
-    if (!whRatioBox->isChecked() || whRatio <= 0)
+    if (!whRatioBox->isChecked() || whRatio <= 0) {
         return;
+    }
     widthBox->disconnect();
     widthBox->setValue(ceil(v * whRatio));
     setChanged();
@@ -951,8 +955,16 @@ void MainWindow::outputHeightChanged(int v) {
 }
 
 void MainWindow::whRatioChanged(int s) {
-    if (s == Qt::Checked)
-        whRatio = (float) widthBox->value() / (float) heightBox->value();
+    if (s == Qt::Checked) {
+        float outWHRatio = (float) widthBox->value() / (float) heightBox->value();
+        Size originalSize = player->getOriginalSize();
+        whRatio = (float) originalSize.width / (float) originalSize.height;
+        if (outWHRatio < 1) {
+            outputHeightChanged(heightBox->value());
+        } else if (outWHRatio > 1) {
+            outputWidthChanged(widthBox->value());
+        }
+    }
     setChanged();
 }
 

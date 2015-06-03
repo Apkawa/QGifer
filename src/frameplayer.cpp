@@ -62,8 +62,9 @@ bool FramePlayer::openSource(const QString &src) {
     qDebug() << "total frames: " << totalFrames;
 
     interval = estimateInterval();
-    if (!interval)
+    if (!interval) {
         interval = 40;
+    }
 
     slider->setMaximum(countFrames() - 1);
 
@@ -300,4 +301,12 @@ void FramePlayer::renderDefaultTextImage(const QString &text) {
     p.drawImage((defaultImg.width() - txt.width()) / 2,
                 (defaultImg.height() - txt.height()) / 2, txt);
 }
+
+
+Size FramePlayer::getOriginalSize() const
+{
+    return originalSize;
+}
+
+
 
