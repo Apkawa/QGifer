@@ -8,7 +8,6 @@ CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
 PROJECT(QGifer)
 SET(TARGET_NAME qgifer)
 
-SET(CMAKE_INSTALL_PREFIX "/usr/")
 
 SET(QGIFER_VERSION_MAJOR 0)
 SET(QGIFER_VERSION_MINOR 2)
@@ -16,9 +15,10 @@ SET(QGIFER_VERSION_PATCH 3)
 
 OPTION(QUIET_MODE "quiet mode" OFF)
 OPTION(RELEASE_MODE "release mode" OFF)
-OPTION(ARCH "Arch" "x86")
+
 
 IF(UNIX)
+    SET(CMAKE_INSTALL_PREFIX "/usr/")
 	SET(BIN_INSTALL_DIR "bin")
 	SET(DATA_INSTALL_DIR "share/qgifer")
 	SET(ICON_INSTALL_DIR "share/icons")
@@ -35,20 +35,21 @@ IF(WIN32)
 	SET(GIF_LIBRARY "C:/Program Files/GnuWin32/lib")
 	SET(GIF_INCLUDE_DIR "C:/Program Files/GnuWin32/include")
 	INCLUDE_DIRECTORIES(SYSTEM "C:/Program Files/GnuWin32/include")
+	SET(CMAKE_INSTALL_PREFIX "${TARGET_NAME}")
 ENDIF(WIN32)
 
 FIND_PACKAGE(OpenCV REQUIRED core highgui imgproc )
-FIND_PACKAGE(Qt4 REQUIRED)
+FIND_PACKAGE(Qt4 REQUIRED QtCore QtGui)
 FIND_PACKAGE(GIF REQUIRED)
 
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall -Wno-reorder -Wno-sign-compare" )
-# TODO Choise
+# TODO Crosscompile
 #SET(CMAKE_SYSTEM_PROCESSOR "i686")
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=i686 -march=pentium" )
 #SET(CMAKE_SYSTEM_PROCESSOR "x86_64")
-#  -march=i686 -march=pentium
 
 
 SET(WINDOWS_EXEC )
@@ -82,7 +83,7 @@ add_custom_target(uninstall
 #-------------------- APP BUILD -----------------------
 #------------------------------------------------------
 
-configure_file (
+CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in"
   "${CMAKE_CURRENT_BINARY_DIR}/version.h"
   )
@@ -208,6 +209,63 @@ IF(UNIX)
 	DESTINATION ${DOC_INSTALL_DIR})
 ENDIF(UNIX)
 
+IF(WIN32)
+    FILE(GLOB _QT_DLL_FILES
+      ${QT_BINARY_DIR}/QtCore4.dll
+      ${QT_BINARY_DIR}/QtGui4.dll
+    )
+    FILE(GLOB _OPENCV_DLL_FILES
+        ${OpenCV_DIR}/bin/libopencv_core*.dll
+        ${OpenCV_DIR}/bin/libopencv_highgui*.dll
+        ${OpenCV_DIR}/bin/libopencv_imgproc*.dll
+        ${OpenCV_DIR}/bin/opencv_ffmpeg*.dll
+    )
+
+    FILE(GLOB_RECURSE _GIF_DLL_FILES
+        ${GIF_LIBRARY}/../*/giflib4.dll
+    )
+    FILE(GLOB _MINGW_DLL_FILES
+        ${CMAKE_CXX_COMPILER}/../libstdc++-6.dll
+        ${CMAKE_CXX_COMPILER}/../libwinpthread-1.dll
+        ${CMAKE_CXX_COMPILER}/../libgcc_s_dw2-1.dll
+    )
+
+    INSTALL(TARGETS ${TARGET_NAME}
+        DESTINATION .
+        )
+
+    INSTALL(FILES
+        doc/ChangeLog
+        doc/COPYRIGHT
+        doc/LICENSE
+        doc/README
+        "doc/TRANSLATOR'S NOTE.txt"
+
+        ${_QT_DLL_FILES}
+        ${_OPENCV_DLL_FILES}
+        ${_GIF_DLL_FILES}
+        ${_MINGW_DLL_FILES}
+        DESTINATION .
+        )
+
+    INSTALL(FILES
+        ${QT_QGIF_PLUGIN_RELEASE}
+        ${QT_QJPEG_PLUGIN_RELEASE}
+        DESTINATION imageformats/
+        )
+
+    INSTALL(FILES
+        locale/pl.qm
+        locale/ru.qm
+        locale/sv.qm
+        locale/jp.qm
+        locale/cs.qm
+        locale/fr.qm
+        locale/zh_TW.qm
+        DESTINATION locale/
+        )
+
+ENDIF(WIN32)
 
 
 #------------------------------------------------------
@@ -240,6 +298,13 @@ SET(CPACK_DEBIAN_PACKAGE_SECTION "video")
 SET(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
 
 SET(CPACK_COMPONENTS_ALL Libraries ApplicationData)
+
+
+IF(WIN32)
+    SET(CPACK_PACKAGING_INSTALL_PREFIX ".")
+ENDIF(WIN32)
+
+
 INCLUDE(CPack)
 
 ENDIF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
