@@ -40,13 +40,15 @@ private:
      QString findConvert();
      QProcess* proc;
      QSettings* set;
-     private slots:
+
+private slots:
 	  void optimize();
 	  void setIMDir();
 	  void setSrc();
 	  void setDst();
 	  void finished(int,QProcess::ExitStatus);
 	  void showStateChanged(int);
+      void fuzzChanged(int);
 };
 
 #endif

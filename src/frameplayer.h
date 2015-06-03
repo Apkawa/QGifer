@@ -28,6 +28,7 @@
 #include <QStatusBar>
 #include <QPixmap>
 #include <QMessageBox>
+
 #include "textrenderer.h"
 #include "workspace.h"
 #include "ui_frameplayer.h"

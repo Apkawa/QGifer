@@ -27,13 +27,23 @@ OptimizerDialog::OptimizerDialog(QSettings* s)
      setupUi(this);
      set = s;
      srcEdit->setText(set->value("last_gif","").toString());
-     if(srcEdit->text().size()>4)
-	  dstEdit->setText(srcEdit->text().insert(srcEdit->text().size()-4,"_optimized"));
+     if(srcEdit->text().size() > 4) {
+         dstEdit->setText(srcEdit->text().insert(srcEdit->text().size()-4,"_optimized"));
+     }
+
      showBox->setChecked(set->value("show_optimizer",false).toBool());
      proc = new QProcess(this);
     
-     if(set->value("convert_exec","").toString().isEmpty())
-	  set->setValue("convert_exec",findConvert());
+     // TODO Settings wrapper with getters, setters and save
+
+     if(set->value("convert_exec","").toString().isEmpty()) {
+        set->setValue("convert_exec", findConvert());
+     }
+
+     int convertFuzz = set->value("convert_fuzz").toInt();
+     if (convertFuzz) {
+            fuzzBox->setValue(convertFuzz);
+     }
      checkIM();
 
      connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
@@ -45,6 +55,7 @@ OptimizerDialog::OptimizerDialog(QSettings* s)
 	     this, SLOT(finished(int,QProcess::ExitStatus)));
      connect(showBox, SIGNAL(stateChanged(int)), 
 	     this, SLOT(showStateChanged(int)));
+     connect(fuzzBox, SIGNAL(valueChanged(int)), this, SLOT(fuzzChanged(int)));
 
 }
 
@@ -55,8 +66,11 @@ OptimizerDialog::~OptimizerDialog()
 void OptimizerDialog::optimize()
 {
      if(!QFile::exists(srcEdit->text())){
-	  QMessageBox::critical(this, tr("Error"), 
-				tr("The chosen source file does not exist!"));
+               QMessageBox::critical(
+                             this,
+                             tr("Error"),
+                             tr("The chosen source file does not exist!")
+                        );
 	  return;
      }
 
@@ -77,16 +91,21 @@ void OptimizerDialog::optimize()
 void OptimizerDialog::setIMDir()
 {
      QString path = QFileDialog::getExistingDirectory(
-	  this, tr("Select ImageMagick binary directory"), 
-	  qApp->applicationDirPath());
-     if(path.isEmpty())
+                 this,
+                 tr("Select ImageMagick binary directory"),
+                 qApp->applicationDirPath()
+                 );
+
+     if(path.isEmpty()){
 	  return;
+     }
      
 #if defined(Q_WS_X11)
      path += "/convert";
 #elif defined(Q_WS_WIN)
      path += "\\convert.exe";
 #endif
+
      if(!QFile::exists(path))
      {
 	  QMessageBox::critical(this, tr("Error"), 
@@ -107,7 +126,7 @@ void OptimizerDialog::setSrc()
      if(!path.isEmpty())
      {
 	  srcEdit->setText(path);
-	  dstEdit->setText(path.insert(path.size()-4,"_optimized"));
+      dstEdit->setText(path.insert(path.size() - 4,"_optimized"));
      }
 }
 
@@ -167,7 +186,13 @@ void OptimizerDialog::finished(int,QProcess::ExitStatus status)
 
 void OptimizerDialog::showStateChanged(int s)
 {
-     set->setValue("show_optimizer", s == Qt::Checked);
+    set->setValue("show_optimizer", s == Qt::Checked);
+}
+
+void OptimizerDialog::fuzzChanged(int fuzz_value)
+{
+    set->setValue("convert_fuzz", fuzz_value);
+
 }
 
 QStringList OptimizerDialog::sysEnv()
