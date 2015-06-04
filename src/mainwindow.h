@@ -173,7 +173,7 @@ private slots:
 
     void outputHeightChanged(int);
 
-    void whRatioChanged(int);
+    void whRatioChanged(bool);
 
     void varPaletteBoxChanged(int);
 

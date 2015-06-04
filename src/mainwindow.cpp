@@ -151,7 +151,7 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
     connect(medianSlider, SIGNAL(valueChanged(int)), this, SLOT(medianChanged(int)));
 
     connect(getWHButton, SIGNAL(clicked()), this, SLOT(estimateOutputSize()));
-    connect(whRatioBox, SIGNAL(stateChanged(int)), this, SLOT(whRatioChanged(int)));
+    connect(whRatioBox, SIGNAL(toggled(bool)), this, SLOT(whRatioChanged(bool)));
     connect(player->getWorkspace(), SIGNAL(objectChanged()), this, SLOT(setChanged()));
     connectMargins();
 
@@ -190,9 +190,9 @@ void MainWindow::openVideo() {
             this, tr("Open video file"),
             set->value("last_video_dir", "").toString(),
             "Video files (*.avi *.mp4 *.mpg *.ogv);;All files (*.*)");
-    if (!path.isEmpty()) if (!openVideo(path))
+    if (!path.isEmpty()) if (!openVideo(path)) {
         QMessageBox::critical(this, tr("Error"), tr("The player failed to load the video file!"));
-
+    }
     QList<WorkspaceObject *> *ol = player->getWorkspace()->getObjectsList();
     for (int i = 0; i < ol->size(); i++)
         if (ol->at(i)->getStart() >= player->countFrames()) {
@@ -225,6 +225,7 @@ bool MainWindow::openVideo(const QString &path) {
         vidfile = path;
         lock(false);
         setChanged();
+        whRatioChanged(ratioBox->isChecked());
         return true;
     }
     startBox->setMaximum(0);
@@ -232,6 +233,8 @@ bool MainWindow::openVideo(const QString &path) {
 
     player->showDefaultScreen();
     lock(true);
+
+
     return false;
 }
 
@@ -260,7 +263,9 @@ void MainWindow::extractGif() {
     GifWidget *gw = new GifWidget(set);
     gw->setAttribute(Qt::WA_DeleteOnClose, true);
     gw->setColorRes(paletteBox->value());
-    //g->setPalette(paletteWidget->map(), );
+
+    gw->setVisibleFPS(player->fps());
+
 
     connect(gw, SIGNAL(gifSaved(QString)), this, SLOT(gifSaved(QString)));
     QString sn = QFileInfo(vidfile).baseName() + "_" +
@@ -683,7 +688,7 @@ void MainWindow::estimateOutputSize() {
     heightBox->setValue(s.height());
     whRatio = tmp;
     setChanged();
-    whRatioChanged(ratioBox->checkState());
+    whRatioChanged(ratioBox->isChecked());
 
     connect(widthBox, SIGNAL(valueChanged(int)), this, SLOT(outputWidthChanged(int)));
     connect(heightBox, SIGNAL(valueChanged(int)), this, SLOT(outputHeightChanged(int)));
@@ -954,15 +959,16 @@ void MainWindow::outputHeightChanged(int v) {
 
 }
 
-void MainWindow::whRatioChanged(int s) {
-    if (s == Qt::Checked) {
+void MainWindow::whRatioChanged(bool isChecked) {
+    if (isChecked && player->isOpened()) {
         float outWHRatio = (float) widthBox->value() / (float) heightBox->value();
         Size originalSize = player->getOriginalSize();
         whRatio = (float) originalSize.width / (float) originalSize.height;
         if (outWHRatio < 1) {
-            outputHeightChanged(heightBox->value());
-        } else if (outWHRatio > 1) {
             outputWidthChanged(widthBox->value());
+        } else if (outWHRatio > 1) {
+            outputHeightChanged(heightBox->value());
+
         }
     }
     setChanged();

@@ -29,6 +29,7 @@
 
 #include "utils/qgiferformatter.h"
 
+
 class GifWidget : public QDialog, public Ui::GifWidget, public Retranslatable
 {
      Q_OBJECT;
@@ -45,6 +46,10 @@ public:
      }
 
      unsigned long getEstimateSize();
+
+     void setVisibleFPS(uint FPS) {
+         visibleFPSBox->setValue(FPS);
+     }
 
 signals:
      void gifSaved(const QString&);
@@ -76,6 +81,9 @@ public slots:
       void updateEstimateSize() {
           estimateSize->setText(QGifer::utils::humanSizeFormat(this->getEstimateSize()));
       }
+
+      void updateInterval();
+
 };
 
 #endif

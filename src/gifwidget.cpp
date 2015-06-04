@@ -23,6 +23,8 @@
 #include <QProcess>
 #include <QMessageBox>
 
+
+
 GifWidget::GifWidget(QSettings* s): timerId(-1), currentFrame(-1), reversePlay(false)
 {
      setupUi(this);
@@ -32,6 +34,12 @@ GifWidget::GifWidget(QSettings* s): timerId(-1), currentFrame(-1), reversePlay(f
 
      connect(seBox, SIGNAL(valueChanged(int)), this, SLOT(updateEstimateSize()));
      connect(saveEveryBox, SIGNAL(toggled(bool)), this, SLOT(updateEstimateSize()));
+
+     connect(visibleFPSBox, SIGNAL(valueChanged(int)), this, SLOT(updateInterval()));
+     connect(calculateIntervalForFPS, SIGNAL(toggled(bool)), this, SLOT(updateInterval()));
+     connect(saveEveryBox, SIGNAL(toggled(bool)), this, SLOT(updateInterval()));
+
+
 }
 
 GifWidget::~GifWidget()
@@ -103,6 +111,22 @@ void GifWidget::pause()
      intervalBox->setEnabled(true);
 }
 
+void GifWidget::updateInterval()
+{
+    if (calculateIntervalForFPS->isChecked()) {
+        uint visibleFps = visibleFPSBox->value();
+        uint skipFrame = 1;
+        if (saveEveryBox->isChecked()) {
+            skipFrame = seBox->value();
+        }
+        uint newInterval = (1000 / visibleFps ) * (visibleFps / (visibleFps / skipFrame));
+        intervalBox->setValue(newInterval);
+
+        pause();
+        play();
+    }
+}
+
 void GifWidget::save()
 {
      qDebug() << "saving gif...";
@@ -155,6 +179,7 @@ unsigned long GifWidget::getEstimateSize()
 
 void GifWidget::timerEvent(QTimerEvent*)
 {
+
      preview->setImage(prevFrames.at(currentFrame));
      int d = saveEveryBox->isChecked() ? seBox->value() : 1;
      currentFrame += reversePlay ? d*-1 : d;
@@ -172,7 +197,8 @@ void GifWidget::timerEvent(QTimerEvent*)
 	  currentFrame = prevFrames.size()-1;
 	  reversePlay = true;
      }
-	  
+
+
      
 }
 
