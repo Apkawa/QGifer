@@ -25,7 +25,8 @@
 #include <QTextStream>
 #include <QDirIterator>
 #include <QDesktopWidget>
-#include <widgets/QPressAction.h>
+
+#include "widgets/QPressAction.h"
 #include "mainwindow.h"
 #include "objectwidget.h"
 
@@ -64,6 +65,7 @@ MainWindow::MainWindow() : translator(NULL), locked(false) {
     widgetForAction->setMouseTracking(true);
     widgetForAction->installEventFilter(actionPrevFrame);
 
+    // TODO Move to default constructor
 
     multiSlider->setSkin(QPixmap(":/res/multislider/bar.png"),
                          QPixmap(":/res/multislider/midbar.png"),
@@ -208,7 +210,6 @@ void MainWindow::openVideo() {
             }
             else
                 showProperties(ol->at(i));
-
         }
     player->getWorkspace()->update();
 }
@@ -233,7 +234,6 @@ bool MainWindow::openVideo(const QString &path) {
 
     player->showDefaultScreen();
     lock(true);
-
 
     return false;
 }
@@ -273,14 +273,20 @@ void MainWindow::extractGif() {
                  QString::number(stopBox->value());
     gw->suggestName(sn);
     gw->setWindowTitle(sn);
-    QProgressDialog pd("Rendering frames...", "Abort", startBox->value(),
-                       stopBox->value(), this);
-    pd.setWindowModality(Qt::WindowModal);
+    QProgressDialog pd(
+                "Rendering frames...",
+                "Abort",
+                 startBox->value(),
+                 stopBox->value(),
+                       this);
+
+    pd.setAttribute(Qt::WA_DeleteOnClose, true);
+    pd.setWindowModality(Qt::WindowModal);    
     pd.show();
     qApp->processEvents();
     ColorMapObject *map = paletteWidget->mapCopy();
     player->seek(startBox->value() - 1);
-    for (long i = startBox->value(); i <= stopBox->value() && !pd.wasCanceled(); i++) {
+    for (long i = startBox->value(); i <= stopBox->value() && ! pd.wasCanceled(); i++) {
         pd.setValue(i);
         if (varPaletteBox->isChecked()) {
             player->nextFrame();
@@ -307,7 +313,10 @@ void MainWindow::extractGif() {
 
     }
     pd.setValue(stopBox->value());
-    gw->move(x() + width() / 2 - gw->minimumSize().width() / 2, y() + height() / 2 - gw->minimumSize().height() / 2);
+
+    gw->move(
+             x() + width() / 2 - gw->minimumSize().width() / 2,
+             y() + height() / 2 - gw->minimumSize().height() / 2);
     gw->show();
     gw->play();
     player->pause();
@@ -695,6 +704,7 @@ void MainWindow::estimateOutputSize() {
 }
 
 QString MainWindow::projectToXml() {
+    // TODO move to settings wrapper
     QString xcontent;
     QXmlStreamWriter stream(&xcontent);
     stream.setCodec("UTF-8");
