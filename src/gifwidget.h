@@ -27,6 +27,8 @@
 #include "retranslatable.h"
 #include "ui_gifwidget.h"
 
+#include "utils/qgiferformatter.h"
+
 class GifWidget : public QDialog, public Ui::GifWidget, public Retranslatable
 {
      Q_OBJECT;
@@ -37,8 +39,13 @@ public:
      void setColorRes(int res){gif->setColorRes(res);}
      void suggestName(const QString& name){suggestedName = name;}
      void saveGif(const QString& gif);
-      void retranslate()
-     {QString t = windowTitle();retranslateUi(this);setWindowTitle(t);}
+
+     void retranslate() {
+         QString t = windowTitle();retranslateUi(this);setWindowTitle(t);
+     }
+
+     unsigned long getEstimateSize();
+
 signals:
      void gifSaved(const QString&);
 
@@ -50,15 +57,25 @@ private:
      void createActions();
      QString suggestedName;
      QList<QImage> prevFrames;
+
+     unsigned long frameByteSize = 0;
+
      int timerId;
      int currentFrame;
      int skipped;
      void timerEvent(QTimerEvent*);
-     public slots:
+
+public slots:
 	  void save();
 	  void play();
 	  void pause();
-	  void adjustWidgetSize(){adjustSize();}
+      void adjustWidgetSize(){
+          adjustSize();
+      }
+
+      void updateEstimateSize() {
+          estimateSize->setText(QGifer::utils::humanSizeFormat(this->getEstimateSize()));
+      }
 };
 
 #endif

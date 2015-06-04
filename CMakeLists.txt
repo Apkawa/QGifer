@@ -91,12 +91,14 @@ CONFIGURE_FILE(
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
 	src
 	src/widgets
+        src/utils
 	ui
-	)
+)
 
 SET (HEADERS
 src/gifcreator.h
 src/textrenderer.h
+src/utils/qgiferformatter.h
 )
 
 SET (QT_HEADERS
@@ -119,6 +121,8 @@ src/textobject.h
 
 src/widgets/QJumpSlider.h
 src/widgets/QPressAction.h
+
+
 )
 
 SET (SOURCES
@@ -143,6 +147,8 @@ src/interpolationdialog.cpp
 
 src/widgets/QJumpSlider.cpp
 src/widgets/QPressAction.cpp
+
+src/utils/qgiferformatter.cpp
 )
 
 SET (RESOURCES
@@ -188,7 +194,7 @@ if(MINGW)
     "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
 endif(MINGW)
 
-ADD_EXECUTABLE(${TARGET_NAME} ${WINDOWS_EXEC} ${SOURCES} ${HEADERS_MOC} ${FORMS_HEADERS} ${RESOURCES_RCC} ${RES_FILES})
+ADD_EXECUTABLE(${TARGET_NAME} ${WINDOWS_EXEC} ${SOURCES} ${HEADERS} ${HEADERS_MOC} ${FORMS_HEADERS} ${RESOURCES_RCC} ${RES_FILES})
 TARGET_LINK_LIBRARIES(${TARGET_NAME} ${QT_LIBRARIES} ${OpenCV_LIBS} ${GIF_LIBRARIES})
 
 IF(UNIX)

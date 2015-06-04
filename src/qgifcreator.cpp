@@ -30,44 +30,16 @@ QGifCreator::~QGifCreator()
      //clearCache();
 }
 
-// Byte* QGifCreator::imageData(const QImage& img)
-// {
-//      //Byte* frame = new Byte[w*h*3];
-//      // for(int i=0;i<w*h*3;i++)
-//      // 	  if(i%6)
-//      // 	       frame[i] = 255;
-//      // 	  else
-//      // 	       frame[i] = 0;
 
-//      if(img.isNull())
-// 	  return NULL;
-//      QImage* i = new QImage(img.mirrored());
-//      cache.append(i);
-//      return (Byte*)i->bits();
-     
-//      //return frame;
-// }
-
-// void QGifCreator::addFrame(const QImage& img)
-// {
-//      Byte* b = imageData(img);
-//      if(b)
-// 	  GifCreator::addFrame(b, duration);
-// }
-
-// void QGifCreator::clearCache()
-// {
-//      qDebug() << "clearing image cache...";
-//      while(cache.size())
-// 	  delete cache.takeFirst();
-// }
 
 void QGifCreator::prepareFrame(QImage* img, ColorMapObject* map, bool dither)
 {
-     if(!map && cmaps.size())
+     if(!map && cmaps.size()) {
 	  map = cmaps.at(cmaps.size()-1);
-     else if(!cmaps.size())
+     }
+     else if(!cmaps.size()) {
 	  return;
+     }
 	  
      //Frame frame(img->bytesPerLine()*img->height());
      

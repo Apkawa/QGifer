@@ -38,8 +38,14 @@ public:
      void prepareFrame(QImage* img, ColorMapObject* map, bool dither = true);
 private:
      bool savingProgress(int p);
-     void endProgress()
-     {if(progressDialog){progressDialog->close();delete progressDialog;progressDialog = NULL;}}
+     void endProgress() {
+         if(progressDialog)
+         {
+             progressDialog->close();
+             delete progressDialog;
+             progressDialog = NULL;
+         }
+     }
      QProgressDialog* progressDialog;
      QList<QImage*> cache;
      private slots:

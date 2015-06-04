@@ -35,7 +35,8 @@ class GifCreator
 {
 
 public:
-     GifCreator();
+
+  GifCreator();
   ~GifCreator();
   
   void resize(int width, int height) {w = width; h = height;}
@@ -44,7 +45,7 @@ public:
   // "data" is the image (r,g,b,r,g,b,r,g,b...), bottom-to-top
   // The first frame defines the palette
   bool addFrame(Byte* data,  float dt);
-  
+
   // Saves the results in a gif file
   bool save(const char* filename, int every = 1);
   void setColorRes(int res) {colorRes = res;}
@@ -52,6 +53,7 @@ public:
   void setDuration(float d){duration = d;}
   void appendReversedCopy();
   void removeReversedCopy();
+
 protected:
   virtual bool savingProgress(int){return true;} //procentowy postep w zapisie, false jesli przerwac prace
   virtual void endProgress(){}; //zakonczenie pracy

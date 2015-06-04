@@ -92,8 +92,10 @@ bool GifCreator::save(const char* filename, int every)
 
 
      for (int ni=0; ni<frames.size(); ni+=every) {      
-       if(!savingProgress((float)ni/(frames.size()/every)*100))
-	 return true; //przerwanie przez usera
+       if(!savingProgress((float)ni/(frames.size()/every)*100)) {
+           return true; //przerwanie przez usera
+       }
+
     
 	  unsigned char ExtStr[4] = { 0x04, 0x00, 0x00, 0xff };
  
@@ -102,7 +104,7 @@ bool GifCreator::save(const char* filename, int every)
 	  // ExtStr[1] = delay[ni] % 256;
 	  // ExtStr[2] = delay[ni] / 256;
     
-	  int dt = duration*100.0f;
+      int dt = duration * 100.0f;
 	  ExtStr[1] = dt % 256;
 	  ExtStr[2] = dt / 256;
 
@@ -113,6 +115,7 @@ bool GifCreator::save(const char* filename, int every)
 		   GifFile,
 		   0, 0, w, h, FALSE, cmaps.size() > ni ? cmaps.at(ni) : cmaps.at(cmaps.size()-1)
 		   ) == GIF_ERROR) {
+
 	       PrintGifError();
 	       endProgress();
 	       return false;
@@ -147,17 +150,21 @@ bool GifCreator::save(const char* filename, int every)
 
 void GifCreator::appendReversedCopy()
 {
-     if(frames.size() < 2)
+     if(frames.size() < 2) {
 	  return;
-     if(cmaps.size() > 1 && cmaps.size() != frames.size())
+     }
+     if(cmaps.size() > 1 && cmaps.size() != frames.size()) {
 	  cerr << "WARNING: going to append reversed copy of frames but palettes probably won't match!" << endl;
+     }
      revStart = frames.size();
-     for(int i=frames.size()-2;i>0;i--)
+     for(int i=frames.size()-2;i>0;i--) {
 	  frames.push_back(frames.at(i));
+     }
 
      if(cmaps.size() > 1)
-	  for(int i=cmaps.size()-2;i>0;i--)
+      for(int i=cmaps.size()-2;i>0;i--) {
 	       cmaps.push_back(cmaps.at(i));
+      }
 }
 
 void GifCreator::removeReversedCopy()
