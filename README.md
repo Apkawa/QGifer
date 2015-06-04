@@ -6,6 +6,7 @@ QGifer is a tool for extracting part of a video to an animated GIF file.
 http://sourceforge.net/projects/qgifer/
 
     Author:  	Lukasz Chodyla <chodak166@op.pl>
+    Author:		Arkadii Ivanov <apkawa@gmail.com>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

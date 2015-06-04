@@ -12,9 +12,11 @@ SET(TARGET_NAME qgifer)
 SET(QGIFER_VERSION_MAJOR 0)
 SET(QGIFER_VERSION_MINOR 2)
 SET(QGIFER_VERSION_PATCH 3)
+SET(QGIFER_VERSION "${QGIFER_VERSION_MAJOR}.${QGIFER_VERSION_MINOR}.${QGIFER_VERSION_PATCH}")
 
 OPTION(QUIET_MODE "quiet mode" OFF)
 OPTION(RELEASE_MODE "release mode" OFF)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 
 IF(UNIX)
@@ -71,7 +73,7 @@ ENDIF( RELEASE_MODE )
 
 # uninstall target
 configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+    "cmake/cmake_uninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
     IMMEDIATE @ONLY)
 add_custom_target(uninstall
@@ -194,7 +196,7 @@ if(MINGW)
     "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
 endif(MINGW)
 
-ADD_EXECUTABLE(${TARGET_NAME} ${WINDOWS_EXEC} ${SOURCES} ${HEADERS} ${HEADERS_MOC} ${FORMS_HEADERS} ${RESOURCES_RCC} ${RES_FILES})
+ADD_EXECUTABLE(${TARGET_NAME} ${WINDOWS_EXEC} ${SOURCES} ${HEADERS_MOC} ${FORMS_HEADERS} ${RESOURCES_RCC} ${RES_FILES})
 TARGET_LINK_LIBRARIES(${TARGET_NAME} ${QT_LIBRARIES} ${OpenCV_LIBS} ${GIF_LIBRARIES})
 
 IF(UNIX)
@@ -216,6 +218,8 @@ IF(UNIX)
 ENDIF(UNIX)
 
 IF(WIN32)
+    SET(OpenCV_SUFFIX "${OpenCV_VERSION_MAJOR}${OpenCV_VERSION_MINOR}${OpenCV_VERSION_PATCH}")
+
     FILE(GLOB _QT_DLL_FILES
       ${QT_BINARY_DIR}/QtCore4.dll
       ${QT_BINARY_DIR}/QtGui4.dll
@@ -224,7 +228,16 @@ IF(WIN32)
         ${OpenCV_DIR}/bin/libopencv_core*.dll
         ${OpenCV_DIR}/bin/libopencv_highgui*.dll
         ${OpenCV_DIR}/bin/libopencv_imgproc*.dll
-        ${OpenCV_DIR}/bin/opencv_ffmpeg*.dll
+        ${OpenCV_DIR}/bin/opencv_ffmpeg.dll
+    )
+    FILE(GLOB_RECURSE _OPENCV_DLL_FILES
+        ${OpenCV_DIR}/bin/libopencv_core*.dll
+        ${OpenCV_DIR}/bin/libopencv_highgui*.dll
+        ${OpenCV_DIR}/bin/libopencv_imgproc*.dll
+    )
+
+    FILE(GLOB_RECURSE _OPENCV_FFMPEG_DLL_FILE
+        ${OpenCV_DIR}/../source/*/opencv_ffmpeg.dll
     )
 
     FILE(GLOB_RECURSE _GIF_DLL_FILES
@@ -253,6 +266,11 @@ IF(WIN32)
         ${_MINGW_DLL_FILES}
         DESTINATION .
         )
+    INSTALL(FILES
+        ${_OPENCV_FFMPEG_DLL_FILE}
+        DESTINATION .
+        RENAME "opencv_ffmpeg${OpenCV_SUFFIX}.dll"
+        )
 
     INSTALL(FILES
         ${QT_QGIF_PLUGIN_RELEASE}
@@ -274,46 +292,6 @@ IF(WIN32)
 ENDIF(WIN32)
 
 
-#------------------------------------------------------
-#-------------------- CPACK ---------------------------
-#------------------------------------------------------
-
-SET(PACKAGE_VERSION 1)
-SET(PACKAGE_NAME qgifer)
-
-IF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
-INCLUDE(InstallRequiredSystemLibraries)
-
-SET(CPACK_SET_DESTDIR "on")
-SET(CPACK_GENERATOR "DEB")
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A video-based gif creator.")
-
-SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION "A video-based gif creator.")
-
-SET(CPACK_PACKAGE_VENDOR "Chodak")
-SET(CPACK_PACKAGE_CONTACT "Lukasz Chodyla")
-SET(CPACK_PACKAGE_VERSION_MAJOR "${PACKAGE_VERSION}")
-SET(CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
-SET(CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}")
-SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}_${QGIFER_VERSION_MAJOR}.${QGIFER_VERSION_MINOR}.${QGIFER_VERSION_PATCH}-${PACKAGE_VERSION}_${CMAKE_SYSTEM_PROCESSOR}")
-
-SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.1.3), libc6 (>= 2.3.6-6~), libgcc1 (>= 1:4.1.1), libgif4 (>= 4.1.4), libopencv-core2.4, libopencv-highgui2.4, libopencv-imgproc2.4, libqtcore4 (>= 4:4.7.0~beta1), libqtgui4 (>= 4:4.6.1), libstdc++6 (>= 4.1.1)")
-
-SET(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
-SET(CPACK_DEBIAN_PACKAGE_SECTION "video")
-SET(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
-
-SET(CPACK_COMPONENTS_ALL Libraries ApplicationData)
 
 
-IF(WIN32)
-    SET(CPACK_PACKAGING_INSTALL_PREFIX ".")
-ENDIF(WIN32)
-
-
-INCLUDE(CPack)
-
-ENDIF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
-
-
-
+INCLUDE(cmake/CMakeCPack.cmake)
