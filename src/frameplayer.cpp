@@ -105,7 +105,7 @@ void FramePlayer::nextFrame() {
         if (currentPos >= totalFrames) {
             currentPos = totalFrames - 1;
         }
-        //qDebug() << "current pos: " << currentPos << "/" << frames;
+        qDebug() << "current pos: " << currentPos << "/" << totalFrames;
         //cvtColor(m,m,CV_BGR2RGB);
         if (medianblur) {
             medianBlur(m, m, medianblur % 2 ? medianblur : medianblur + 1);

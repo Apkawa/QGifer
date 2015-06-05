@@ -38,6 +38,7 @@ GifWidget::GifWidget(QSettings* s): timerId(-1), currentFrame(-1), reversePlay(f
      connect(visibleFPSBox, SIGNAL(valueChanged(int)), this, SLOT(updateInterval()));
      connect(calculateIntervalForFPS, SIGNAL(toggled(bool)), this, SLOT(updateInterval()));
      connect(saveEveryBox, SIGNAL(toggled(bool)), this, SLOT(updateInterval()));
+     connect(seBox, SIGNAL(valueChanged(int)), this, SLOT(updateInterval()));
 
 
 }
@@ -54,7 +55,7 @@ void GifWidget::addFrame(const QImage& f, ColorMapObject* map, bool dither)
      gif->resize(i.width(), i.height());
 
      if(map) {
-         qDebug("pallete %i %i", map->ColorCount, map->BitsPerPixel);
+         //qDebug("pallete %i %i", map->ColorCount, map->BitsPerPixel);
          gif->addPalette(map);
      }
 

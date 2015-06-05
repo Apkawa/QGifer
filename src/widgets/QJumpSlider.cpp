@@ -28,5 +28,6 @@ void QJumpSlider::mouseMoveEvent(QMouseEvent *event) {
         QString toolTipText = QString("%1 / %2 [%3]").arg(time_display).arg(max_time_display).arg(hovered_frame);
         this->setToolTip(toolTipText);
     }
+    QSlider::mouseMoveEvent(event);
 }
 
