@@ -28,3 +28,7 @@
 #ifndef VERSION_PATCH
 #define VERSION_PATCH @QGIFER_VERSION_PATCH@
 #endif
+
+#ifndef VERSION
+#define VERSION "@QGIFER_VERSION@"
+#endif

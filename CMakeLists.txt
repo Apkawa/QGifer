@@ -12,10 +12,18 @@ SET(TARGET_NAME qgifer)
 SET(QGIFER_VERSION_MAJOR 0)
 SET(QGIFER_VERSION_MINOR 2)
 SET(QGIFER_VERSION_PATCH 3)
+# choices between "a", "b", "rc" and empty string for release
+SET(QGIFER_VERSION_PRERELEASE_TAG rc)
+SET(QGIFER_VERSION_PRERELEASE_VERSION 2)
 SET(QGIFER_VERSION "${QGIFER_VERSION_MAJOR}.${QGIFER_VERSION_MINOR}.${QGIFER_VERSION_PATCH}")
+
+IF(QGIFER_VERSION_PRERELEASE_TAG)
+    SET(QGIFER_VERSION "${QGIFER_VERSION}-${QGIFER_VERSION_PRERELEASE_TAG}${QGIFER_VERSION_PRERELEASE_VERSION}")
+ENDIF(QGIFER_VERSION_PRERELEASE_TAG)
 
 OPTION(QUIET_MODE "quiet mode" OFF)
 OPTION(RELEASE_MODE "release mode" OFF)
+
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 
@@ -80,7 +88,6 @@ add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
 
-
 #------------------------------------------------------
 #-------------------- APP BUILD -----------------------
 #------------------------------------------------------
@@ -97,76 +104,88 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
 	ui
 )
 
-SET (HEADERS
-src/gifcreator.h
-src/textrenderer.h
-src/utils/qgiferformatter.h
+SET(HEADERS
+        src/gifcreator.h
+        src/textrenderer.h
+        src/utils/qgiferformatter.h
 )
 
-SET (QT_HEADERS
-src/frameplayer.h
-src/previewwidget.h
-src/mainwindow.h
-src/gifwidget.h
-src/qgifcreator.h
-src/palettewidget.h
-src/qmultislider.h
-src/optimizerdialog.h
-src/converterdialog.h
-src/aboutdialog.h
-src/workspace.h
-src/workspaceobject.h
-src/objectwidget.h
-src/textwidget.h
-src/interpolationdialog.h
-src/textobject.h
+SET(QT_HEADERS
+        src/frameplayer.h
+        src/previewwidget.h
+        src/mainwindow.h
+        src/gifwidget.h
+        src/qgifcreator.h
+        src/palettewidget.h
+        src/qmultislider.h
+        src/optimizerdialog.h
+        src/converterdialog.h
+        src/aboutdialog.h
+        src/workspace.h
+        src/workspaceobject.h
+        src/objectwidget.h
+        src/textwidget.h
+        src/interpolationdialog.h
+        src/textobject.h
 
-src/widgets/QJumpSlider.h
-src/widgets/QPressAction.h
+        src/widgets/QJumpSlider.h
+        src/widgets/QPressAction.h
 
 
 )
 
-SET (SOURCES
-src/frameplayer.cpp
-src/main.cpp
-src/previewwidget.cpp
-src/mainwindow.cpp
-src/gifwidget.cpp
-src/gifcreator.cpp
-src/qgifcreator.cpp
-src/palettewidget.cpp
-src/qmultislider.cpp
-src/optimizerdialog.cpp
-src/converterdialog.cpp
-src/aboutdialog.cpp
-src/workspace.cpp
-src/workspaceobject.cpp
-src/objectwidget.cpp
-src/textwidget.cpp
-src/textrenderer.cpp
-src/interpolationdialog.cpp
+SET(SOURCES
+        src/frameplayer.cpp
+        src/main.cpp
+        src/previewwidget.cpp
+        src/mainwindow.cpp
+        src/gifwidget.cpp
+        src/gifcreator.cpp
+        src/qgifcreator.cpp
+        src/palettewidget.cpp
+        src/qmultislider.cpp
+        src/optimizerdialog.cpp
+        src/converterdialog.cpp
+        src/aboutdialog.cpp
+        src/workspace.cpp
+        src/workspaceobject.cpp
+        src/objectwidget.cpp
+        src/textwidget.cpp
+        src/textrenderer.cpp
+        src/interpolationdialog.cpp
 
-src/widgets/QJumpSlider.cpp
-src/widgets/QPressAction.cpp
+        src/widgets/QJumpSlider.cpp
+        src/widgets/QPressAction.cpp
 
-src/utils/qgiferformatter.cpp
+        src/utils/qgiferformatter.cpp
 )
 
-SET (RESOURCES
-res.qrc
+SET(RESOURCES
+        res.qrc
 )
 
-SET (FORMS
-ui/frameplayer.ui
-ui/mainwindow.ui
-ui/gifwidget.ui
-ui/optimizerdialog.ui
-ui/converterdialog.ui
-ui/aboutdialog.ui
-ui/objectwidget.ui
-ui/textwidget.ui
-ui/interpolationdialog.ui
+SET(FORMS
+        ui/frameplayer.ui
+        ui/mainwindow.ui
+        ui/gifwidget.ui
+        ui/optimizerdialog.ui
+        ui/converterdialog.ui
+        ui/aboutdialog.ui
+        ui/objectwidget.ui
+        ui/textwidget.ui
+        ui/interpolationdialog.ui
+)
+
+
+FILE(GLOB LOCALES
+        "${CMAKE_CURRENT_SOURCE_DIR}/locale/*.qm"
+)
+
+SET(DOCS
+        doc/ChangeLog
+        doc/COPYRIGHT
+        doc/LICENSE
+        doc/README
 )
 
 QT4_WRAP_CPP(HEADERS_MOC ${QT_HEADERS})
@@ -188,6 +207,7 @@ if(MINGW)
   set(RES_FILES "icon.rc")
   set(CMAKE_RC_COMPILER_INIT windres)
   ENABLE_LANGUAGE(RC)
+
   SET(GIF_LIBRARIES
   ${GIF_LIBRARIES}
   "${GIF_LIBRARIES}/libgif.dll.a"
@@ -204,17 +224,8 @@ IF(UNIX)
 	INSTALL(FILES "doc/menu/qgifer" DESTINATION ${MENU_INSTALL_DIR})
 	INSTALL(FILES "doc/qgifer.desktop" DESTINATION ${DESKTOP_INSTALL_DIR})
 	INSTALL(FILES "doc/qgifer.xpm" DESTINATION ${ICON_INSTALL_DIR})
-	INSTALL(FILES
-	locale/pl.qm
-	locale/ru.qm
-	locale/sv.qm
-	locale/jp.qm
-	locale/cs.qm
-	locale/fr.qm
-	locale/zh_TW.qm
-	DESTINATION ${DATA_INSTALL_DIR}/locale/)
-	INSTALL(FILES "doc/README" "doc/LICENSE" "doc/COPYRIGHT" "doc/ChangeLog"
-	DESTINATION ${DOC_INSTALL_DIR})
+        INSTALL(FILES ${LOCALES} DESTINATION ${DATA_INSTALL_DIR}/locale/)
+        INSTALL(FILES ${DOCS} DESTINATION ${DOC_INSTALL_DIR})
 ENDIF(UNIX)
 
 IF(WIN32)
@@ -254,12 +265,7 @@ IF(WIN32)
         )
 
     INSTALL(FILES
-        doc/ChangeLog
-        doc/COPYRIGHT
-        doc/LICENSE
-        doc/README
-        "doc/TRANSLATOR'S NOTE.txt"
-
+        ${DOCS}
         ${_QT_DLL_FILES}
         ${_OPENCV_DLL_FILES}
         ${_GIF_DLL_FILES}
@@ -278,20 +284,10 @@ IF(WIN32)
         DESTINATION imageformats/
         )
 
-    INSTALL(FILES
-        locale/pl.qm
-        locale/ru.qm
-        locale/sv.qm
-        locale/jp.qm
-        locale/cs.qm
-        locale/fr.qm
-        locale/zh_TW.qm
-        DESTINATION locale/
-        )
+    INSTALL(FILES ${LOCALES}
+        DESTINATION locale/)
 
 ENDIF(WIN32)
-
-
 
 
 INCLUDE(cmake/CMakeCPack.cmake)

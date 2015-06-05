@@ -34,10 +34,7 @@ int main(int argc, char* argv[])
      if(argc == 2 && QFile::exists(QString(argv[1])))
 	  pro = argv[1];
      else if(argc > 1){
-	  std::cout << "======== QGifer v" << 
-	       QString::number(VERSION_MAJOR).toStdString() << "." << 
-	       QString::number(VERSION_MINOR).toStdString() << "." << 
-	       QString::number(VERSION_PATCH).toStdString() << 
+      std::cout << "======== QGifer v" << VERSION <<
 	       " beta ========" << std::endl << std::endl <<
 	       "Usage: " << QString(argv[0]).toStdString() << 
 	       " [project path]" << std::endl << std::endl;
