@@ -91,8 +91,8 @@ bool GifCreator::save(const char* filename, int every)
      //------------------
 
 
-     for (int ni=0; ni<frames.size(); ni+=every) {      
-       if(!savingProgress((float)ni/(frames.size()/every)*100)) {
+     for (unsigned int ni=0; ni<frames.size(); ni+=every) {
+       if(!savingProgress((float) ni /(frames.size()/every)*100)) {
            return true; //przerwanie przez usera
        }
 
@@ -113,7 +113,7 @@ bool GifCreator::save(const char* filename, int every)
             
 	  if (EGifPutImageDesc(
 		   GifFile,
-		   0, 0, w, h, FALSE, cmaps.size() > ni ? cmaps.at(ni) : cmaps.at(cmaps.size()-1)
+		   0, 0, w, h, FALSE, getPalette(ni)
 		   ) == GIF_ERROR) {
 
 	       PrintGifError();

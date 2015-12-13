@@ -22,36 +22,64 @@
 
 #include <QWidget>
 #include <gif_lib.h>
+#include <core/Palette.h>
 
-class PaletteWidget : public QWidget
-{
-     Q_OBJECT;
+class PaletteWidget : public QWidget {
+Q_OBJECT;
 public:
-     PaletteWidget(QWidget* parent=0, Qt::WindowFlags f=0);
-     virtual ~PaletteWidget();
-     ColorMapObject* map() {return palette;}
-     ColorMapObject* mapCopy() {return MakeMapObject(palette->ColorCount, palette->Colors);}
-     bool fromImage(const QImage& img, int palette_size, float mindiff = 2);
-     void setColumnCount(int cc){cols = cc;}
-     bool toFile(const QString& path);
-     bool fromFile(const QString& path);
-     QString toString();
-     bool fromString(const QString& str);
-     int getSize() const {return size;}
-     void clear() {if(palette) FreeMapObject(palette); palette = NULL; update();}
+    PaletteWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
+
+    virtual ~PaletteWidget();
+
+    ColorMapObject *map() { return palette_v2.getMap(); }
+
+    ColorMapObject *mapCopy() { return palette_v2.getMapCopy(); }
+
+    bool fromImage(const QImage &img, int palette_size, float mindiff = 2);
+
+    bool toFile(const QString &path);
+
+    bool fromFile(const QString &path);
+
+    QString toString();
+
+    bool fromString(const QString &str);
+
+    int getSize() const {
+        return size;
+    }
+
+    void clear() {
+        palette_v2.clear();
+        update();
+    }
+
 private:
-     int size;
-     int cols;
-     int sqSize;
-     int hlIndex;
-     ColorMapObject* palette;
-     float difference(ColorMapObject* a, ColorMapObject* b);
-     void paintEvent(QPaintEvent*);
-     void resizeEvent(QResizeEvent*){sqSize = (width()-10)/cols;}
-     void mouseReleaseEvent(QMouseEvent*);
-     void mouseMoveEvent(QMouseEvent*);
-     void leaveEvent(QEvent*){hlIndex=-1;}
-     private slots:
+    int size;
+    int cols;
+    int sqSize;
+    int hlIndex;
+    Palette palette_v2;
+
+
+    void paintEvent(QPaintEvent *);
+
+    void resizeEvent(QResizeEvent *) { sqSize = (width() - 10) / cols; }
+
+    void mouseReleaseEvent(QMouseEvent *);
+
+    void mouseMoveEvent(QMouseEvent *);
+
+    void leaveEvent(QEvent *) { hlIndex = -1; }
+
+    void reload() {
+        setFixedSize(
+                width(),
+                (getSize() / cols) * sqSize + sqSize + 2);
+        update();
+    }
+
+private slots:
 
 };
 

@@ -31,39 +31,60 @@ using namespace std;
 typedef vector<GifByteType> Frame;
 typedef unsigned char Byte;
 
-class GifCreator
-{
+class GifCreator {
 
 public:
 
-  GifCreator();
-  ~GifCreator();
-  
-  void resize(int width, int height) {w = width; h = height;}
+    GifCreator();
 
-  // Adds a frame that is to last [dt] seconds
-  // "data" is the image (r,g,b,r,g,b,r,g,b...), bottom-to-top
-  // The first frame defines the palette
-  bool addFrame(Byte* data,  float dt);
+    ~GifCreator();
 
-  // Saves the results in a gif file
-  bool save(const char* filename, int every = 1);
-  void setColorRes(int res) {colorRes = res;}
-  void addPalette(ColorMapObject* pal) {cmaps.push_back(pal);}
-  void setDuration(float d){duration = d;}
-  void appendReversedCopy();
-  void removeReversedCopy();
+    void resize(int width, int height) {
+        w = width;
+        h = height;
+    }
+
+    // Adds a frame that is to last [dt] seconds
+    // "data" is the image (r,g,b,r,g,b,r,g,b...), bottom-to-top
+    // The first frame defines the palette
+    bool addFrame(Byte *data, float dt);
+
+    // Saves the results in a gif file
+    bool save(const char *filename, int every = 1);
+
+    void setColorRes(int res) {
+        colorRes = res;
+    }
+
+    void addPalette(ColorMapObject *pal) {
+        cmaps.push_back(pal);
+    }
+
+    void setDuration(float d) { duration = d; }
+
+    void appendReversedCopy();
+
+    void removeReversedCopy();
+
+    ColorMapObject *getPalette(unsigned int number_frame) {
+        if (cmaps.size() > number_frame) {
+            return cmaps.at(cmaps.size() - 1); //get last
+        } else {
+            return cmaps.at(number_frame);
+        }
+    }
+
 
 protected:
-  virtual bool savingProgress(int){return true;} //procentowy postep w zapisie, false jesli przerwac prace
-  virtual void endProgress(){}; //zakonczenie pracy
-  vector<Frame> frames;
-  //vector<int> delay; //na razie rezygnujemy z roznych opoznien
-  vector<ColorMapObject*> cmaps;
-  int w;
-  int h;
-  int colorRes;
-  float duration;
-  int revStart; //indeks klatki od ktorej zaczyna sie odwrocone powtorzenie
-  //int paletteSize;
+    virtual bool savingProgress(int) { return true; } //procentowy postep w zapisie, false jesli przerwac prace
+    virtual void endProgress() { }; //zakonczenie pracy
+    vector<Frame> frames;
+    //vector<int> delay; //na razie rezygnujemy z roznych opoznien
+    vector<ColorMapObject *> cmaps;
+    int w;
+    int h;
+    int colorRes;
+    float duration;
+    int revStart; //indeks klatki od ktorej zaczyna sie odwrocone powtorzenie
+    //int paletteSize;
 };

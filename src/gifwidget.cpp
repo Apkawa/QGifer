@@ -55,7 +55,6 @@ void GifWidget::addFrame(const QImage& f, ColorMapObject* map, bool dither)
      gif->resize(i.width(), i.height());
 
      if(map) {
-         //qDebug("pallete %i %i", map->ColorCount, map->BitsPerPixel);
          gif->addPalette(map);
      }
 

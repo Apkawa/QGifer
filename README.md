@@ -48,7 +48,16 @@ Requirements
  * giflib version 4.1 or higher.
  * CMake version 2.6 or higher.
 
+Install build requirements
+===========================
 
+For debian
+----------
+    
+    sudo apt-get install libqt4-dev \
+            libopencv-devlibopencv-core-dev libopencv-highgui-dev libopencv-imgproc-dev \
+            libgif-dev cmake
+            
 Compilation and installation
 ============
 
