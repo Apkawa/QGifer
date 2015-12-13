@@ -121,6 +121,7 @@ private slots:
     void jumpToStart() {
         player->seek(startBox->value());
     };
+
     void jumpToStop() {
         player->seek(stopBox->value());
     };

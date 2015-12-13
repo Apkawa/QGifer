@@ -18,108 +18,96 @@
 ************************************************************************/
 
 #include "gifwidget.h"
-#include <QProgressDialog>
 #include <QFileDialog>
-#include <QProcess>
 #include <QMessageBox>
 
 
+GifWidget::GifWidget(QSettings *s) : timerId(-1), currentFrame(-1), reversePlay(false) {
+    setupUi(this);
+    set = s;
+    createActions();
+    gif = new QGifCreator();
 
-GifWidget::GifWidget(QSettings* s): timerId(-1), currentFrame(-1), reversePlay(false)
-{
-     setupUi(this);
-     set = s;
-     createActions();
-     gif = new QGifCreator();
+    connect(seBox, SIGNAL(valueChanged(int)), this, SLOT(updateEstimateSize()));
+    connect(saveEveryBox, SIGNAL(toggled(bool)), this, SLOT(updateEstimateSize()));
 
-     connect(seBox, SIGNAL(valueChanged(int)), this, SLOT(updateEstimateSize()));
-     connect(saveEveryBox, SIGNAL(toggled(bool)), this, SLOT(updateEstimateSize()));
-
-     connect(visibleFPSBox, SIGNAL(valueChanged(int)), this, SLOT(updateInterval()));
-     connect(calculateIntervalForFPS, SIGNAL(toggled(bool)), this, SLOT(updateInterval()));
-     connect(saveEveryBox, SIGNAL(toggled(bool)), this, SLOT(updateInterval()));
-     connect(seBox, SIGNAL(valueChanged(int)), this, SLOT(updateInterval()));
+    connect(visibleFPSBox, SIGNAL(valueChanged(int)), this, SLOT(updateInterval()));
+    connect(calculateIntervalForFPS, SIGNAL(toggled(bool)), this, SLOT(updateInterval()));
+    connect(saveEveryBox, SIGNAL(toggled(bool)), this, SLOT(updateInterval()));
+    connect(seBox, SIGNAL(valueChanged(int)), this, SLOT(updateInterval()));
 
 
 }
 
-GifWidget::~GifWidget()
-{
-     delete gif;
+GifWidget::~GifWidget() {
+    delete gif;
 }
 
-void GifWidget::addFrame(const QImage& f, ColorMapObject* map, bool dither)
-{
-     QImage i(f);
-     i = i.mirrored().convertToFormat(QImage::Format_RGB888);
-     gif->resize(i.width(), i.height());
+void GifWidget::addFrame(const QImage &f, ColorMapObject *map, bool dither) {
+    QImage i(f);
+    i = i.mirrored().convertToFormat(QImage::Format_RGB888);
+    gif->resize(i.width(), i.height());
 
-     if(map) {
-         gif->addPalette(map);
-     }
+    if (map) {
+        gif->addPalette(map);
+    }
 
-     gif->prepareFrame(&i, map, dither);
-     prevFrames.append(i.mirrored());
+    gif->prepareFrame(&i, map, dither);
+    prevFrames.append(i.mirrored());
 
-     currentFrame = 0;
+    currentFrame = 0;
 
-     frameByteSize += i.byteCount();
-     updateEstimateSize();
-
-}
-
-void GifWidget::createActions()
-{
-     QAction* a = new QAction(tr("Save gif..."), this);
-     a->setIcon(QIcon(":/res/save.png"));
-     saveButton->setDefaultAction(a);
-     connect(a, SIGNAL(triggered()), this, SLOT(save()));
-
-     a = new QAction(tr("Play"), this);
-     a->setIcon(QIcon(":/res/start.png"));
-     playButton->setDefaultAction(a);
-     connect(a, SIGNAL(triggered()), this, SLOT(play()));
-     
-     a = new QAction(tr("Pause"), this);
-     a->setIcon(QIcon(":/res/pause.png"));
-     pauseButton->setDefaultAction(a);
-     connect(a, SIGNAL(triggered()), this, SLOT(pause()));
+    frameByteSize += i.byteCount();
+    updateEstimateSize();
 
 }
 
-void GifWidget::play()
-{
-     if(timerId == -1)
-     {
-	  timerId = startTimer(intervalBox->value());
-	  skipped = 0;
-	  currentFrame = 0;
-	  reversePlay = false;
-     }
-     else
-     {
-	  pause();
-	  play();
-     }
-     intervalBox->setEnabled(false);
+void GifWidget::createActions() {
+    QAction *a = new QAction(tr("Save gif..."), this);
+    a->setIcon(QIcon(":/res/save.png"));
+    saveButton->setDefaultAction(a);
+    connect(a, SIGNAL(triggered()), this, SLOT(save()));
+
+    a = new QAction(tr("Play"), this);
+    a->setIcon(QIcon(":/res/start.png"));
+    playButton->setDefaultAction(a);
+    connect(a, SIGNAL(triggered()), this, SLOT(play()));
+
+    a = new QAction(tr("Pause"), this);
+    a->setIcon(QIcon(":/res/pause.png"));
+    pauseButton->setDefaultAction(a);
+    connect(a, SIGNAL(triggered()), this, SLOT(pause()));
+
 }
 
-void GifWidget::pause()
-{
-     killTimer(timerId);
-     timerId = -1;
-     intervalBox->setEnabled(true);
+void GifWidget::play() {
+    if (timerId == -1) {
+        timerId = startTimer(intervalBox->value());
+        skipped = 0;
+        currentFrame = 0;
+        reversePlay = false;
+    }
+    else {
+        pause();
+        play();
+    }
+    intervalBox->setEnabled(false);
 }
 
-void GifWidget::updateInterval()
-{
+void GifWidget::pause() {
+    killTimer(timerId);
+    timerId = -1;
+    intervalBox->setEnabled(true);
+}
+
+void GifWidget::updateInterval() {
     if (calculateIntervalForFPS->isChecked()) {
         uint visibleFps = visibleFPSBox->value();
         uint skipFrame = 1;
         if (saveEveryBox->isChecked()) {
             skipFrame = seBox->value();
         }
-        uint newInterval = (1000 / visibleFps ) * (visibleFps / (visibleFps / skipFrame));
+        uint newInterval = (1000 / visibleFps) * (visibleFps / (visibleFps / skipFrame));
         intervalBox->setValue(newInterval);
 
         pause();
@@ -127,46 +115,42 @@ void GifWidget::updateInterval()
     }
 }
 
-void GifWidget::save()
-{
-     qDebug() << "saving gif...";
+void GifWidget::save() {
+    qDebug() << "saving gif...";
 
-     QString filename = QFileDialog::getSaveFileName(
-      this,
-      tr("Save GIF file"),
-      set->value("last_gif_dir","").toString() +
-	  (suggestedName.isEmpty() ? "" : "/"+suggestedName+".gif"),
-	  "GIF files (*.gif);;All files (*.*)");
+    QString filename = QFileDialog::getSaveFileName(
+            this,
+            tr("Save GIF file"),
+            set->value("last_gif_dir", "").toString() +
+            (suggestedName.isEmpty() ? "" : "/" + suggestedName + ".gif"),
+            "GIF files (*.gif);;All files (*.*)");
 
-     if(filename.isEmpty()) {
-         return;
-     }
-     if(!prevFrames.size()) {
-	  return;
-     }
-     saveGif(filename);
+    if (filename.isEmpty()) {
+        return;
+    }
+    if (!prevFrames.size()) {
+        return;
+    }
+    saveGif(filename);
 }
 
-void GifWidget::saveGif(const QString& filename)
-{
-     pause();
-     gif->setDuration((double)intervalBox->value() / 1000);
-     if(reverseBox->isChecked()) {
-	  gif->appendReversedCopy();
-     }
-     if(!gif->save(
-                 filename.toStdString().c_str(),
-                 saveEveryBox->isChecked() ? seBox->value() : 1))
-     {
-	  QMessageBox::critical(this,tr("Error"),tr("Unexpected error while saving GIF file!"));
-	  //PrintGifError(); przeniesione do save
-     }
-     gif->removeReversedCopy();
-     emit gifSaved(filename);
+void GifWidget::saveGif(const QString &filename) {
+    pause();
+    gif->setDuration((double) intervalBox->value() / 1000);
+    if (reverseBox->isChecked()) {
+        gif->appendReversedCopy();
+    }
+    if (!gif->save(
+            filename.toStdString().c_str(),
+            saveEveryBox->isChecked() ? seBox->value() : 1)) {
+        QMessageBox::critical(this, tr("Error"), tr("Unexpected error while saving GIF file!"));
+        //PrintGifError(); przeniesione do save
+    }
+    gif->removeReversedCopy();
+    emit gifSaved(filename);
 }
 
-unsigned long GifWidget::getEstimateSize()
-{
+unsigned long GifWidget::getEstimateSize() {
 
     if (saveEveryBox->isChecked()) {
         return (this->frameByteSize / 8) / this->seBox->value();
@@ -176,29 +160,24 @@ unsigned long GifWidget::getEstimateSize()
 }
 
 
+void GifWidget::timerEvent(QTimerEvent *) {
 
-void GifWidget::timerEvent(QTimerEvent*)
-{
+    preview->setImage(prevFrames.at(currentFrame));
+    int d = saveEveryBox->isChecked() ? seBox->value() : 1;
+    currentFrame += reversePlay ? d * -1 : d;
 
-     preview->setImage(prevFrames.at(currentFrame));
-     int d = saveEveryBox->isChecked() ? seBox->value() : 1;
-     currentFrame += reversePlay ? d*-1 : d;
-
-     if(reversePlay && currentFrame <= 0)
-     {
-	  currentFrame = 0;
-	  reversePlay = false;
-     }
-     if(!reverseBox->isChecked() && currentFrame >= prevFrames.size()) {
+    if (reversePlay && currentFrame <= 0) {
+        currentFrame = 0;
+        reversePlay = false;
+    }
+    if (!reverseBox->isChecked() && currentFrame >= prevFrames.size()) {
         currentFrame = skipped = 0;
-     }
-     else if(reverseBox->isChecked() && currentFrame >= prevFrames.size() - 1)
-     {
-	  currentFrame = prevFrames.size()-1;
-	  reversePlay = true;
-     }
+    }
+    else if (reverseBox->isChecked() && currentFrame >= prevFrames.size() - 1) {
+        currentFrame = prevFrames.size() - 1;
+        reversePlay = true;
+    }
 
 
-     
 }
 

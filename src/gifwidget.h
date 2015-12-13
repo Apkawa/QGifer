@@ -30,59 +30,73 @@
 #include "utils/qgiferformatter.h"
 
 
-class GifWidget : public QDialog, public Ui::GifWidget, public Retranslatable
-{
-     Q_OBJECT;
+class GifWidget : public QDialog, public Ui::GifWidget, public Retranslatable {
+Q_OBJECT;
 public:
-     GifWidget(QSettings* s);
-     virtual ~GifWidget();
-     void addFrame(const QImage& f, ColorMapObject* map, bool dither);
-     void setColorRes(int res){gif->setColorRes(res);}
-     void suggestName(const QString& name){suggestedName = name;}
-     void saveGif(const QString& gif);
+    GifWidget(QSettings *s);
 
-     void retranslate() {
-         QString t = windowTitle();retranslateUi(this);setWindowTitle(t);
-     }
+    virtual ~GifWidget();
 
-     unsigned long getEstimateSize();
+    void addFrame(const QImage &f, ColorMapObject *map, bool dither);
 
-     void setVisibleFPS(uint FPS) {
-         visibleFPSBox->setValue(FPS);
-     }
+    void setColorRes(int res) { gif->setColorRes(res); }
+
+    void suggestName(const QString &name) { suggestedName = name; }
+
+    void saveGif(const QString &gif);
+
+    void retranslate() {
+        QString t = windowTitle();
+        retranslateUi(this);
+        setWindowTitle(t);
+    }
+
+    unsigned long getEstimateSize();
+
+    void setVisibleFPS(uint FPS) {
+        visibleFPSBox->setValue(FPS);
+    }
 
 signals:
-     void gifSaved(const QString&);
+
+    void gifSaved(const QString &);
 
 private:
-     QGifCreator* gif;
-     bool reversePlay;
-     ColorMapObject* palette;
-     QSettings* set;
-     void createActions();
-     QString suggestedName;
-     QList<QImage> prevFrames;
+    QGifCreator *gif;
+    bool reversePlay;
+    ColorMapObject *palette;
+    QSettings *set;
 
-     unsigned long frameByteSize = 0;
+    void createActions();
 
-     int timerId;
-     int currentFrame;
-     int skipped;
-     void timerEvent(QTimerEvent*);
+    QString suggestedName;
+    QList<QImage> prevFrames;
+
+    unsigned long frameByteSize = 0;
+
+    int timerId;
+    int currentFrame;
+    int skipped;
+
+    void timerEvent(QTimerEvent *);
 
 public slots:
-	  void save();
-	  void play();
-	  void pause();
-      void adjustWidgetSize(){
-          adjustSize();
-      }
 
-      void updateEstimateSize() {
-          estimateSize->setText(QGifer::utils::humanSizeFormat(this->getEstimateSize()));
-      }
+    void save();
 
-      void updateInterval();
+    void play();
+
+    void pause();
+
+    void adjustWidgetSize() {
+        adjustSize();
+    }
+
+    void updateEstimateSize() {
+        estimateSize->setText(QGifer::utils::humanSizeFormat(this->getEstimateSize()));
+    }
+
+    void updateInterval();
 
 };
 

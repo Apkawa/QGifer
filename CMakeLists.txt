@@ -158,7 +158,7 @@ SET(SOURCES
         src/widgets/QPressAction.cpp
 
         src/utils/qgiferformatter.cpp
-        src/core/Palette.cpp src/core/Palette.h)
+        src/core/Palette.cpp src/core/Palette.h src/core/AbstractFramePlayer.cpp src/core/AbstractFramePlayer.h)
 
 SET(RESOURCES
         res.qrc

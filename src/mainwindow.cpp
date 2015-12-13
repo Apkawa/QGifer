@@ -20,7 +20,6 @@
 #include <QTimer>
 #include <QProgressDialog>
 #include <QXmlStreamWriter>
-#include <QXmlStreamReader>
 #include <QFile>
 #include <QTextStream>
 #include <QDirIterator>
@@ -274,19 +273,19 @@ void MainWindow::extractGif() {
     gw->suggestName(sn);
     gw->setWindowTitle(sn);
     QProgressDialog pd(
-                "Rendering frames...",
-                "Abort",
-                 startBox->value(),
-                 stopBox->value(),
-                       this);
+            "Rendering frames...",
+            "Abort",
+            startBox->value(),
+            stopBox->value(),
+            this);
 
     pd.setAttribute(Qt::WA_DeleteOnClose, true);
-    pd.setWindowModality(Qt::WindowModal);    
+    pd.setWindowModality(Qt::WindowModal);
     pd.show();
     qApp->processEvents();
     ColorMapObject *map = paletteWidget->mapCopy();
     player->seek(startBox->value() - 1);
-    for (long i = startBox->value(); i <= stopBox->value() && ! pd.wasCanceled(); i++) {
+    for (long i = startBox->value(); i <= stopBox->value() && !pd.wasCanceled(); i++) {
         pd.setValue(i);
         if (varPaletteBox->isChecked()) {
             player->nextFrame();
@@ -315,8 +314,8 @@ void MainWindow::extractGif() {
     pd.setValue(stopBox->value());
 
     gw->move(
-             x() + width() / 2 - gw->minimumSize().width() / 2,
-             y() + height() / 2 - gw->minimumSize().height() / 2);
+            x() + width() / 2 - gw->minimumSize().width() / 2,
+            y() + height() / 2 - gw->minimumSize().height() / 2);
     gw->show();
     gw->play();
     player->pause();
@@ -380,7 +379,7 @@ void MainWindow::frameChanged(long f) {
 void MainWindow::gifSaved(const QString &path) {
     set->setValue("last_gif", path);
     set->setValue("last_gif_dir", QFileInfo(path).absoluteDir().absolutePath());
-    if (set->value("show_optimizer", false).toBool()){
+    if (set->value("show_optimizer", false).toBool()) {
         runOptimizer();
     }
 }

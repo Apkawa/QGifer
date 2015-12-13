@@ -134,8 +134,7 @@ bool Palette::fromFile(const QString &path) {
 }
 
 void Palette::setColor(unsigned int i, QColor color) {
-    if(color.isValid())
-    {
+    if (color.isValid()) {
         palette->Colors[i].Red = color.red();
         palette->Colors[i].Green = color.green();
         palette->Colors[i].Blue = color.blue();
@@ -145,8 +144,8 @@ void Palette::setColor(unsigned int i, QColor color) {
 
 QColor Palette::getColor(unsigned int i) {
     return QColor(
-		     palette->Colors[i].Red,
-		     palette->Colors[i].Green,
-		     palette->Colors[i].Blue);
+            palette->Colors[i].Red,
+            palette->Colors[i].Green,
+            palette->Colors[i].Blue);
 
 }

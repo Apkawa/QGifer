@@ -11,5 +11,4 @@ namespace QGifer {
 }
 
 
-
 #endif // QGIFERFORMATTER_H

@@ -27,28 +27,31 @@
 #include <QDebug>
 #include "gifcreator.h"
 
-class QGifCreator : public QObject, public GifCreator
-{
-     Q_OBJECT;
+class QGifCreator : public QObject, public GifCreator {
+Q_OBJECT;
 public:
-     QGifCreator();
-     virtual ~QGifCreator();
-     
-     Byte* imageData(const QImage& img);
-     void prepareFrame(QImage* img, ColorMapObject* map, bool dither = true);
+    QGifCreator();
+
+    virtual ~QGifCreator();
+
+    Byte *imageData(const QImage &img);
+
+    void prepareFrame(QImage *img, ColorMapObject *map, bool dither = true);
+
 private:
-     bool savingProgress(int p);
-     void endProgress() {
-         if(progressDialog)
-         {
-             progressDialog->close();
-             delete progressDialog;
-             progressDialog = NULL;
-         }
-     }
-     QProgressDialog* progressDialog;
-     QList<QImage*> cache;
-     private slots:
+    bool savingProgress(int p);
+
+    void endProgress() {
+        if (progressDialog) {
+            progressDialog->close();
+            delete progressDialog;
+            progressDialog = NULL;
+        }
+    }
+
+    QProgressDialog *progressDialog;
+    QList<QImage *> cache;
+private slots:
 
 };
 

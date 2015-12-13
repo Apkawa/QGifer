@@ -21,8 +21,9 @@
 #include "frameplayer.h"
 
 FramePlayer::FramePlayer(QWidget *parent) : QWidget(parent), totalFrames(0), originalSize(Size(0, 0)),
-                                            currentPos(-1), timerId(-1), status(Stopped), statusbar(NULL),
-                                            raw(false), interval(40), medianblur(0) {
+                                                    currentPos(-1), timerId(-1), status(Stopped),
+                                                    statusbar(NULL),
+                                                    raw(false), interval(40), medianblur(0) {
     setupUi(this);
     workspace = new Workspace(frame);
     workspace->enableBackground(true);
@@ -303,8 +304,7 @@ void FramePlayer::renderDefaultTextImage(const QString &text) {
 }
 
 
-Size FramePlayer::getOriginalSize() const
-{
+Size FramePlayer::getOriginalSize() const {
     return originalSize;
 }
 

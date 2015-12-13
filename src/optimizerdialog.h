@@ -26,29 +26,42 @@
 #include "retranslatable.h"
 #include "ui_optimizerdialog.h"
 
-class OptimizerDialog : public QDialog, public Ui::OptimizerDialog, public Retranslatable
-{
-     Q_OBJECT;
+class OptimizerDialog : public QDialog, public Ui::OptimizerDialog, public Retranslatable {
+Q_OBJECT;
 public:
-     OptimizerDialog(QSettings* s);
-     virtual ~OptimizerDialog();
-     void retranslate(){retranslateUi(this);}
+    OptimizerDialog(QSettings *s);
+
+    virtual ~OptimizerDialog();
+
+    void retranslate() { retranslateUi(this); }
+
 private:
-     bool convertAvailable();
-     void checkIM();
-     QStringList sysEnv();
-     QString findConvert();
-     QProcess* proc;
-     QSettings* set;
+    bool convertAvailable();
+
+    void checkIM();
+
+    QStringList sysEnv();
+
+    QString findConvert();
+
+    QProcess *proc;
+    QSettings *set;
 
 private slots:
-	  void optimize();
-	  void setIMDir();
-	  void setSrc();
-	  void setDst();
-	  void finished(int,QProcess::ExitStatus);
-	  void showStateChanged(int);
-      void fuzzChanged(int);
+
+    void optimize();
+
+    void setIMDir();
+
+    void setSrc();
+
+    void setDst();
+
+    void finished(int, QProcess::ExitStatus);
+
+    void showStateChanged(int);
+
+    void fuzzChanged(int);
 };
 
 #endif

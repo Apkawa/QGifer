@@ -11,15 +11,15 @@
 #include <QPixmap>
 #include "textobject.h"
 
-class TextRenderer
-{
+class TextRenderer {
 public:
-     static QImage renderText(const QString& text,
-			      const QFont& font,
-			      const QColor& textColor,
-			      const QColor& outlineColor,
-			      int outlineWidth);
-     static void renderText(TextObject* o);
+    static QImage renderText(const QString &text,
+                             const QFont &font,
+                             const QColor &textColor,
+                             const QColor &outlineColor,
+                             int outlineWidth);
+
+    static void renderText(TextObject *o);
 };
 
 #endif

@@ -161,6 +161,7 @@ public slots:
     }
 
     void reverse_play();
+
     void play();
 
     void stop();
