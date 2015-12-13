@@ -100,7 +100,7 @@ CONFIGURE_FILE(
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
 	src
 	src/widgets
-        src/utils
+    src/utils
 	ui
 )
 
@@ -131,6 +131,9 @@ SET(QT_HEADERS
         src/widgets/QJumpSlider.h
         src/widgets/QPressAction.h
 
+        src/core/Palette.h
+        src/core/AbstractFramePlayer.h
+        src/core/OpenCVFramePlayer.h
 
 )
 
@@ -158,7 +161,10 @@ SET(SOURCES
         src/widgets/QPressAction.cpp
 
         src/utils/qgiferformatter.cpp
-        src/core/Palette.cpp src/core/Palette.h src/core/AbstractFramePlayer.cpp src/core/AbstractFramePlayer.h)
+        src/core/Palette.cpp
+        src/core/AbstractFramePlayer.cpp
+        src/core/OpenCVFramePlayer.cpp
+        )
 
 SET(RESOURCES
         res.qrc
@@ -193,7 +199,6 @@ QT4_WRAP_UI(FORMS_HEADERS ${FORMS})
 QT4_ADD_RESOURCES(RESOURCES_RCC ${RESOURCES})
 
 IF(WIN32)
-
 	SET(OPENCV_LIBS "-lopencv_core${CVLIB_SUFFIX} -lopencv_highgui${CVLIB_SUFFIX} -lopencv_imgproc${CVLIB_SUFFIX}" )
 ELSE(WIN32)
 	SET(OPENCV_LIBS "-lopencv_core -lopencv_highgui -lopencv_imgproc" )
