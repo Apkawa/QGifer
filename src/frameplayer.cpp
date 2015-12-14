@@ -20,10 +20,10 @@
 
 #include "frameplayer.h"
 
-FramePlayer::FramePlayer(QWidget *parent) : QWidget(parent), totalFrames(0), originalSize(Size(0, 0)),
-                                                    currentPos(-1), timerId(-1), status(Stopped),
-                                                    statusbar(NULL),
-                                                    raw(false), interval(40), medianblur(0) {
+FramePlayer::FramePlayer(QWidget *parent) : QWidget(parent), player(NULL),
+                                            timerId(-1), status(Stopped),
+                                            statusbar(NULL),
+                                            medianblur(0) {
     setupUi(this);
     workspace = new Workspace(frame);
     workspace->enableBackground(true);
@@ -36,15 +36,10 @@ FramePlayer::~FramePlayer() {
 }
 
 bool FramePlayer::openSource(const QString &src) {
-    if (vcap.isOpened())
-        vcap.release();
-    vcap.open(src.toStdString());
-    originalSize.width = vcap.get(CV_CAP_PROP_FRAME_WIDTH);
-    originalSize.height = vcap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    player = core::OpenCVFramePlayer(src);
     killTimer(timerId);
     timerId = -1;
-    currentPos = -1;
-    if (!vcap.isOpened()) {
+    if (!player.isOpened()) {
         qDebug() << "FramePlayer::openSource cannot load video: " << src;
         close();
         return false;
@@ -52,36 +47,21 @@ bool FramePlayer::openSource(const QString &src) {
 
     qDebug() << "FramePlayer::openSource new video loaded: " << src;
 
-#if defined(Q_WS_X11)
-    QString codec = codecName();
-    raw = (codec == "MJPG" || codec == "I420" || codec == "YUV4");
-    qDebug() << "codec name: " << codecName();
-#endif
-
     filepath = src;
-    totalFrames = vcap.get(CV_CAP_PROP_FRAME_COUNT);
-    qDebug() << "total frames: " << totalFrames;
-
-    interval = estimateInterval();
-    if (!interval) {
-        interval = 40;
-    }
+    interval = player.estimateInterval();
 
     slider->setMaximum(countFrames() - 1);
-
     slider->setValue(0);
-    slider->setVideoFps(fps());
+    slider->setVideoFps(player.getFPS());
     nextFrame();
     return true;
 }
 
 void FramePlayer::close() {
     stop();
-    vcap.release();
+    player.close();
     //fakeFrames += frames;
-    totalFrames = 0;
     filepath.clear();
-    originalSize = Size(0, 0);
     slider->setValue(0);
     slider->setVideoFps(0.0);
     showDefaultScreen();
@@ -89,40 +69,16 @@ void FramePlayer::close() {
 }
 
 void FramePlayer::nextFrame() {
-    if (!vcap.isOpened()) {
+    if (!player.hasNextFrame()) {
         return;
     }
+    player.nextFrame();
 
-    if (vcap.isOpened() && currentPos + 1 <= totalFrames - 1) {
-        //qDebug() << "next REAL frame...";
-        Mat m;
-        //vcap.grab();
-        //vcap.retrieve(m);
+    workspace->setImage(player.getFrame(), frame->size());
 
-        vcap >> m;
-
-        //currentPos = vcap.get(CV_CAP_PROP_POS_FRAMES); //videocapture zlicza roznie przy roznych kodekach
-        currentPos++;
-        if (currentPos >= totalFrames) {
-            currentPos = totalFrames - 1;
-        }
-        qDebug() << "current pos: " << currentPos << "/" << totalFrames;
-        //cvtColor(m,m,CV_BGR2RGB);
-        if (medianblur) {
-            medianBlur(m, m, medianblur % 2 ? medianblur : medianblur + 1);
-        }
-        currentFrame = QImage((uchar *) m.data, m.cols, m.rows, m.step,
-                              QImage::Format_RGB888).rgbSwapped();
-    }
-    else {
-        return;
-    }
-
-    workspace->setImage(currentFrame, frame->size());
-    workspace->updateFrameIndex(currentPos);
-    emit frameChanged(currentPos);
-    updateSlider(currentPos);
-
+    workspace->updateFrameIndex(player.getPos());
+    emit frameChanged(player.getPos());
+    updateSlider(player.getPos());
     updateStatus(timerId == -1 ? Stopped : Playing);
 }
 
@@ -132,10 +88,6 @@ void FramePlayer::reverse_play() {
     is_reverse_play = true;
     if (!countFrames()) {
         return;
-    }
-    if (currentPos == countFrames() - 1) {
-        qDebug() << "currentPos:" << currentPos << " countFrames():" << countFrames();
-        seek(0);
     }
     if (timerId == -1) {
         timerId = startTimer(interval);
@@ -150,13 +102,13 @@ void FramePlayer::play() {
         return;
     }
 
-    if (currentPos == countFrames() - 1) {
-        qDebug() << "currentPos:" << currentPos << " countFrames():" << countFrames();
+    if (player.getPos() == countFrames() - 1) {
+        qDebug() << "currentPos:" << player.getPos() << " countFrames():" << countFrames();
         seek(0);
     }
 
     if (timerId == -1) {
-        timerId = startTimer(interval);
+        timerId = startTimer(player.estimateInterval());
     }
     updateStatus(Playing);
 }
@@ -172,54 +124,12 @@ void FramePlayer::pause() {
     updateStatus(Stopped);
 }
 
-void FramePlayer::setPos(long pos) {
-    if (!vcap.isOpened())
-        return;
-
-    if (pos < 0) {
-        pos = 0;
-    }
-    if (pos >= totalFrames) {
-        pos = totalFrames - 1;
-    }
-    currentPos = pos;
-    vcap.set(CV_CAP_PROP_POS_FRAMES, currentPos);
-    currentPos--;
-    nextFrame();
-}
-
-void FramePlayer::slowSetPos(long pos) {
-    if (!vcap.isOpened()) {
-        return;
-    }
-
-    if (pos < 0) {
-        pos = 0;
-    }
-    if (pos >= totalFrames) {
-        pos = totalFrames - 1;
-    }
-    currentPos = pos;
-
-    long startPos = currentPos - 55;
-    if (startPos < 0) {
-        startPos = 0;
-    }
-
-    vcap.set(CV_CAP_PROP_POS_FRAMES, startPos);
-    for (; startPos < currentPos; startPos++) {
-        vcap.grab();
-    }
-    currentPos--;
-    nextFrame();
-}
-
 void FramePlayer::seek(int pos) {
     qDebug() << "seeking pos: " << pos;
-    if (status != Playing && abs(currentPos - pos) < 55) {
-        slowSetPos(pos);
+    if (status != Playing) {
+        player.seek(pos);
     } else {
-        setPos(pos);
+        player.setPos(pos);
     }
 }
 
@@ -229,14 +139,16 @@ void FramePlayer::timerEvent(QTimerEvent *) {
     } else {
         nextFrame();
     }
-    if ((currentPos >= countFrames() - 1) || (currentPos <= 0)) {
+    if ((!player.hasNextFrame()) || (!player.hasPrevFrame())) {
         stop();
     }
 }
 
 
 void FramePlayer::updateSlider(int pos) {
-    if (pos < 0) pos = 0;
+    if (pos < 0) {
+        pos = 0;
+    }
     disconnect(slider, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
     slider->setValue(pos);
     connect(slider, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
@@ -251,7 +163,7 @@ void FramePlayer::updateStatus(Status s) {
 
     long total = countFrames();
     if (total)
-        info += ", frame: " + QString::number(currentPos) + "/" + QString::number(total - 1) +
+        info += ", frame: " + QString::number(player.getPos()) + "/" + QString::number(total - 1) +
                 " (" + QString::number(total) + " in total)";
     else
         info += ", no frames";
@@ -267,25 +179,19 @@ void FramePlayer::updateStatus(Status s) {
 void FramePlayer::resizeEvent(QResizeEvent *) {
     //qDebug() << "player resize event";
     workspace->updateBackground();
-    if (countFrames())
-        workspace->setImage(currentFrame, frame->size());
-    else
+    if (countFrames()) {
+        workspace->setImage(player.getFrame(), frame->size());
+    }
+    else {
         showDefaultScreen();
+
+    }
     workspace->setFixedSize(frame->size());
 }
 
 void FramePlayer::setStatusBar(QStatusBar *sb) {
     statusbar = sb;
     //statusLabel->setVisible(sb==NULL);
-}
-
-QString FramePlayer::codecName() {
-    if (!vcap.isOpened())
-        return "";
-    int ex = static_cast<int>(vcap.get(CV_CAP_PROP_FOURCC));
-    char EXT[] = {(char) (ex & 0XFF), (char) ((ex & 0XFF00) >> 8), (char) ((ex & 0XFF0000) >> 16),
-                  (char) ((ex & 0XFF000000) >> 24), 0};
-    return QString(EXT);
 }
 
 
@@ -304,8 +210,8 @@ void FramePlayer::renderDefaultTextImage(const QString &text) {
 }
 
 
-Size FramePlayer::getOriginalSize() const {
-    return originalSize;
+core::Size FramePlayer::getOriginalSize() const {
+    return player.getOriginalSize();
 }
 
 

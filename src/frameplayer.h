@@ -29,11 +29,11 @@
 #include <QStatusBar>
 #include <QPixmap>
 #include <QMessageBox>
+#include <core/OpenCVFramePlayer.h>
 
 #include "textrenderer.h"
 #include "workspace.h"
 #include "ui_frameplayer.h"
-
 
 using namespace cv;
 
@@ -52,34 +52,27 @@ public:
     bool openSource(const QString &src);
 
     long countFrames() const {
-        return totalFrames;
+        return player.getTotalFrames();
     }
 
-    const long &getCurrentPos() const {
-        return currentPos;
+    const long getCurrentPos() const {
+        return player.getPos();
     }
 
     QImage *getCurrentFrame() {
-        return &currentFrame;
+        return player.getPointerFrame();
     }
 
-    int estimateInterval() {
-        return vcap.isOpened() ? round(1000.0 / vcap.get(CV_CAP_PROP_FPS)) : 0;
-    }
 
     double fps() {
-        return vcap.isOpened() ? vcap.get(CV_CAP_PROP_FPS) : 0;
+        return player.getFPS();
     }
 
     bool isOpened() {
-        return vcap.isOpened();
+        return player.isOpened();
     }
 
     void setStatusBar(QStatusBar *sb);
-
-    void setPos(long pos);
-
-    void slowSetPos(long pos);
 
     Status getStatus() const {
         return status;
@@ -89,19 +82,8 @@ public:
         return filepath;
     }
 
-    void setDefaultImage(const QImage &img) {
-        defaultImg = img.copy();
-    }
-
-    void enableAntialiasing(bool enable) {
-        workspace->enableAntialiasing(enable);
-        workspace->setImage(currentFrame, frame->size());
-    }
-
-    QString codecName();
-
     void showDefaultScreen() {
-        currentFrame = defaultImg;
+//        currentFrame = defaultImg;
         workspace->setImage(defaultImg, frame->size(), true, true);
     }
 
@@ -115,24 +97,19 @@ public:
 
     void renderDefaultTextImage(const QString &text);
 
-    Size getOriginalSize() const;
+    core::Size getOriginalSize() const;
 
 
 private:
-    VideoCapture vcap;
+    core::OpenCVFramePlayer player;
     int medianblur;
     QString filepath;
     Status status;
-    Size originalSize;
-    QImage currentFrame;
     QImage defaultImg;
     Workspace *workspace;
-    long totalFrames;
-    long currentPos;
     int interval;
     int timerId;
     QStatusBar *statusbar;
-    bool raw;
     bool is_reverse_play = false;
 
     void timerEvent(QTimerEvent *);
@@ -158,7 +135,7 @@ public slots:
     void nextFrame();
 
     void prevFrame() {
-        seek(currentPos - 1);
+        player.prevFrame();
     }
 
     void reverse_play();

@@ -971,7 +971,7 @@ void MainWindow::outputHeightChanged(int v) {
 void MainWindow::whRatioChanged(bool isChecked) {
     if (isChecked && player->isOpened()) {
         float outWHRatio = (float) widthBox->value() / (float) heightBox->value();
-        Size originalSize = player->getOriginalSize();
+        core::Size originalSize = player->getOriginalSize();
         whRatio = (float) originalSize.width / (float) originalSize.height;
         if (outWHRatio < 1) {
             outputWidthChanged(widthBox->value());

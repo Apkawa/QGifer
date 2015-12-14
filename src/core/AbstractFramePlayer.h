@@ -20,7 +20,6 @@ namespace core {
     public:
 
         explicit AbstractFramePlayer(const QString &filepath) : filepath(filepath) {
-            setSource(filepath);
         }
 
         virtual ~AbstractFramePlayer() {
@@ -35,7 +34,6 @@ namespace core {
             return 24; // TODO
         }
 
-        virtual void setFPS() = 0;
 
         const QString &getSourcePath() const {
             return filepath;
@@ -52,19 +50,28 @@ namespace core {
         virtual QImage getFrame() {
             return frame;
         }
+        virtual QImage *getPointerFrame() {
+            return &frame;
+        }
+
+        virtual void seek(u_long pos) = 0;
 
         virtual QImage nextFrame() = 0;
 
         virtual QImage prevFrame() = 0;
 
-        QImage *getFrame(unsigned long frame_idx) {
+        QImage getFrame(unsigned long frame_idx) {
             setPos(frame_idx);
-            getFrame();
+            return getFrame();
         }
 
 
         int estimateInterval() {
-            return round(1000.0 / getFPS());
+            int calculated_interval = round(1000.0 / getFPS());
+            if (calculated_interval) {
+                return calculated_interval;
+            }
+            return 40;
         }
 
 
@@ -73,11 +80,11 @@ namespace core {
         }
 
         virtual bool hasNextFrame() {
-            return position < totalFrames;
+            return isOpened() && position + 1 < totalFrames;
         }
 
         virtual bool hasPrevFrame() {
-            return position > 0;
+            return isOpened() && position - 1 > 0;
         }
 
         virtual void close() = 0;
@@ -86,7 +93,7 @@ namespace core {
             return codecName;
         }
 
-        virtual core::Size getOriginalSize() {
+        virtual core::Size getOriginalSize() const{
             return frameSize;
         };
 

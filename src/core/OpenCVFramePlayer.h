@@ -13,31 +13,31 @@
 
 #include "AbstractFramePlayer.h"
 
+#define SLOW_SEEK_OFFSET 55
+
 namespace core {
 
     class OpenCVFramePlayer : public core::AbstractFramePlayer {
 
     public:
+
+        OpenCVFramePlayer(const QString &filepath) : AbstractFramePlayer(filepath) {
+            setSource(filepath);
+        }
+
+        virtual void seek(u_long pos) override;
+
         virtual bool setSource(const QString &src) override;
 
         virtual void setPos(u_long pos) override;
 
         virtual double getFPS() override;
-
-        virtual void setFPS() override;
-
-        virtual core::Size getOriginalSize() override;
-
-        OpenCVFramePlayer(const QString &filepath) : AbstractFramePlayer(filepath) { }
-
     private:
         cv::VideoCapture vcap;
         bool raw;
 
     public:
         virtual QString getCodecName() override;
-
-        virtual QImage getFrame() override;
 
         virtual bool isOpened() override;
 
@@ -46,6 +46,12 @@ namespace core {
         bool isRaw() {
             return raw;
         }
+
+        void slowSetPos(u_long pos);
+
+        QImage nextFrame();
+
+        virtual QImage prevFrame() override;
     };
 
 }
