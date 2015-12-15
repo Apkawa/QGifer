@@ -53,6 +53,28 @@ public:
     }
     void FindKeyFrame(int64_t frame);
 
+    u_long getTotalFrames() {
+        return pVideoCodecCtx->refcounted_frames;
+    }
+
+    void printDuration() {
+        if (pFormatCtx->duration != AV_NOPTS_VALUE) {
+            int hours, mins, secs, us;
+            int64_t duration = pFormatCtx->duration + 5000;
+            int total_secs = secs = duration / AV_TIME_BASE;
+            us    = duration % AV_TIME_BASE;
+            mins  = total_secs / 60;
+            secs %= 60;
+            hours = mins / 60;
+            mins %= 60;
+            double f_total_secs = (double)total_secs + (((100.0 * us) / AV_TIME_BASE) / 100.0) ;
+            av_log(NULL, AV_LOG_INFO, "%02d:%02d:%02d.%02d\n", hours, mins, secs, (100 * us) / AV_TIME_BASE);
+            av_log(NULL, AV_LOG_INFO, "seconds: %f\n", f_total_secs);
+            av_log(NULL, AV_LOG_INFO, "frames: %f\n", videoFramePerSecond * f_total_secs);
+        }
+
+    }
+
 
 private:
     // open video stream.

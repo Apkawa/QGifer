@@ -63,21 +63,24 @@
 
 int main() {
     FFmpegDecoder decoder;
-
-    if (decoder.OpenFile("/media/hd750/!Unsorted/!Finished/Anime/Nanatsu no Taizai/Nanatsu no Taizai - 11.mp4")) {
+    char * filename = "/home/apkawa/tmp/SampleVideo_360x240_1mb.mp4";
+    if (decoder.OpenFile(filename)) {
         int w = decoder.GetWidth();
         int h = decoder.GetHeight();
-        decoder.SeekFrame(100);
+        printf("video size %ix%i\n", w, h);
+        printf("total frames %i\n", decoder.getTotalFrames());
+        decoder.SeekFrame(1);
         for (int i = 0; i < 5000; i++) {
             AVFrame *frame = decoder.GetNextFrame();
             if (frame && frame->key_frame == 1) {
                 printf("frame i=%i; %i is key_frame dts=%i \n", i, frame->coded_picture_number, frame->pkt_dts);
-
             }
         }
-        decoder.FindKeyFrame(3000);
+        decoder.FindKeyFrame(50);
 
         decoder.CloseFile();
+    } else {
+        printf("Can't open file %s\n", filename);
     }
 
     return 0;

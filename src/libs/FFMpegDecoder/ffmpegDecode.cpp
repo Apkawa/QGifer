@@ -39,10 +39,17 @@ bool FFmpegDecoder::OpenFile(const char * inputFile) {
         // Need for convert time to ffmpeg time.
 //        videoBaseTime = (int64_t(pVideoCodecCtx->time_base.num) * AV_TIME_BASE) / int64_t(pVideoCodecCtx->time_base.den);
         videoBaseTime = av_q2d(pFormatCtx->streams[videoStreamIndex]->time_base);
+        double testBaseTime = av_q2d(pFormatCtx->streams[videoStreamIndex]->time_base);
+
+        printf("FPS %f\n", videoFramePerSecond);
+        printDuration();
+        av_dump_format(pFormatCtx, videoStreamIndex, inputFile, 0);
 
     }
     return true;
 }
+
+
 
 
 bool FFmpegDecoder::CloseFile() {
