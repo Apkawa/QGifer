@@ -416,7 +416,7 @@ void Workspace::execObjectMenu(const QPoint& p)
      if(!hoveredObject)
 	  return;
 
-     	  QMenu* m = new QMenu(this);
+	  QMenu* m = new QMenu(this);
 	  QAction* btf = new QAction(tr("Bring to &front"),m);
 	  m->addAction(btf);
 
