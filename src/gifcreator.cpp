@@ -21,7 +21,17 @@
 #include <cstring>
 
 #include <iostream>
+#include <QtDebug>
 using namespace std;
+
+//#define TRUE 1
+//#define FALSE 0
+
+void PrintGifError()
+{
+	qDebug() << "Something wrong whith GIF";
+}
+
 
 GifCreator::GifCreator():duration(0.1), revStart(-1)
 {
@@ -38,9 +48,8 @@ GifCreator::~GifCreator()
 		    j--;
 	       }
      for(int i=0;i<cmaps.size();i++)
-	  FreeMapObject(cmaps[i]);
+	  GifFreeMapObject(cmaps[i]);
 }
-
 
 bool GifCreator::save(const char* filename, int every)
 {
@@ -52,7 +61,8 @@ bool GifCreator::save(const char* filename, int every)
      }
   
   
-     GifFileType *GifFile = EGifOpenFileName(filename, FALSE);
+	 int err;
+     GifFileType *GifFile = EGifOpenFileName(filename, FALSE, &err);
   
      if (!GifFile){
 	  PrintGifError();
@@ -74,15 +84,26 @@ bool GifCreator::save(const char* filename, int every)
      {
 	  char nsle[12] = "NETSCAPE2.0";
 	  char subblock[3];
-	  if (EGifPutExtensionFirst(GifFile, APPLICATION_EXT_FUNC_CODE, 11, nsle) == GIF_ERROR) {
+	  //if (EGifPutExtensionFirst(GifFile, APPLICATION_EXT_FUNC_CODE, 11, nsle) == GIF_ERROR) {
+	  if (EGifPutExtensionLeader(GifFile, APPLICATION_EXT_FUNC_CODE) == GIF_ERROR) {
+	       PrintGifError();
+	       return false;
+	  }
+	  if (EGifPutExtensionBlock(GifFile, 11, nsle) == GIF_ERROR) {
 	       PrintGifError();
 	       return false;
 	  }
 	  subblock[0] = 1;
 	  subblock[2] = loop_count % 256;
 	  subblock[1] = loop_count / 256;
+	  if (EGifPutExtensionBlock(GifFile, 3, subblock) == GIF_ERROR)
+	  {
+	       PrintGifError();
+	       return false;
+	  }
 
-	  if (EGifPutExtensionLast(GifFile, APPLICATION_EXT_FUNC_CODE, 3, subblock) == GIF_ERROR) {
+	  //if (EGifPutExtensionLast(GifFile, APPLICATION_EXT_FUNC_CODE, 3, subblock) == GIF_ERROR) {
+	  if (EGifPutExtensionTrailer(GifFile) == GIF_ERROR) {
 	       PrintGifError();
 	       return false;
 	  }
@@ -138,7 +159,7 @@ bool GifCreator::save(const char* filename, int every)
 	  return false;
      }
    
-     if (EGifCloseFile(GifFile) == GIF_ERROR) {
+     if (EGifCloseFile(GifFile, &err) == GIF_ERROR) {
 	  PrintGifError();
 	  endProgress();
 	  return false;

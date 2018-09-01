@@ -34,7 +34,7 @@ PaletteWidget::PaletteWidget(QWidget* parent, Qt::WindowFlags f):
 
 PaletteWidget::~PaletteWidget()
 {
-     FreeMapObject(palette);
+     GifFreeMapObject(palette);
 }
 
 void PaletteWidget::paintEvent(QPaintEvent*)
@@ -117,7 +117,7 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      if(palette && mindiff > 1)
      {
 	  qDebug() << "deleting old palette, size: " << size << ", colors: " << palette->ColorCount;
-	  FreeMapObject(palette);
+	  GifFreeMapObject(palette);
 	  qDebug() << "done";
 	  palette = NULL;
      }
@@ -157,7 +157,7 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      }
 
      ColorMapObject* previous = palette;
-     palette = MakeMapObject(size, NULL);
+     palette = GifMakeMapObject(size, NULL);
      if (!palette) 
      {
 	  qDebug() << "NULL palette!";
@@ -165,7 +165,7 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      }
      
 
-     if (QuantizeBuffer(fimg.width(), fimg.height(), &size, 
+     if (GifQuantizeBuffer(fimg.width(), fimg.height(), &size, 
      			&(r[0]),&(g[0]),&(b[0]), &(output[0]), 
      			palette->Colors) == GIF_ERROR) 
      {
@@ -178,11 +178,11 @@ bool PaletteWidget::fromImage(const QImage& img, int palette_size, float mindiff
      //qDebug() << "difference: " << df;
      if(previous && df < mindiff)
      {
-	  FreeMapObject(palette);
+	  GifFreeMapObject(palette);
 	  palette = previous;
      }
      else if(df >= mindiff)
-	  FreeMapObject(previous);
+	  GifFreeMapObject(previous);
 
      // qDebug() << "palette (" << palette->ColorCount << ") :";
      // for(int i=0;i<size;i++)
@@ -230,8 +230,8 @@ bool PaletteWidget::fromString(const QString& str)
 {
      QStringList rgb = QString(str).split(";", QString::SkipEmptyParts);
      if(palette)
-	  FreeMapObject(palette);
-     palette = MakeMapObject(rgb.size(), NULL);
+	  GifFreeMapObject(palette);
+     palette = GifMakeMapObject(rgb.size(), NULL);
      if(!palette)
 	  return false;
      size = rgb.size();

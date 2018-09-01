@@ -48,7 +48,7 @@ IF(WIN32)
 	SET(CMAKE_INSTALL_PREFIX "${TARGET_NAME}")
 ENDIF(WIN32)
 
-FIND_PACKAGE(OpenCV REQUIRED core highgui imgproc )
+FIND_PACKAGE(OpenCV REQUIRED core highgui imgproc videoio)
 FIND_PACKAGE(Qt4 REQUIRED QtCore QtGui)
 FIND_PACKAGE(GIF REQUIRED)
 
@@ -194,9 +194,9 @@ QT4_ADD_RESOURCES(RESOURCES_RCC ${RESOURCES})
 
 IF(WIN32)
 
-	SET(OPENCV_LIBS "-lopencv_core${CVLIB_SUFFIX} -lopencv_highgui${CVLIB_SUFFIX} -lopencv_imgproc${CVLIB_SUFFIX}" )
+	SET(OPENCV_LIBS "-lopencv_core${CVLIB_SUFFIX} -lopencv_highgui${CVLIB_SUFFIX} -lopencv_imgproc${CVLIB_SUFFIX} -lopencv_videoio${CVLIB_SUFFIX}" )
 ELSE(WIN32)
-	SET(OPENCV_LIBS "-lopencv_core -lopencv_highgui -lopencv_imgproc" )
+	SET(OPENCV_LIBS "-lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_videoio" )
 ENDIF(WIN32)
 
 SET(GIF_LIBS "-lgif" )
